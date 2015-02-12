@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FreeFileSync XmlFormat="4" XmlType="BATCH">
+    <MainConfig>
+        <Comparison>
+            <Variant>TimeAndSize</Variant>
+            <TimeShift>0</TimeShift>
+            <Symlinks>Direct</Symlinks>
+        </Comparison>
+        <SyncConfig>
+            <Variant>TwoWay</Variant>
+            <CustomDirections>
+                <LeftOnly>right</LeftOnly>
+                <RightOnly>left</RightOnly>
+                <LeftNewer>right</LeftNewer>
+                <RightNewer>left</RightNewer>
+                <Different>none</Different>
+                <Conflict>none</Conflict>
+            </CustomDirections>
+            <DetectMovedFiles>false</DetectMovedFiles>
+            <DeletionPolicy>Versioning</DeletionPolicy>
+            <VersioningFolder Style="TimeStamp">E:\FFS\FFSArchive</VersioningFolder>
+        </SyncConfig>
+        <GlobalFilter>
+            <Include>
+                <Item>*</Item>
+            </Include>
+            <Exclude>
+                <Item>\System Volume Information\</Item>
+                <Item>\$Recycle.Bin\</Item>
+                <Item>\RECYCLER\</Item>
+                <Item>\RECYCLED\</Item>
+                <Item>*\desktop.ini</Item>
+                <Item>*\thumbs.db</Item>
+            </Exclude>
+            <TimeSpan Type="None">0</TimeSpan>
+            <SizeMin Unit="None">0</SizeMin>
+            <SizeMax Unit="None">0</SizeMax>
+        </GlobalFilter>
+        <FolderPairs>
+            <Pair>
+                <Left>P:</Left>
+                <Right>\\LAGOON\Emulators</Right>
+            </Pair>
+            <Pair>
+                <Left>F:\SCREENSHOTS</Left>
+                <Right>\\LAGOON\Games\SCREENSHOTS</Right>
+            </Pair>
+        </FolderPairs>
+        <OnCompletion>Close progress dialog</OnCompletion>
+    </MainConfig>
+    <BatchConfig>
+        <HandleError>Popup</HandleError>
+        <RunMinimized>true</RunMinimized>
+        <LogfileFolder Limit="-1">E:\FFS\FFSLog</LogfileFolder>
+    </BatchConfig>
+</FreeFileSync>

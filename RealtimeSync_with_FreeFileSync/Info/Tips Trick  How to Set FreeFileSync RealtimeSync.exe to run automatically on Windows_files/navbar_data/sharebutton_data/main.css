@@ -1,0 +1,128 @@
+#vdls-adv{
+	word-wrap: break-word;
+}
+
+.vdls-adv-ask h3{
+	font-size: medium;
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+}
+.vdls-adv-ask
+{
+	display: block;
+	border-left: 1px solid #EBEBEB;
+	width: 213px;
+}
+.vdls-adv-yh{
+	display: block;
+	border-left: 1px solid #D3E1F9;
+	width: 213px;
+}
+.vdls-adv-bn{
+	display: block;
+	border-left: 1px solid #E6E6E6;
+	width: 264px;
+	margin-right: -20px;
+}
+
+.vdls-adv-gl
+{
+	display: block;
+	border-left: 1px solid #D3E1F9;
+	position: relative;
+	width: 264px;
+	margin-bottom: 10px;
+}
+
+.vdls-advs-gl
+{
+	margin: 5px 10px 5px 5px;
+	padding: 6px;
+	background: #FFF8E7;
+}
+
+.vdls-advs-ask
+{
+	margin: 5px 10px 5px 5px;
+	padding: 6px;
+	background: #F9FCFF;
+}
+
+.vdls-advs-ask h3
+{
+	margin: 0;
+}
+
+.vdls-advs-bn
+{
+	padding: 6px 3px;
+	margin: 0 0 8px 0;
+	background: #FFF8E7;
+}
+
+.vdls-advs-yh
+{
+	padding: 6px 3px;
+	margin: 0 5px 8px 0;
+	background: #FBF0FA;
+}
+
+.vdls-advs-yh li,
+.vdls-advs-ask li,
+.vdls-advs-bn li,
+.vdls-advs-gl li
+{
+	padding-top: 10px;
+}
+
+.vdls-advs-yh li:first-child,
+.vdls-advs-ask li:first-child,
+.vdls-advs-bn li:first-child,
+.vdls-advs-gl li:first-child
+{
+	padding-top: 0px;
+}
+#vdls-advs ol,
+#vdls-adv ol{
+	padding: 2px 7px 1px 4px;
+	border: 0;
+	margin: 0;
+	list-style: none;
+}
+#vdls-adv li{
+	margin: 0 0 12px 0;
+}
+#vdls-advs cite,
+#vdls-adv cite{
+	color: #0E774A;
+}
+
+/* --advh*/
+/* --ggl bt*/
+#bottomads,
+/*   gl, yh*/
+/* #rhscol #rhs_block,*/
+.spl_ad_plus,
+#center_col #taw #tads,
+#main .ads,
+#sidebar .sb_adsNv2,
+#rhscol #mbEnd,
+#right #east{
+	display:none!important;
+}
+/* --ask*/
+#spl_img_top
+{
+	display:none!important;
+}
+
+/* Bing */
+.sb_tlst, .sb_tlst h3 a {
+    display: inline !important;
+}
+
+/* Yahoo */
+.sm-media {
+    display: none;
+}
