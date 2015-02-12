@@ -24,7 +24,7 @@ somehow this combo makes ALL windows invisible totally, nothing even flashes up 
 If you WANT to see the CMD window, just run runner.bat itself
 
 VERSION 1.0 2014
--________________________________
+_________________________________
 The shortcut runner runs, minimised, as admin
 runner checks whether we are TRICKLE or RIVER (the string to check must be uppercase)
 if river runs RIVER_QP.bat (if trickle likewise)
