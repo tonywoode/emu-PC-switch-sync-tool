@@ -1,4 +1,4 @@
-Emulator PC Switcher Sync Tool
+Emulator PC Switcher Sync Tool v1.02
 by Tony Woode, 2015
 
 Description
@@ -7,13 +7,26 @@ Windows emulation users often have multiple PC setups, both a laptop and a deskt
 to a TV monitor.
 
 some years ago, these setups would have such different specifications, that no one would try and run the same emulation software on all of these,
-for instance it would take minutes for a laptop pc to uncompress a DVD to run
+for instance it would take minutes for a laptop pc to uncompress a DVD to run, so DVD-based gaming was restricted to your home PC.
 
-However in 2015, using SSDs, performance is becoming a negligible concern: we CAN sync our windows emulators between multiple PCs without performat
-issue. 32bit/64 bit is no longer an issue, memory is no longer an issue. What IS an issue is the difference in hardware of your machines
+Now, performance is becoming a negligible concern: we CAN sync our windows emulators between multiple PCs without performance issues. 
+32bit/64 bit is no longer an issue, memory is no longer an issue. 
 
-Here included is a series of interrelated scripts that attempt to ensure that emulation is smooth and transparently modified between machines ie: 
-you use the same code for EVERY machine. What needs to be changed is predominantly screen size. (Also physical DVD drive location sometimes causes issue)
+So we can try and make our emulation and retro-gamin environments portable - just folders we sync between machines. 
+What IS an issue, though, for emulators is the difference in hardware of your machines. Particularly the properties of your screen.
+
+Emulators contain config files which often specify the screen resolution to use. Highly problematic for a portable environment.
+Other problems include the presence or lack of physical DVD drive letter which confuses some implementations of disk mounting code in emulators
+
+Here's how I overcame these problems in a windows environment, a series of interrelated scripts for a variety of purposes mainly centered around
+a Powershell replacement script, so you can PORTABLY:
+* Live sync your emulators folders between multiple systems whenever they see each other 
+* Manually sync emulators folders if you need
+* Sync changes in windows registry settings so all emulators work the same anywhere
+* Launch your frontend of choice
+* Launch any game you have, irrespective of system
+* Launch any emulator on any system
+* Save a game at home and continue where you left off on your laptop
 
 So the purpose of this suite of scripts and configs is to ensure that EVERY Windows emulator can change its config depending on running system.
 
@@ -33,6 +46,9 @@ How do I use this?
 The folders are organised by function, with a master Powershell script in the root directory. A good place to start is the RunFrontend_and_ReplaceConfigs
 folder, where you can set a frontend to launch whilst replacing all the screen resolution settings in various emulators in the powershell script. Just adapt
 both to your needs.
+
+You need to reduce the secuirty level on powershell so it will run.
+You need to go into the powershell script and change the paths
 
 History
 =======
