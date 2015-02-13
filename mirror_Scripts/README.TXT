@@ -1,30 +1,18 @@
-1.1: Updated this to make it all relative, now one script can copy either way
-so its now got a modular/functional structure
-First we call the batch that selects which way round we're going:
-e.g.: RIVER-TO-SEAEEE.bat
-these get funny when called as admin so I had to cd to scripts dir
+First we call the batch that selects which way round we're going: e.g.: RIVER-TO-SEAEEE.bat
+(These get funny when called as admin: we must make sure we cd to scripts dir)
 
-So please note they will always go to the C directory of the machine you're running FROM
+Note they will always go to the directory on the machine you're running FROM, not from the network name. I decided that was best, but if you call the script via MACHINEA's shared folder as it is on MACHINEB, it doesn't matter it will run the versions from MACHINEB. But then the script mirrors its own directory, so make sure MACHINEA and MACHINEB agree on the script contents before you run it, or try to always run the script itself from MACHINEB's version. Will also LOG robocopy to the machine you're running it FROM and then copy that log when its done
 
-I decided that was best, but if you call the script via SEAEEE's shared folder as it is on RIVER, it doesn't matter it will run the versions from RIVER!
-
-This is tricky because the script mirrors its own directory, so just make sure river and seaeee agree on the script contents before you run it, or try to always run the script itself from RIVERs version
-
-Will also LOG robocopy to the machine you're running it FROM and then copy that log when its done
-
-
-So we passs the parameters "which machine I am" "which machine I'm going to" "source THEN destination res and refresh" to the main script, which in turn uses these parameters to pass to:
+Essentially we pass the parameters "which machine I am" "which machine I'm going to" "source THEN destination res and refresh" to the main script, which in turn uses these parameters to pass to:
 
 1) the replace list powershell script (which doesn't need to know which machine it is just which machine its altering files on)
 
-2) The two files list which maintains two files for little and big computers
+2) The two files list which maintains two files for little and big computers based on their file extension names 
 
-Although we should need the two files list to be echoed in the replace list for when doing the "TV" script, none of those files actually specify resolutions its speed etc that changes in them
-
-
+Note that, although we should need the two files list to be echoed in the replace list for when doing the "TV" script, none of those files actually specify resolutions its speed etc that changes in them
 
 
-
+NOTES
 ____________________________________________________________
 registry export is run from seaeee, import is run from river
 
