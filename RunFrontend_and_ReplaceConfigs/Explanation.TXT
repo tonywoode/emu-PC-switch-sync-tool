@@ -1,5 +1,5 @@
-NOTE 04/05/14
--------------
+VERSION 2.01 APR 2014
+____________________
 I had immediately changed this shortcut to run from the React_OS version of CMD previously, but a strange thing
 happens with my winmounting script if I do that. It passes incorrect command lines to winmount AND daemon tools
 The short term fix was to just take this script back to calling windows CMD for now.
@@ -23,7 +23,7 @@ somehow this combo makes ALL windows invisible totally, nothing even flashes up 
 
 If you WANT to see the CMD window, just run runner.bat itself
 
-VERSION 1.0 2014
+VERSION 1.0 JAN 2014
 _________________________________
 The shortcut runner runs, minimised, as admin
 runner checks whether we are TRICKLE or RIVER (the string to check must be uppercase)
@@ -35,5 +35,5 @@ This ensures that all resolutions (and any other setting for future text-alterab
 
 The first shortcut to runner is there so we can run as admin, but the second is there so we can put the shortcut on the windows 7 taskbar. Windows 7 only likes to put APPLICATIONS on the taskbar, and we can fool it by making a shortcut which calls EXPLORER "shortcut.lnk" - this is an application....
 
-the vbs script is here because I wanted to hide the cmd window, but then "how do you launch that eh" ;-) You'd have to have it run the runner's code instead of take params, and then shortcut it and run THAT shortcut as admin, and I can't be bothered right now...
+the vbs script is here because I wanted to hide the cmd window, but then "how do you launch that eh" ;-) You'd have to have it run the runner's code instead of take params, and then shortcut it and run THAT shortcut as admin.
 

@@ -1,3 +1,6 @@
+EMU MIRROR SCRIPTS VERSION 1.0 FEB 2012
+_______________________________________
+
 First we call the batch that selects which way round we're going: e.g.: RIVER-TO-SEAEEE.bat
 (These get funny when called as admin: we must make sure we cd to scripts dir)
 

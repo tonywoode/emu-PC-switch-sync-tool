@@ -44,7 +44,7 @@ SET /P Select=Type 'y' for Yes Or 'n' for No:
 IF  /i %Select%==y (set _POW=yes) else set _POW=no
 
 ::set Robo options
-set _OPTIONS=/MIR /SL /R:5 /W:5 /TEE /ETA /LOG+:\\%MACHINE_A%\Emulators\Scripts\Sync\backlog\mirror_%MACHINE_A%_emu_to_%MACHINE_B%%DATE:/=%.log
+set _OPTIONS=/MIR /SL /R:5 /W:5 /TEE /ETA /LOG+:\\%MACHINE_A%\CODE\Scripts\Emulator_PC_Switcher_Sync_Tool\mirror_scripts\backlog\mirror_%MACHINE_A%_emu_to_%MACHINE_B%%DATE:/=%.log
 
 :PRECOPY
 IF (%_PRECOPY%)==(no) GOTO :COPY
