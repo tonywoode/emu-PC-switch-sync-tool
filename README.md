@@ -28,7 +28,7 @@ Can I use this?
 The folders are organised by function, with a master Powershell script in the root directory. A good place to start is the RunFrontend_and_ReplaceConfigs
 folder, where you can set a frontend to launch whilst replacing all the screen resolution settings in various emulators in the Powershell script.
 Its designed to be run by double clicking the RunFronend shortcut. See explanation doc in that folder. 
-If you're new to Powershell note you'll need to reduce the security level on powershell so it will run. You need to go into the powershell script and change the paths,
+If you're new to Powershell note you'll need to reduce the security level on Powershell so it will run. You need to go into the Powershell script and change the paths,
 and change the calls to Powershell to suit your system (by System name) in runner.bat
 
 NOTES

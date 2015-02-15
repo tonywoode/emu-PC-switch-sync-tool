@@ -10,7 +10,7 @@ Essentially we pass the parameters "which machine I am" "which machine I'm going
 
 1) the replace list powershell script (which doesn't need to know which machine it is just which machine its altering files on)
 
-2) The two files list which maintains two files for little and big computers based on their file extension names 
+2) The two files list which maintains two files for MACHINEA and big MACHINEB based on their file extension names 
 
 Note that, although we should need the two files list to be echoed in the replace list for when doing the "TV" script, none of those files actually specify resolutions its speed etc that changes in them
 
