@@ -37,7 +37,10 @@ Registry export from an external machine is frowned upon. So we must run export 
 
 History
 =======
+
 1.03 Added ability to run from a different drive letter than the Emu folder
+
 1.02 Changed paths to allow for different emulator and config drives
+
 1.01: Updated this to make it all relative, now one script can copy either way
 
