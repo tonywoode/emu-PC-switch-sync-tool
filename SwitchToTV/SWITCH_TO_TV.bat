@@ -1,7 +1,7 @@
 @echo off & SETLOCAL
 ::copy from River to Seaeee
 ::these get funny when called as admin so I had to cd to scripts dir
-echo.****CONFIGURING TV MODE AND LAUNCHING QUICKPLAY*****
+echo.****CONFIGURING TV MODE AND LAUNCHING FRONTEND*****
 
 ::cd to script directory, for administrator needs to run this
 cd /d "%~dp0" 
