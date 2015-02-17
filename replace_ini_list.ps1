@@ -1,12 +1,12 @@
-#we set our Machine, Width and Height and Refresh Rate - pass to script as THISSCRIPT.ps1 MACHINE_B 1024 1800 600 1440 65 72
+#we set our Machine, Width and Height and Refresh Rate - pass to script as THISSCRIPT.ps1 MACHINE_B 1800 1440 72
 #so e.g.:SEAEEE
 $MACHINE = $args[0]
 #Width Gets changed to eg: 1800
-$WIDTH = $args[2]
+$WIDTH = $args[1]
 #And height Gets changed to eg: 1440
-$HEIGHT = $args[4]
+$HEIGHT = $args[2]
 #Then let's set the refresh rate (UAE needs this for a start)
-$REFRESH = $args[6]
+$REFRESH = $args[3]
 #gets changed to 72 (HZ that is)
 
 #First all the amiga stuff

@@ -63,7 +63,7 @@ copy "\\%MACHINE_B%\games\PC Games\FAR CRY\system.cfg_%MACHINE_B%" "\\%MACHINE_A
 IF (%_POW%)==(no) GOTO :END
 ::Note here passing everything to powershell EXCEPT machine_A - because powershell needs to know machine to act on, not machine A
 ::TODO: get powershell to log to file (atm it errors in view if any probs, so we'll pause for you to see)
-powershell -file .\..\replace_ini_list.ps1 %2 %3 %4 %5 %6 %7 %8
+powershell -file .\..\replace_ini_list.ps1 %2 %3 %4 %5
 
 ECHO.Has it gone ok? Lastly are you sure you want to run the two files list? Press y if you do
 SET /P Select=Type 'y' for Yes Or 'n' for No:
