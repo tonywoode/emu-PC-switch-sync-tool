@@ -1,4 +1,4 @@
-Emulator PC Switcher Sync Tool v1.03
+Emulator PC Switcher Sync Tool v1.04
 ====================================
 
 Windows emulation users often have multiple PC setups, both a laptop and a desktop PC, often an HTPC or the capacity to switch their desktop
@@ -27,9 +27,9 @@ Can I use this?
 ==================
 The folders are organised by function, with a master Powershell script in the root directory. A good place to start is the RunFrontend_and_ReplaceConfigs
 folder, where you can set a frontend to launch whilst replacing all the screen resolution settings in various emulators in the Powershell script.
-Its designed to be run by double clicking the RunFronend shortcut. See explanation doc in that folder. 
-If you're new to Powershell note you'll need to reduce the security level on Powershell so it will run. You need to go into the Powershell script and change the paths,
-and change the calls to Powershell to suit your system (by System name) in runner.bat
+Its designed to be run by double clicking the RunFrontend shortcut. See explanation doc in that folder. 
+If you're new to Powershell note you'll need to reduce the security level on Powershell so it will run. 
+You also need to go into the Powershell script and change the paths, and change the calls to Powershell to suit your system (by System name) in runner.bat
 
 NOTES
 =====
@@ -37,6 +37,7 @@ Registry export from an external machine is frowned upon. So we must run export 
 
 History
 =======
+1.04 General Refactor and concerns in TV-Switcher are now far more separated
 
 1.03 Added ability to run from a different drive letter than the Emu folder
 
