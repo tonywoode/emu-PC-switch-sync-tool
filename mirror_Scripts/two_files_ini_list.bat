@@ -7,22 +7,13 @@ SET MACHINE_A=%1
 SET MACHINE_B=%2
 ::and eg: RIVER
 
-
-
-
 ::Desmume x64 - MAINTAIN 2 FILES
 SET path2emu="Emulators\Nintendo\DS GBA GB\Desmume\desmume-64\desmume.ini"
 CALL :TWO_FILES
 
-
-
-
 ::Desmume 32bit - MAINTAIN 2 FILES
 SET path2emu="Emulators\Nintendo\DS GBA GB\Desmume\desmume\desmume.ini"
 CALL :TWO_FILES
-
-
-
 
 ::NoCASh GBA - MAINTAIN 2 FILES
 SET path2emu="Emulators\Nintendo\DS GBA GB\No$GBA\No$gba\NO$GBA.ini"

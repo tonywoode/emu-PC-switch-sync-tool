@@ -41,6 +41,7 @@ IF  /i %Select%==y (set _POW=yes) else set _POW=no
 set _OPTIONS=/MIR /SL /R:5 /W:5 /TEE /ETA /LOG+:\\%MACHINE_A%\CODE\Scripts\Emulator_PC_Switcher_Sync_Tool\mirror_scripts\backlog\mirror_%MACHINE_A%_emu_to_%MACHINE_B%%DATE:/=%.log
 
 :COPY
+:: Don't copy JoyToKey log (its live and locked), nor the the FreeFileSync database file (Else FFS will have to rebuild it)
 IF (%_COPY%)==(no) GOTO :GAMES
 robocopy \\%MACHINE_A%\EMULATORS \\%MACHINE_B%\Emulators %_OPTIONS% /XF "JoyTokey.log" "sync.ffs_db"
 
@@ -52,16 +53,16 @@ REG IMPORT "..\Gamebase_Import_export\Gamebase.reg"
 IF (%_GAMES%)==(no) GOTO :POW
 robocopy \\%MACHINE_A%\seaeee_games \\%MACHINE_B%\river_games /E /XD "Backup" "$RECYCLE.BIN" "SYSTEM VOLUME INFORMATION" /XF "pagefile.sys" "SEAEEE_disk_IDs.txt" "syncguid.dat" /SL /R:5 /W:5 /TEE /ETA /LOG+:.\backlog\mirror_seaeee_emu_to_river%DATE:/=%.log
 
-::now sort out Far Crys ini ie: replace %MACHINE_A%'s INI that you just copied over
-copy "\\%MACHINE_A%\%MACHINE_A%_games\PC Games\FAR CRY\system.cfg" "\\%MACHINE_A%\%MACHINE_A%_games\PC Games\FAR CRY\system.cfg_%MACHINE_A%"
-copy "\\%MACHINE_A%\%MACHINE_A%_games\PC Games\FAR CRY\system.cfg" "\\%MACHINE_B%\river_games\PC Games\FAR CRY\system.cfg_%MACHINE_A%"
-copy "\\%MACHINE_B%\%MACHINE_B%_games\PC Games\FAR CRY\system.cfg_%MACHINE_B%" "\\%MACHINE_B%\%MACHINE_B%_games\PC Games\FAR CRY\system.cfg"
-copy "\\%MACHINE_B%\%MACHINE_B%_games\PC Games\FAR CRY\system.cfg_%MACHINE_B%" "\\%MACHINE_A%\%MACHINE_A%_games\PC Games\FAR CRY\system.cfg_%MACHINE_B%"
+::now sort out Far Crys ini ie: replace %MACHINE_A%'s INI that you just copied over - TODO: rather hardcoded atm..
+copy "\\%MACHINE_A%\games\PC Games\FAR CRY\system.cfg" "\\%MACHINE_A%\games\PC Games\FAR CRY\system.cfg_%MACHINE_A%"
+copy "\\%MACHINE_A%\games\PC Games\FAR CRY\system.cfg" "\\%MACHINE_B%\games\PC Games\FAR CRY\system.cfg_%MACHINE_A%"
+copy "\\%MACHINE_B%\games\PC Games\FAR CRY\system.cfg_%MACHINE_B%" "\\%MACHINE_B%\games\PC Games\FAR CRY\system.cfg"
+copy "\\%MACHINE_B%\games\PC Games\FAR CRY\system.cfg_%MACHINE_B%" "\\%MACHINE_A%\%games\PC Games\FAR CRY\system.cfg_%MACHINE_B%"
 
 :POW
 IF (%_POW%)==(no) GOTO :END
 ::Note here passing everything to powershell EXCEPT machine_A - because powershell needs to know machine to act on, not machine A
-::I've no idea how to get the powershell to log, but it errors in view if any probs
+::TODO: get powershell to log to file (atm it errors in view if any probs, so we'll pause for you to see)
 powershell -file .\..\replace_ini_list.ps1 %2 %3 %4 %5 %6 %7 %8
 
 ECHO.Has it gone ok? Lastly are you sure you want to run the two files list? Press y if you do

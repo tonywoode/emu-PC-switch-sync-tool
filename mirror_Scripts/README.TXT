@@ -17,15 +17,4 @@ Note that, although we should need the two files list to be echoed in the replac
 
 NOTES
 ____________________________________________________________
-registry export is run from seaeee, import is run from river
-
-Seaa to river script copies emus plus games
-
-Seaa to river does NOT sync these emu folders:
-"Nintendo\Gamecube Wii" "CD-I" "SEGA\Saturn" "SEGA\Dreamcast"
-
-or these games folders:
-"Backup" "NEW THINGS" "$RECYCLE.BIN" "SYSTEM VOLUME INFORMATION"
-or these games files: "pagefile.sys" "SEAEEE_disk_IDs.txt" "syncguid.dat
-
-river to seaa script copies emus only
+registry export needs to be run from Machine A, import is run from MACHINE B
