@@ -7,14 +7,14 @@
             <Symlinks>Direct</Symlinks>
         </Comparison>
         <SyncConfig>
-            <Variant>TwoWay</Variant>
+            <Variant>Custom</Variant>
             <CustomDirections>
                 <LeftOnly>right</LeftOnly>
                 <RightOnly>left</RightOnly>
                 <LeftNewer>right</LeftNewer>
                 <RightNewer>left</RightNewer>
                 <Different>none</Different>
-                <Conflict>none</Conflict>
+                <Conflict>right</Conflict>
             </CustomDirections>
             <DetectMovedFiles>false</DetectMovedFiles>
             <DeletionPolicy>Versioning</DeletionPolicy>
@@ -38,20 +38,20 @@
         </GlobalFilter>
         <FolderPairs>
             <Pair>
-                <Left>\\River\Games\eXoDOS</Left>
-                <Right>\\LAGOON\eXoDOS</Right>
+                <Left>\\LAGOON\eXoDOS</Left>
+                <Right>\\River\Games\eXoDOS</Right>
             </Pair>
             <Pair>
-                <Left>\\River\code</Left>
-                <Right>\\LAGOON\code</Right>
+                <Left>\\LAGOON\code</Left>
+                <Right>\\River\code</Right>
             </Pair>
             <Pair>
-                <Left>\\RIVER\Emulators</Left>
-                <Right>\\LAGOON\Emulators</Right>
+                <Left>\\LAGOON\Emulators</Left>
+                <Right>\\RIVER\Emulators</Right>
             </Pair>
             <Pair>
-                <Left>\\RIVER\Games\SCREENSHOTS</Left>
-                <Right>\\LAGOON\Games\SCREENSHOTS</Right>
+                <Left>\\LAGOON\Games\SCREENSHOTS</Left>
+                <Right>\\RIVER\Games\SCREENSHOTS</Right>
             </Pair>
         </FolderPairs>
         <OnCompletion>Close progress dialog</OnCompletion>
