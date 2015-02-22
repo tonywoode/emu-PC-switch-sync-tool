@@ -38,8 +38,12 @@
         </GlobalFilter>
         <FolderPairs>
             <Pair>
+                <Left>\\River\Games\eXoDOS</Left>
+                <Right>\\LAGOON\eXoDOS</Right>
+            </Pair>
+            <Pair>
                 <Left>\\River\code</Left>
-                <Right>\\Lagoon\code</Right>
+                <Right>\\LAGOON\code</Right>
             </Pair>
             <Pair>
                 <Left>\\RIVER\Emulators</Left>
