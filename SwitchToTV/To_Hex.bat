@@ -9,5 +9,5 @@ for /L %%N in (1,1,8) do (
     for %%D in (!d!) do set "hex=!map:~%%D,1!!hex!"
 )
 ( ENDLOCAL & REM RETURN VALUES
-    IF "%~2" NEQ "" (SET %~2=0x%hex%) ELSE ECHO.%hex%
+    ECHO.0x%hex%
 )
