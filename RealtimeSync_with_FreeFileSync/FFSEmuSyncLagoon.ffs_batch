@@ -62,7 +62,7 @@
     </MainConfig>
     <BatchConfig>
         <HandleError>Popup</HandleError>
-        <RunMinimized>false</RunMinimized>
+        <RunMinimized>true</RunMinimized>
         <LogfileFolder Limit="-1">E:\FFS\FFSLog</LogfileFolder>
     </BatchConfig>
 </FreeFileSync>
