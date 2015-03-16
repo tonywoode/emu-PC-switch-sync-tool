@@ -2,7 +2,7 @@
 ::switch to tv
 ::this is an abstraction of the tv switching function, things that might change realtively often are set in SWITCH_TO_TV.bat
 ::cd to script directory, for administrator needs to run this
-cd /d "%~dp0"
+cd /D "%~dp0"
 
 echo.****CONFIGURING TV MODE AND LAUNCHING FRONTEND*****
 

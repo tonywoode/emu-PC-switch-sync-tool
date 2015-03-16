@@ -1,6 +1,6 @@
 
 ::cd to script directory, for administrator needs to run this
-cd /d "%~dp0" 
+cd /D "%~dp0" 
 
 if "%computername%"=="RIVER" (call ReplaceTextAndLaunchQP.bat RIVER 3840 2160 60)
 if "%computername%"=="TRICKLE" (call ReplaceTextAndLaunchQP.bat TRICKLE 1366 768 60)

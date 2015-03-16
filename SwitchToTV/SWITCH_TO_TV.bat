@@ -1,6 +1,6 @@
 @echo off % SETLOCAL
 ::Only administrator can do some of this, we need to be running from script dir
-cd /d "%~dp0" 
+cd /D "%~dp0" 
 
 :: This is the instantiation of the switch to tv script
 :: To change screen properties edit this file

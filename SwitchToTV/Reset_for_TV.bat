@@ -2,7 +2,7 @@
 ::Change the DPI setting and log out so it can be activated
 
 ::cd to script directory, for administrator needs to run this
-cd /d "%~dp0" 
+cd /D "%~dp0" 
 
 ::now find out if its large or small DPI. Just test the actual desktop value, for if its large
 ::from here: http://stackoverflow.com/questions/9315289/batch-file-if-registry-keys-data-is-equal-to
