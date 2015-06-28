@@ -7,7 +7,7 @@
             <Symlinks>Direct</Symlinks>
         </Comparison>
         <SyncConfig>
-            <Variant>Custom</Variant>
+            <Variant>TwoWay</Variant>
             <CustomDirections>
                 <LeftOnly>right</LeftOnly>
                 <RightOnly>left</RightOnly>
@@ -44,10 +44,6 @@
             <Pair>
                 <Left>\\LAGOON\eXoDOS</Left>
                 <Right>\\River\Games\eXoDOS</Right>
-            </Pair>
-            <Pair>
-                <Left>\\LAGOON\code</Left>
-                <Right>\\River\code</Right>
             </Pair>
             <Pair>
                 <Left>\\LAGOON\Emulators</Left>
