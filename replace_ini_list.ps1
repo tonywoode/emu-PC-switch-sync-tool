@@ -51,6 +51,15 @@ $path2emu = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader
 Foreach-Object { $_ -replace "Screen=.*", "Screen=$SCREEN" } |
 Set-Content $path2emu
 
+#and we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
+IF ($WIDTH -eq '1920' -or $WIDTH -eq '3840') { $FusionString = '56,4,128,7' } #4k or tv
+ ELSEIF ($WIDTH -eq '1280') { $FusionString = '32,3,0,5' } #current laptops 1280x800
+ELSE { $FusionString = '224,1,128,2' } #default to 640x480 if something else happenss
+$path2emu = "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini"
+(Get-Content $path2emu) | 
+Foreach-Object { $_ -replace "DResolution=.*", "DResolution=$FusionString" } |  
+Set-Content $path2emu
+
 #Then the sensible stuff
 
 #BLUE MSX
@@ -124,12 +133,14 @@ $path2emu = "\\$MACHINE\Emulators\PCEngine\Magic Engine\Magic-Engine113\pce.ini"
 Foreach-Object { $_ -replace "screen_width=.*", "screen_width=$WIDTH" } | 
 ForEach-Object { $_ -replace "screen_height=.*", "screen_height=$HEIGHT" } |
 Set-Content $path2emu
+
 #Magic Engine FX
 $path2emu = "\\$MACHINE\Emulators\PCEngine\Magic Engine FX\pcfx.ini"
 (Get-Content $path2emu) | 
 Foreach-Object { $_ -replace "screen_width=.*", "screen_width=$WIDTH" } | 
 ForEach-Object { $_ -replace "screen_height=.*", "screen_height=$HEIGHT" } |
 Set-Content $path2emu
+
 #M2 0.9
 $path2emu = "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_09\emulator.ini"
 (Get-Content $path2emu) | 
