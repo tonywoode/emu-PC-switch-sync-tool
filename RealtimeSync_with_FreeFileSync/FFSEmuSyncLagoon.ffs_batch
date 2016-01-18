@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="4" XmlType="BATCH">
+<FreeFileSync XmlFormat="5" XmlType="BATCH">
     <MainConfig>
         <Comparison>
             <Variant>TimeAndSize</Variant>
-            <TimeShift>0</TimeShift>
             <Symlinks>Direct</Symlinks>
+            <IgnoreTimeShift/>
         </Comparison>
         <SyncConfig>
             <Variant>TwoWay</Variant>

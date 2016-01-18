@@ -1,0 +1,2 @@
+Find your ATI profiles here:
+C:\Users\tony\AppData\Local\ATI\ACE\Profiles
