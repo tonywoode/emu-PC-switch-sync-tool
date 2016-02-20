@@ -44,7 +44,8 @@ UAE_SCREEN
 
 #now that bit is for WinUAELoader is a bit manual. Is Width is 1366 we'll set 14, if 1800 or 1920 we want 19
 IF ($WIDTH -eq "1366") { $SCREEN = 14 }
-ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 } 
+ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
+ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
 ELSE { $SCREEN = 19 }
 $path2emu = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini"
 (Get-Content $path2emu) |
@@ -53,7 +54,7 @@ Set-Content $path2emu
 
 #and we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
 IF ($WIDTH -eq '1920' -or $WIDTH -eq '3840') { $FusionString = '56,4,128,7' } #4k or tv
- ELSEIF ($WIDTH -eq '1280') { $FusionString = '32,3,0,5' } #current laptops 1280x800
+ ELSEIF ($WIDTH -eq '1280' -or $WIDTH -eq '2560') { $FusionString = '32,3,0,5' } #current laptops 1280x800
 ELSE { $FusionString = '224,1,128,2' } #default to 640x480 if something else happenss
 $path2emu = "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini"
 (Get-Content $path2emu) | 
@@ -149,7 +150,7 @@ ForEach-Object { $_ -replace "FullScreenHeight=.*", "FullScreenHeight=$HEIGHT" }
 Set-Content $path2emu
 
 #MEDNAFEN
-$path2emu = "\\$MACHINE\Emulators\Mednafen\mednafen-0.8.B-win32\mednafen.cfg"
+$path2emu = "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg"
 (Get-Content $path2emu) | 
 Foreach-Object { $_ -replace "xres .*", "xres $WIDTH" } | 
 ForEach-Object { $_ -replace "yres .*", "yres $HEIGHT" } | 
