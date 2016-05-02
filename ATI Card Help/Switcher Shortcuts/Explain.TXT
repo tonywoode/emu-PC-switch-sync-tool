@@ -10,3 +10,11 @@ In Dec 2015 AMD deprecated Catalyst Control Centre and launched Radeon settings.
 Now what you can do is make a shortcut to this. Right click on your desktop, or wherever you want this shortcut to be saved and then click on New->Shortcut. Then you need to copy the command above this text and paste it into the location box for your new shortcut, and remember to change the last part to the name of your profile. Once you've done this, click next and choose a name for your shortcut, then click Finish. Now this is a shortcut and can be double-clicked like any other shortcut and it will activate your display profile.
 
 Optionally, you can also add a keyboard shortcut to your new shortcut. If you would like to do this, right-click on your shortcut and choose "Properties", usually at the bottom, and click on the "Shortcut key" box and press your desired keyboard shortcut. You can now click OK and this shortcut will be activated every time you press your chosen shortcut."
+
+---------------------------
+Remember the qp shortcut has to run through a scheduled task and its the shortcut to the scheduled task that you shortcut to!
+----------------------------
+But NOTE THIS:
+https://support.microsoft.com/en-us/kb/134552
+
+These shortcuts have to be in this path: "Make sure that the shortcuts for which you want to use shortcut keys are on the desktop, on the Start menu, or in the Windows\Start Menu\Programs folder." Well I tried verious things and it seems only having the shortcuts on the desktop worked, which copies a shortcut rather thank links to a shortcut, and you have to seem to setup the shortcut again (and use a different key combo)

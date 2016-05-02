@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FreeFileSync XmlFormat="5" XmlType="GUI">
+    <MainConfig>
+        <Comparison>
+            <Variant>TimeAndSize</Variant>
+            <Symlinks>Direct</Symlinks>
+            <IgnoreTimeShift/>
+        </Comparison>
+        <SyncConfig>
+            <Variant>TwoWay</Variant>
+            <CustomDirections>
+                <LeftOnly>right</LeftOnly>
+                <RightOnly>left</RightOnly>
+                <LeftNewer>right</LeftNewer>
+                <RightNewer>left</RightNewer>
+                <Different>none</Different>
+                <Conflict>right</Conflict>
+            </CustomDirections>
+            <DetectMovedFiles>false</DetectMovedFiles>
+            <DeletionPolicy>Versioning</DeletionPolicy>
+            <VersioningFolder Style="TimeStamp">E:\FFS\FFSArchive</VersioningFolder>
+        </SyncConfig>
+        <GlobalFilter>
+            <Include>
+                <Item>*</Item>
+            </Include>
+            <Exclude>
+                <Item>\System Volume Information\</Item>
+                <Item>\$Recycle.Bin\</Item>
+                <Item>\RECYCLER\</Item>
+                <Item>\RECYCLED\</Item>
+                <Item>*\desktop.ini</Item>
+                <Item>*\thumbs.db</Item>
+            </Exclude>
+            <TimeSpan Type="None">0</TimeSpan>
+            <SizeMin Unit="None">0</SizeMin>
+            <SizeMax Unit="None">0</SizeMax>
+        </GlobalFilter>
+        <FolderPairs>
+            <Pair>
+                <Left>\\RIVER\Users\Tony\Saved Games</Left>
+                <Right>\\POND\Users\Tony\Saved Games</Right>
+            </Pair>
+            <Pair>
+                <Left>\\RIVER\Users\tony\Documents</Left>
+                <Right>\\POND\Users\Tony\Documents</Right>
+            </Pair>
+            <Pair>
+                <Left>\\RIVER\Emulators</Left>
+                <Right>\\POND\Emulators</Right>
+            </Pair>
+        </FolderPairs>
+        <OnCompletion>Close progress dialog</OnCompletion>
+    </MainConfig>
+    <GuiConfig>
+        <HandleError>Popup</HandleError>
+        <MiddleGridView>Action</MiddleGridView>
+    </GuiConfig>
+</FreeFileSync>
