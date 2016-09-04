@@ -67,6 +67,36 @@ $path2emu = "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini"
 Foreach-Object { $_ -replace "DResolution=.*", "DResolution=$FusionString" } |  
 Set-Content $path2emu
 
+
+# And for Zinc it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples
+# note tv and 4k monitor will get the SAME multiple
+IF ($WIDTH -eq '2560' ) { 
+	$FIXED_WIDTH='1280' 
+	$FIXED_HEIGHT='800' 
+	}
+  ELSE { 
+	$FIXED_WIDTH='1024' 
+	$FIXED_HEIGHT='768' 
+	}
+
+#ZINC - all files in dir
+Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
+    Foreach-Object {
+        $c = ($_ | Get-Content) 
+        $c = $c -replace "XSize=.*", "XSize=$FIXED_WIDTH"
+		$c = $c -replace "YSize=.*", "YSize=$FIXED_HEIGHT"
+        [IO.File]::WriteAllText($_.FullName, ($c -join "`r`n"))
+		}
+
+#ZINC - renderer.cfg
+$path2emu = "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg"
+(Get-Content $path2emu) | 
+ForEach-Object { $_ -replace "XSize			= .*", "XSize			= $FIXED_WIDTH" } | 
+Foreach-Object { $_ -replace "YSize			= .*", "YSize			= $FIXED_HEIGHT" } | 
+Set-Content $path2emu
+
+
+
 #Then the sensible stuff
 
 #BLUE MSX
@@ -219,22 +249,6 @@ ForEach-Object { $_ -replace "FullScreenWidth=.*", "FullScreenWidth=$WIDTH" } |
 ForEach-Object { $_ -replace "FullScreenHeight=.*", "FullScreenHeight=$HEIGHT" } | 
 ForEach-Object { $_ -replace "FullScreenWidthNeoGeo=.*", "FullScreenWidthNeoGeo=$WIDTH" } | 
 ForEach-Object { $_ -replace "FullScreenHeightNeoGeo=.*", "FullScreenHeightNeoGeo=$HEIGHT" } | 
-Set-Content $path2emu
-
-#ZINC - all files in dir
-Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
-    Foreach-Object {
-        $c = ($_ | Get-Content) 
-        $c = $c -replace "XSize=.*", "XSize=$WIDTH"
-		$c = $c -replace "YSize=.*", "YSize=$HEIGHT"
-        [IO.File]::WriteAllText($_.FullName, ($c -join "`r`n"))
-		}
-
-#ZINC - renderer.cfg
-$path2emu = "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg"
-(Get-Content $path2emu) | 
-ForEach-Object { $_ -replace "XSize			= .*", "XSize			= $WIDTH" } | 
-Foreach-Object { $_ -replace "YSize			= .*", "YSize			= $HEIGHT" } | 
 Set-Content $path2emu
 
 #ZSnesW
