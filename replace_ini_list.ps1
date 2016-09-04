@@ -21,28 +21,34 @@ ForEach-Object { $_ -replace "gfx_refreshrate=.*", "gfx_refreshrate=$REFRESH" } 
 Set-Content $path2emu
 }
 
-#And let's do each one in term using the function
-#UAE - default
-$path2emu = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
+# I think the only valid one that needs changing now is the cd32 config in winuaeloader's directory
+#UAE - CD32 with PAD
+$path2emu = "\\$MACHINE\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
 UAE_SCREEN
+
+#And let's do each one in term using the function
+#UAE - default - the section here is probably useless as the UAE registry entry changes the config 
+#directory permanently to WinUAELoader's config directory, so any .uae not in there isn't even visible to winUAE
+#$path2emu = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
+#UAE_SCREEN
 
 #UAE - CD32 with PAD
-$path2emu = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
-UAE_SCREEN
+#$path2emu = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
+#UAE_SCREEN
 
 #Gamebase Amiga - Gamebase Amiga
-$path2emu = "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
-UAE_SCREEN
+#$path2emu = "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
+#UAE_SCREEN
 
 #Gamebase Amiga - whdload
-$path2emu = "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\WHDLoad.uae"
-UAE_SCREEN
+#$path2emu = "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\WHDLoad.uae"
+#UAE_SCREEN
 
 #DEMObase Amiga - Gamebase Amiga
-$path2emu = "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
-UAE_SCREEN
+#$path2emu = "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
+#UAE_SCREEN
 
-#now that bit is for WinUAELoader is a bit manual. Is Width is 1366 we'll set 14, if 1800 or 1920 we want 19
+#now that bit is for WinUAELoader is a bit manual. Is Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
 IF ($WIDTH -eq "1366") { $SCREEN = 14 }
 ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
 ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
