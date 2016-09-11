@@ -28,6 +28,7 @@ powershell -file .\switch_to_tv_list.ps1 14
 @FOR /F "tokens=*" %%i IN ('To_Hex.bat %TV_WIDTH%') DO set HEX_WIDTH=%%i
 @FOR /F "tokens=*" %%j IN ('To_Hex.bat %TV_HEIGHT%') DO set HEX_HEIGHT=%%j
 
+
 ::set the Monitors resolution in the registry for EPSXE - Pete's D3D driver
 reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
 reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
@@ -55,6 +56,11 @@ powershell -file .\switch_to_tv_list.ps1 8
 @FOR /F "tokens=*" %%k IN ('To_Hex.bat %MON_WIDTH%') DO set HEX_WIDTH=%%k
 @FOR /F "tokens=*" %%l IN ('To_Hex.bat %MON_HEIGHT%') DO set HEX_HEIGHT=%%l
 
+::Sadly Pete's D3D driver can't cope with 4k res, so we need to add a manual exception for 3840x2160
+:: TODO: I tried going to the OPENGL2 driver but it hated display scaling - maybe when launched by quickplay it would work fine though
+::The highest we seem to be able to get is 1920x1440 (the registry shows you the hex of these - just set it in epsxe and look)
+if (%HEX_WIDTH%)==(0x00000F00) do set HEX_WIDTH=0x00000780
+if (%HEX_WIDTH%)==(0x00000870) do set HEX_WIDTH=0x000005a0
 
 reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
 reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
