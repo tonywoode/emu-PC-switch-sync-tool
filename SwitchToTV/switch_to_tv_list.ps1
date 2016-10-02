@@ -6,4 +6,3 @@ $path2emu = "P:\QUICKPLAY\QuickPlayFrontend\qp\dats\settings.ini"
 (Get-Content $path2emu) | 
 Foreach-Object { $_ -replace "FontSize=.*", "FontSize=$SIZE" } | 
 Set-Content $path2emu
-

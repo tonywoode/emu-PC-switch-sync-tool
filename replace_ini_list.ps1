@@ -23,7 +23,7 @@ Set-Content $path2emu
 
 # I think the only valid one that needs changing now is the cd32 config in winuaeloader's directory
 #UAE - CD32 with PAD
-$path2emu = "\\$MACHINE\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
+$path2emu = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
 UAE_SCREEN
 
 #And let's do each one in term using the function

@@ -1,4 +1,4 @@
-@echo off & SETLOCAL
+SETLOCAL
 ::switch to tv
 ::this is an abstraction of the tv switching function, things that might change realtively often are set in SWITCH_TO_TV.bat
 ::cd to script directory, for administrator needs to run this
@@ -17,7 +17,7 @@ SET MON_REFRESH=%7
 
 powershell -file .\..\replace_ini_list.ps1 %MACHINE% %TV_WIDTH% %TV_HEIGHT% %TV_REFRESH%
 
-::change font size
+::do tv specific stuff
 powershell -file .\switch_to_tv_list.ps1 14
 
 :now we will set the resolution 1920x1080 in the registry for EPSXE - Pete's D3D driver
@@ -50,7 +50,7 @@ echo.****EXITING TV MODE*****
 
 powershell -file .\..\replace_ini_list.ps1 %MACHINE% %MON_WIDTH% %MON_HEIGHT% %MON_REFRESH%
 
-::change font size back to normal
+::undo tv-specific stuff
 powershell -file .\switch_to_tv_list.ps1 8
 
 @FOR /F "tokens=*" %%k IN ('To_Hex.bat %MON_WIDTH%') DO set HEX_WIDTH=%%k
