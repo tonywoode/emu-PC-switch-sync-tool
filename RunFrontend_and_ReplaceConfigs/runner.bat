@@ -9,8 +9,11 @@ if "%computername%"=="POND"  (call ReplaceTextAndLaunchQP.bat POND 2560 1600 60)
 
 ::my Emulators and frontend all live on Drive P (subst), so if we aren't on that drive, we won't be able to CD
 if not ("%~d0")==("P:") (P:)
-::now run my frontend 
-P:\QUICKPLAY\QuickPlayFrontend\qp\QP.exe
+dir
+::now run my frontend
+::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
+cd P:\QUICKPLAY\QUickPlayFrontend\qp 
+QP.exe
 ::export the gamebase reg before we close
 REG EXPORT HKEY_CURRENT_USER\Software\GB64 "P:\GAMEBASE\Gamebase.reg" /y
 
