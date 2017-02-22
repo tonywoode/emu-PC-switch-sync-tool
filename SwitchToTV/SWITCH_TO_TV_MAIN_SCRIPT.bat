@@ -40,6 +40,9 @@ reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /
 ::taskkill /IM "JoyToKey.exe" /F
 start /D "P:\JoytoKey\" JoyToKey.exe
 
+::try and ensure the tv gets the audio to the tv
+"O:\Scripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\TV_SAMSUNG.lnk"
+
 ::launch our frontend
 "P:\QUICKPLAY\QuickPlayFrontend\qp\QP.exe" /HTPC /MAXIMISE
 
@@ -68,5 +71,8 @@ reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResY /t REG_DWORD 
 ::and set EPSXE's dual shock back to the keyboard (or those keys that we can anyway)
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 203,205,200,208,17,32,31,30,16,15,18,19,28,42,36,38 /f
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /d 0,0,0,0,0,0,0,0 /f
+
+::try and ensure the pc gets the audio to the speakers
+"O:\Scripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\Speakers.lnk"
 
 exit
