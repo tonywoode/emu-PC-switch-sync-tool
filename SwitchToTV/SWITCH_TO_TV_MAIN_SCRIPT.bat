@@ -44,7 +44,9 @@ start /D "P:\JoytoKey\" JoyToKey.exe
 "O:\Scripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\TV_SAMSUNG.lnk"
 
 ::launch our frontend
-"P:\QUICKPLAY\QuickPlayFrontend\qp\QP.exe" /HTPC /MAXIMISE
+::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
+cd /D P:\QUICKPLAY\QUickPlayFrontend\qp 
+QP.exe /HTPC /MAXIMISE
 
 ::then when we go back, we do it the other way round
 echo.****EXITING TV MODE*****
