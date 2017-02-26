@@ -12,7 +12,7 @@ if not ("%~d0")==("P:") (P:)
 dir
 ::now run my frontend
 ::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
-cd P:\QUICKPLAY\QUickPlayFrontend\qp 
+cd /D P:\QUICKPLAY\QUickPlayFrontend\qp 
 QP.exe
 ::export the gamebase reg before we close
 REG EXPORT HKEY_CURRENT_USER\Software\GB64 "P:\GAMEBASE\Gamebase.reg" /y
