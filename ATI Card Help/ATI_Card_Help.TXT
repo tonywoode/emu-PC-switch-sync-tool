@@ -1,2 +1,5 @@
 Find your ATI profiles here:
 C:\Users\tony\AppData\Local\ATI\ACE\Profiles
+
+How to access Radeon Additonal Settings in June 17
+AMD tried once more to hide the old profiles and the way i got them to still display was that I found the other use they old ui code still has is for Eyefinity so the Eyefinity tab in the new UI has an 'advanced Setup' menu which opens it. But it has only Eyefinity settings. However, if you tick the pin for 'show in desktop context menu', you can then right click on the desktop and the advanced menu opens WITH the tree view menu on the left for both Presets and Eyefinity.
