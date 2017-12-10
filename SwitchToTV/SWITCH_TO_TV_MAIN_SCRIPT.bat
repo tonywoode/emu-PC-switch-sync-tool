@@ -45,13 +45,13 @@ start /D "P:\JoytoKey\" JoyToKey.exe
 
 ::launch our frontend
 ::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
-cd /D P:\QUICKPLAY\QUickPlayFrontend\qp 
+pushd P:\QUICKPLAY\QUickPlayFrontend\qp 
 QP.exe /HTPC /MAXIMISE
 
 ::then when we go back, we do it the other way round
 echo.****EXITING TV MODE*****
-::go back to O drive where my code is kept (TODO: should use pushd and popd)
-::if not ("%~d0")==("O:") (O:)
+::go back to O drive where my code is kept
+popd
 
 powershell -file .\..\replace_ini_list.ps1 %MACHINE% %MON_WIDTH% %MON_HEIGHT% %MON_REFRESH%
 
