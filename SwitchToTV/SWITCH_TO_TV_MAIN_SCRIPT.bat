@@ -41,7 +41,7 @@ reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /
 start /D "P:\JoytoKey\" JoyToKey.exe
 
 ::try and ensure the tv gets the audio to the tv
-"O:\Scripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\TV_SAMSUNG.lnk"
+"P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\TV_SAMSUNG.lnk"
 
 ::launch our frontend
 ::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
@@ -75,6 +75,6 @@ reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 203,205,20
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /d 0,0,0,0,0,0,0,0 /f
 
 ::try and ensure the pc gets the audio to the speakers
-"O:\Scripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\Speakers.lnk"
+"P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\Speakers.lnk"
 
 exit
