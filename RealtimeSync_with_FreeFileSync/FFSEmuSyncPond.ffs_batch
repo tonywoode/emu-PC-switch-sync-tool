@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="5" XmlType="BATCH">
+<FreeFileSync XmlFormat="8" XmlType="BATCH">
     <MainConfig>
         <Comparison>
             <Variant>TimeAndSize</Variant>
@@ -8,14 +8,6 @@
         </Comparison>
         <SyncConfig>
             <Variant>TwoWay</Variant>
-            <CustomDirections>
-                <LeftOnly>right</LeftOnly>
-                <RightOnly>left</RightOnly>
-                <LeftNewer>right</LeftNewer>
-                <RightNewer>left</RightNewer>
-                <Different>none</Different>
-                <Conflict>right</Conflict>
-            </CustomDirections>
             <DetectMovedFiles>false</DetectMovedFiles>
             <DeletionPolicy>Versioning</DeletionPolicy>
             <VersioningFolder Style="TimeStamp">E:\FFS\FFSArchive</VersioningFolder>
@@ -53,10 +45,12 @@
                 <Right>\\POND\Emulators</Right>
             </Pair>
         </FolderPairs>
-        <OnCompletion>Close progress dialog</OnCompletion>
+        <IgnoreErrors>false</IgnoreErrors>
+        <PostSyncCommand Condition="Completion"/>
     </MainConfig>
     <BatchConfig>
-        <HandleError>Popup</HandleError>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>Exit</PostSyncAction>
         <RunMinimized>false</RunMinimized>
         <LogfileFolder Limit="-1">E:\FFS\FFSLog</LogfileFolder>
     </BatchConfig>
