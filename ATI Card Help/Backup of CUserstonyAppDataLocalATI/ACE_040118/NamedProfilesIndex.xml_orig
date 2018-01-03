@@ -1,0 +1,227 @@
+<ArrayOfNamedProfileDescriptor>
+  <NamedProfileDescriptor>
+    <HotkeyBindingEnabled>True</HotkeyBindingEnabled>
+    <ApplicationLaunch>True</ApplicationLaunch>
+    <Name>DPI_LOGOUT_BUT_DONT_SWITCH</Name>
+    <Application>P:\WinScripts\\Emulator_PC_Switcher_Sync_Tool\Reset_for_TV.lnk</Application>
+    <AppearesInSystemTray>True</AppearesInSystemTray>
+    <ShowWarningWhenApplied>False</ShowWarningWhenApplied>
+    <AppearesInJumplist>True</AppearesInJumplist>
+    <ModifiedByUser>True</ModifiedByUser>
+    <HasDesktopShortcut>True</HasDesktopShortcut>
+    <AppearesInProfilesMenu>True</AppearesInProfilesMenu>
+    <Key>D4</Key>
+    <Modifiers>MOD_ALT, MOD_CONTROL</Modifiers>
+    <Composition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Graphics</CasteName>
+        <AdapterName>PCI_VEN_1002&amp;DEV_6818&amp;SUBSYS_32511682&amp;REV_00_4&amp;18A5F3E3&amp;0&amp;0018A</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects />
+      </NamedProfileAdapterComposition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Platform</CasteName>
+        <AdapterName>PlatformAdapterUDID</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects />
+      </NamedProfileAdapterComposition>
+    </Composition>
+  </NamedProfileDescriptor>
+  <NamedProfileDescriptor>
+    <HotkeyBindingEnabled>False</HotkeyBindingEnabled>
+    <ApplicationLaunch>True</ApplicationLaunch>
+    <Name>QP On TV Mode</Name>
+    <Description>Same as tv mode but launch qp tv mode bat</Description>
+    <Application>P:\WinScripts\\Emulator_PC_Switcher_Sync_Tool\Switch To TV.lnk</Application>
+    <AppearesInSystemTray>True</AppearesInSystemTray>
+    <ShowWarningWhenApplied>False</ShowWarningWhenApplied>
+    <AppearesInJumplist>True</AppearesInJumplist>
+    <ModifiedByUser>True</ModifiedByUser>
+    <HasDesktopShortcut>True</HasDesktopShortcut>
+    <AppearesInProfilesMenu>True</AppearesInProfilesMenu>
+    <Key>D3</Key>
+    <Modifiers>MOD_ALT, MOD_CONTROL</Modifiers>
+    <Composition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Graphics</CasteName>
+        <AdapterName>PCI_VEN_1002&amp;DEV_6818&amp;SUBSYS_32511682&amp;REV_00_4&amp;18A5F3E3&amp;0&amp;0018A</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>DisplaysManager</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Platform</CasteName>
+        <AdapterName>PlatformAdapterUDID</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>DisplaysManager</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+    </Composition>
+  </NamedProfileDescriptor>
+  <NamedProfileDescriptor>
+    <HotkeyBindingEnabled>False</HotkeyBindingEnabled>
+    <ApplicationLaunch>False</ApplicationLaunch>
+    <Name>Stable Overclock of 7870</Name>
+    <Description>6% power, 1100mhz GPU, 1300Mhz memory</Description>
+    <AppearesInSystemTray>True</AppearesInSystemTray>
+    <ShowWarningWhenApplied>False</ShowWarningWhenApplied>
+    <AppearesInJumplist>True</AppearesInJumplist>
+    <ModifiedByUser>True</ModifiedByUser>
+    <HasDesktopShortcut>True</HasDesktopShortcut>
+    <AppearesInProfilesMenu>True</AppearesInProfilesMenu>
+    <Key>None</Key>
+    <Modifiers />
+    <Composition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Graphics</CasteName>
+        <AdapterName>PCI_VEN_1002&amp;DEV_6818&amp;SUBSYS_32511682&amp;REV_00_4&amp;18A5F3E3&amp;0&amp;0018A</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>Overdrive5</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Platform</CasteName>
+        <AdapterName>PlatformAdapterUDID</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects />
+      </NamedProfileAdapterComposition>
+    </Composition>
+  </NamedProfileDescriptor>
+  <NamedProfileDescriptor>
+    <HotkeyBindingEnabled>False</HotkeyBindingEnabled>
+    <ApplicationLaunch>False</ApplicationLaunch>
+    <Name>overclock</Name>
+    <Description>6%, 1165Mhz, 1300Mhzclock</Description>
+    <AppearesInSystemTray>True</AppearesInSystemTray>
+    <ShowWarningWhenApplied>False</ShowWarningWhenApplied>
+    <AppearesInJumplist>True</AppearesInJumplist>
+    <ModifiedByUser>True</ModifiedByUser>
+    <HasDesktopShortcut>True</HasDesktopShortcut>
+    <AppearesInProfilesMenu>True</AppearesInProfilesMenu>
+    <Key>None</Key>
+    <Modifiers />
+    <Composition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Graphics</CasteName>
+        <AdapterName>PCI_VEN_1002&amp;DEV_6818&amp;SUBSYS_32511682&amp;REV_00_4&amp;18A5F3E3&amp;0&amp;0018A</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>Overdrive5</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Platform</CasteName>
+        <AdapterName>PlatformAdapterUDID</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects />
+      </NamedProfileAdapterComposition>
+    </Composition>
+  </NamedProfileDescriptor>
+  <NamedProfileDescriptor>
+    <HotkeyBindingEnabled>True</HotkeyBindingEnabled>
+    <ApplicationLaunch>False</ApplicationLaunch>
+    <Name>PC</Name>
+    <AppearesInSystemTray>True</AppearesInSystemTray>
+    <ShowWarningWhenApplied>False</ShowWarningWhenApplied>
+    <AppearesInJumplist>True</AppearesInJumplist>
+    <ModifiedByUser>True</ModifiedByUser>
+    <HasDesktopShortcut>True</HasDesktopShortcut>
+    <AppearesInProfilesMenu>True</AppearesInProfilesMenu>
+    <Key>D1</Key>
+    <Modifiers>MOD_ALT, MOD_CONTROL</Modifiers>
+    <Composition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Graphics</CasteName>
+        <AdapterName>PCI_VEN_1002&amp;DEV_6818&amp;SUBSYS_32511682&amp;REV_00_4&amp;18A5F3E3&amp;0&amp;0018A</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>DisplaysManager</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Platform</CasteName>
+        <AdapterName>PlatformAdapterUDID</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>DisplaysManager</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+    </Composition>
+  </NamedProfileDescriptor>
+  <NamedProfileDescriptor>
+    <HotkeyBindingEnabled>True</HotkeyBindingEnabled>
+    <ApplicationLaunch>False</ApplicationLaunch>
+    <Name>TV</Name>
+    <AppearesInSystemTray>True</AppearesInSystemTray>
+    <ShowWarningWhenApplied>False</ShowWarningWhenApplied>
+    <AppearesInJumplist>True</AppearesInJumplist>
+    <ModifiedByUser>True</ModifiedByUser>
+    <HasDesktopShortcut>True</HasDesktopShortcut>
+    <AppearesInProfilesMenu>True</AppearesInProfilesMenu>
+    <Key>D2</Key>
+    <Modifiers>MOD_ALT, MOD_CONTROL</Modifiers>
+    <Composition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Graphics</CasteName>
+        <AdapterName>PCI_VEN_1002&amp;DEV_6818&amp;SUBSYS_32511682&amp;REV_00_4&amp;18A5F3E3&amp;0&amp;0018A</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>DisplaysManager</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Platform</CasteName>
+        <AdapterName>PlatformAdapterUDID</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects>
+          <string>DisplaysManager</string>
+        </Aspects>
+      </NamedProfileAdapterComposition>
+    </Composition>
+  </NamedProfileDescriptor>
+  <NamedProfileDescriptor>
+    <HotkeyBindingEnabled>True</HotkeyBindingEnabled>
+    <ApplicationLaunch>True</ApplicationLaunch>
+    <Name>QP ON TV</Name>
+    <Application>P:\Emulator_PC_Switcher_Sync_Tool\Switch To TV.lnk</Application>
+    <AppearesInSystemTray>True</AppearesInSystemTray>
+    <ShowWarningWhenApplied>False</ShowWarningWhenApplied>
+    <AppearesInJumplist>True</AppearesInJumplist>
+    <ModifiedByUser>True</ModifiedByUser>
+    <HasDesktopShortcut>True</HasDesktopShortcut>
+    <AppearesInProfilesMenu>True</AppearesInProfilesMenu>
+    <Key>D3</Key>
+    <Modifiers>MOD_ALT, MOD_CONTROL</Modifiers>
+    <Composition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Graphics</CasteName>
+        <AdapterName>PCI_VEN_1002&amp;DEV_6818&amp;SUBSYS_32511682&amp;REV_00_4&amp;18A5F3E3&amp;0&amp;0018A</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects />
+      </NamedProfileAdapterComposition>
+      <NamedProfileAdapterComposition>
+        <CasteName>Platform</CasteName>
+        <AdapterName>PlatformAdapterUDID</AdapterName>
+        <FriendlyName>
+        </FriendlyName>
+        <Aspects />
+      </NamedProfileAdapterComposition>
+    </Composition>
+  </NamedProfileDescriptor>
+</ArrayOfNamedProfileDescriptor>
