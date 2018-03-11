@@ -37,7 +37,9 @@ reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 515,513,51
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /d 1,0,0,0,0,0,0,0 /f
 
 ::may need to start joytokey as administrator too...
+::why did i comment this out and why is it above the runner for itself
 ::taskkill /IM "JoyToKey.exe" /F
+:: we now do this in frontend loader so may not be necessary anymore
 start /D "P:\JoytoKey\" JoyToKey.exe
 
 ::try and ensure the tv gets the audio to the tv
