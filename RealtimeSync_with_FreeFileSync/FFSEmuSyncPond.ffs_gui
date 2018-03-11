@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="5" XmlType="GUI">
+<FreeFileSync XmlFormat="8" XmlType="GUI">
     <MainConfig>
         <Comparison>
             <Variant>TimeAndSize</Variant>
@@ -8,14 +8,6 @@
         </Comparison>
         <SyncConfig>
             <Variant>TwoWay</Variant>
-            <CustomDirections>
-                <LeftOnly>right</LeftOnly>
-                <RightOnly>left</RightOnly>
-                <LeftNewer>right</LeftNewer>
-                <RightNewer>left</RightNewer>
-                <Different>none</Different>
-                <Conflict>right</Conflict>
-            </CustomDirections>
             <DetectMovedFiles>false</DetectMovedFiles>
             <DeletionPolicy>Versioning</DeletionPolicy>
             <VersioningFolder Style="TimeStamp">E:\FFS\FFSArchive</VersioningFolder>
@@ -31,6 +23,10 @@
                 <Item>\RECYCLED\</Item>
                 <Item>*\desktop.ini</Item>
                 <Item>*\thumbs.db</Item>
+                <Item>\My Music\</Item>
+                <Item>\My Pictures\</Item>
+                <Item>\My Videos\</Item>
+                <Item/>
             </Exclude>
             <TimeSpan Type="None">0</TimeSpan>
             <SizeMin Unit="None">0</SizeMin>
@@ -50,10 +46,10 @@
                 <Right>\\POND\Emulators</Right>
             </Pair>
         </FolderPairs>
-        <OnCompletion>Close progress dialog</OnCompletion>
+        <IgnoreErrors>false</IgnoreErrors>
+        <PostSyncCommand Condition="Completion"/>
     </MainConfig>
     <GuiConfig>
-        <HandleError>Popup</HandleError>
         <MiddleGridView>Action</MiddleGridView>
     </GuiConfig>
 </FreeFileSync>

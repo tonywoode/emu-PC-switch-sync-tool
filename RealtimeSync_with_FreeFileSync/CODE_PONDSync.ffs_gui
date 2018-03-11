@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="5" XmlType="GUI">
+<FreeFileSync XmlFormat="8" XmlType="GUI">
     <MainConfig>
         <Comparison>
             <Variant>TimeAndSize</Variant>
@@ -8,14 +8,6 @@
         </Comparison>
         <SyncConfig>
             <Variant>TwoWay</Variant>
-            <CustomDirections>
-                <LeftOnly>right</LeftOnly>
-                <RightOnly>left</RightOnly>
-                <LeftNewer>right</LeftNewer>
-                <RightNewer>left</RightNewer>
-                <Different>none</Different>
-                <Conflict>none</Conflict>
-            </CustomDirections>
             <DetectMovedFiles>false</DetectMovedFiles>
             <DeletionPolicy>RecycleBin</DeletionPolicy>
             <VersioningFolder Style="Replace"/>
@@ -42,10 +34,10 @@
                 <Right>/Volumes/CODE</Right>
             </Pair>
         </FolderPairs>
-        <OnCompletion/>
+        <IgnoreErrors>false</IgnoreErrors>
+        <PostSyncCommand Condition="Completion"/>
     </MainConfig>
     <GuiConfig>
-        <HandleError>Popup</HandleError>
         <MiddleGridView>Action</MiddleGridView>
     </GuiConfig>
 </FreeFileSync>
