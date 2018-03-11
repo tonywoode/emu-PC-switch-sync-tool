@@ -10,11 +10,19 @@ if "%computername%"=="POND"  (call ReplaceTextAndLaunchQP.bat POND 2560 1600 60)
 ::my Emulators and frontend all live on Drive P (subst), so if we aren't on that drive, we won't be able to CD
 if not ("%~d0")==("P:") (P:)
 dir
+
+::joy2key does my mappings for player1 in many emulators, consider that there's many emulators that won't
+:: let you map both a keyboard and joypad at the same time
+start /D "P:\JoytoKey\" JoyToKey.exe
+
 ::now run my frontend
 ::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
 cd /D P:\QUICKPLAY\QUickPlayFrontend\qp 
 QP.exe
 ::export the gamebase reg before we close
 REG EXPORT HKEY_CURRENT_USER\Software\GB64 "P:\GAMEBASE\Gamebase.reg" /y
+
+::kill joy2key as it can have unwanted side effects
+taskkill /IM "JoyToKey.exe" /F
 
 
