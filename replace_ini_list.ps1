@@ -185,6 +185,13 @@ Foreach-Object { $_ -replace "FullScreenWidth=.*", "FullScreenWidth=$WIDTH" } |
 ForEach-Object { $_ -replace "FullScreenHeight=.*", "FullScreenHeight=$HEIGHT" } | 
 Set-Content $path2emu
 
+#MEDNAFEN v09 config
+$path2emu = "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg"
+(Get-Content $path2emu) | 
+Foreach-Object { $_ -replace "xres .*", "xres $WIDTH" } | 
+ForEach-Object { $_ -replace "yres .*", "yres $HEIGHT" } | 
+Set-Content $path2emu
+
 #MEDNAFEN
 $path2emu = "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg"
 (Get-Content $path2emu) | 
