@@ -66,6 +66,8 @@ powershell -file .\switch_to_tv_list.ps1 8
 ::Sadly Pete's D3D driver can't cope with 4k res, so we need to add a manual exception for 3840x2160
 :: TODO: I tried going to the OPENGL2 driver but it hated display scaling - maybe when launched by quickplay it would work fine though
 ::The highest we seem to be able to get is 1920x1440 (the registry shows you the hex of these - just set it in epsxe and look)
+:: Later, I found on POND (2650x1600) that I needed to untick 'use window size in fullscreen mode (fullscreen hack)' that i'd previously ticked
+::  otherwise i got pillarboxed to a tiny window. this may need setting back so this process can work for RIVER however
 if (%HEX_WIDTH%)==(0x00000F00) do set HEX_WIDTH=0x00000780
 if (%HEX_WIDTH%)==(0x00000870) do set HEX_WIDTH=0x000005a0
 
