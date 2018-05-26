@@ -194,10 +194,12 @@ Set-Content $path2emu
 
 #MEDNAFEN
 $path2emu = "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg"
-(Get-Content $path2emu) | 
-Foreach-Object { $_ -replace "xres .*", "xres $WIDTH" } | 
-ForEach-Object { $_ -replace "yres .*", "yres $HEIGHT" } | 
-Set-Content $path2emu
+if (Test-Path $path2emu) {
+  (Get-Content $path2emu) | 
+  Foreach-Object { $_ -replace "xres .*", "xres $WIDTH" } | 
+  ForEach-Object { $_ -replace "yres .*", "yres $HEIGHT" } | 
+  Set-Content $path2emu
+}
 
 #NESTOPIA
 $path2emu = "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml"
