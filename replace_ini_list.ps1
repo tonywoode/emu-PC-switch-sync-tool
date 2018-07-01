@@ -101,6 +101,22 @@ Foreach-Object { $_ -replace "UserHacks_unscale_point_line=.*", "UserHacks_unsca
 Foreach-Object { $_ -replace "wrap_gs_mem=.*", "wrap_gs_mem=$wrap_gs_mem" } | 
 Set-Content $path2conf
 
+# now similar for dolphin on retroarch
+$path2conf = "\\$MACHINE\Emulators\Retroarch\RetroArch\retroarch-core-options.cfg"
+switch ($MACHINE) {
+  "RIVER" {
+    $dolphin_internal_resolution = "6x (3840x3168)"
+    break
+  }
+  default {
+    $dolphin_internal_resolution = "1.5x (960x792)"
+    break
+  }
+}
+(Get-Content $path2conf) | 
+Foreach-Object { $_ -replace "dolphin_internal_resolution = .*", "dolphin_internal_resolution = $dolphin_internal_resolution" } | 
+Set-Content $path2conf
+
 # And for Zinc it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples
 # note tv and 4k monitor will get the SAME multiple
 IF ($WIDTH -eq '2560' ) { 
