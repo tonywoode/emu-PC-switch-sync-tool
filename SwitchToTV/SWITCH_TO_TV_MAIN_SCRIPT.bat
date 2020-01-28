@@ -42,9 +42,6 @@ reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /
 :: we now do this in frontend loader so may not be necessary anymore
 start /D "P:\JoytoKey\" JoyToKey.exe
 
-::try and ensure the tv gets the audio to the tv
-"P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\TV_POLAROID.lnk"
-
 ::launch our frontend
 ::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
 pushd P:\QUICKPLAY\QUickPlayFrontend\qp 
@@ -77,8 +74,5 @@ reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResY /t REG_DWORD 
 ::and set EPSXE's dual shock back to the keyboard (or those keys that we can anyway)
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 203,205,200,208,17,32,31,30,16,15,18,19,28,42,36,38 /f
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /d 0,0,0,0,0,0,0,0 /f
-
-::try and ensure the pc gets the audio to the speakers
-"P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\SwitchToTV\nircmd_sound_shortcuts\Speakers.lnk"
 
 exit
