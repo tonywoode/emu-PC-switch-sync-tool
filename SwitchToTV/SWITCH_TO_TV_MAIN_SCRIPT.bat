@@ -39,7 +39,7 @@ reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /
 ::may need to start joytokey as administrator too...
 ::why did i comment this out and why is it above the runner for itself
 ::taskkill /IM "JoyToKey.exe" /F
-:: we now do this in frontend loader so may not be necessary anymore
+:: just like in runner.bat in quickplay launcher, we must start JoyToKey up for some emus
 start /D "P:\JoytoKey\" JoyToKey.exe
 
 ::launch our frontend
@@ -49,6 +49,11 @@ QP.exe /HTPC /MAXIMISE
 
 ::then when we go back, we do it the other way round
 echo.****EXITING TV MODE*****
+
+::stop joyToKey, just like I do in the runner.bat of my QP launcher script, as it can have unwanted side effects
+:: (keep in mind that, running qp up again will reinstantiate joy2key)
+taskkill /IM "JoyToKey.exe" /F
+
 ::go back to O drive where my code is kept
 popd
 

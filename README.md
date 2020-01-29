@@ -37,6 +37,15 @@ Registry export from an external machine is frowned upon. So we must run export 
 
 History
 =======
+
+1.05 (git tagged as such) 
+	* added all-new scripts for monitor and audio switching, and modded switch_to_TV script, to remake and enhance (now using MonitorProfileSwitcher)
+	* removed the following 
+	  * AMD Switching scripts (AMD removed the functionality entirely)
+	  * ChangeWin_DPI scripts and associated 'Reset_for_TV' script (you always needed to log out and in again for this to take effect, so effectively useless)
+	  * the symlinks in the root here for 'Switch_for_TV' and 'Reset_for_Tv' - we no longer script something that runs this shortcut that runs a scheduled task, we just script running a scheduled task in the profile switching script itself
+	  * the nircmd sound shortcuts and exe in the SwitchToTV folder were removed from that folder and got assimalited into the new profileSwitcher dir (and the nircmd calls in switchToTV script as we now change sound device in the upstream profile switching script that kicks off this whole process. Also updated nircmd.exe version in the profile switching folder)	  
+	
 1.04 General Refactor and concerns in TV-Switcher are now far more separated
 
 1.03 Added ability to run from a different drive letter than the Emu folder
