@@ -39,6 +39,7 @@ History
 =======
 
 1.05 (git tagged as such) 
+
 	* added all-new scripts for monitor and audio switching, and modded switch_to_TV script, to remake and enhance (now using MonitorProfileSwitcher)
 	* removed the following 
 	  * AMD Switching scripts (AMD removed the functionality entirely)
