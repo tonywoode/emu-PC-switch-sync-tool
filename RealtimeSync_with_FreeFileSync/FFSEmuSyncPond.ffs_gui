@@ -1,57 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="8" XmlType="GUI">
-    <MainConfig>
-        <Comparison>
-            <Variant>TimeAndSize</Variant>
-            <Symlinks>Direct</Symlinks>
-            <IgnoreTimeShift/>
-        </Comparison>
-        <SyncConfig>
-            <Variant>TwoWay</Variant>
-            <DetectMovedFiles>false</DetectMovedFiles>
-            <DeletionPolicy>Versioning</DeletionPolicy>
-            <VersioningFolder Style="TimeStamp">E:\FFS\FFSArchive</VersioningFolder>
-        </SyncConfig>
-        <GlobalFilter>
-            <Include>
-                <Item>*</Item>
-            </Include>
-            <Exclude>
-                <Item>\System Volume Information\</Item>
-                <Item>\$Recycle.Bin\</Item>
-                <Item>\RECYCLER\</Item>
-                <Item>\RECYCLED\</Item>
-                <Item>*\desktop.ini</Item>
-                <Item>*\thumbs.db</Item>
-                <Item>\My Music\</Item>
-                <Item>\My Pictures\</Item>
-                <Item>\My Videos\</Item>
-                <Item>\My Music</Item>
-                <Item>\My Pictures</Item>
-                <Item>\My Videos</Item>
-            </Exclude>
-            <TimeSpan Type="None">0</TimeSpan>
-            <SizeMin Unit="None">0</SizeMin>
-            <SizeMax Unit="None">0</SizeMax>
-        </GlobalFilter>
-        <FolderPairs>
-            <Pair>
-                <Left>\\RIVER\Users\Tony\Saved Games</Left>
-                <Right>\\POND\Users\Tony\Saved Games</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Users\tony\Documents</Left>
-                <Right>\\POND\Users\Tony\Documents</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Emulators</Left>
-                <Right>\\POND\Emulators</Right>
-            </Pair>
-        </FolderPairs>
-        <IgnoreErrors>false</IgnoreErrors>
-        <PostSyncCommand Condition="Completion"/>
-    </MainConfig>
-    <GuiConfig>
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="GUI" XmlFormat="15">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Direct</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>TwoWay</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>Versioning</DeletionPolicy>
+        <VersioningFolder Style="TimeStamp-File">E:\FFS\FFSArchive</VersioningFolder>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLER\</Item>
+            <Item>\RECYCLED\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+            <Item>\My Music\</Item>
+            <Item>\My Pictures\</Item>
+            <Item>\My Videos\</Item>
+            <Item>\My Music</Item>
+            <Item>\My Pictures</Item>
+            <Item>\My Videos</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>\\RIVER\Users\Tony\Saved Games</Left>
+            <Right>\\POND\Users\Tony\Saved Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Users\tony\Documents</Left>
+            <Right>\\POND\Users\Tony\Documents</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Emulators</Left>
+            <Right>\\POND\Emulators</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder/>
+    <EmailNotification Condition="Always"/>
+    <Gui>
         <MiddleGridView>Action</MiddleGridView>
-    </GuiConfig>
+    </Gui>
 </FreeFileSync>
