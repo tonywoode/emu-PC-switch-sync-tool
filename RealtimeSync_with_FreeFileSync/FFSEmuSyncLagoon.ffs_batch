@@ -1,64 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="5" XmlType="BATCH">
-    <MainConfig>
-        <Comparison>
-            <Variant>TimeAndSize</Variant>
-            <Symlinks>Direct</Symlinks>
-            <IgnoreTimeShift/>
-        </Comparison>
-        <SyncConfig>
-            <Variant>TwoWay</Variant>
-            <CustomDirections>
-                <LeftOnly>right</LeftOnly>
-                <RightOnly>left</RightOnly>
-                <LeftNewer>right</LeftNewer>
-                <RightNewer>left</RightNewer>
-                <Different>none</Different>
-                <Conflict>right</Conflict>
-            </CustomDirections>
-            <DetectMovedFiles>false</DetectMovedFiles>
-            <DeletionPolicy>Versioning</DeletionPolicy>
-            <VersioningFolder Style="TimeStamp">E:\FFS\FFSArchive</VersioningFolder>
-        </SyncConfig>
-        <GlobalFilter>
-            <Include>
-                <Item>*</Item>
-            </Include>
-            <Exclude>
-                <Item>\System Volume Information\</Item>
-                <Item>\$Recycle.Bin\</Item>
-                <Item>\RECYCLER\</Item>
-                <Item>\RECYCLED\</Item>
-                <Item>*\desktop.ini</Item>
-                <Item>*\thumbs.db</Item>
-            </Exclude>
-            <TimeSpan Type="None">0</TimeSpan>
-            <SizeMin Unit="None">0</SizeMin>
-            <SizeMax Unit="None">0</SizeMax>
-        </GlobalFilter>
-        <FolderPairs>
-            <Pair>
-                <Left>\\LAGOON\Users\Tony\Documents</Left>
-                <Right>\\RIVER\Users\tony\Documents</Right>
-            </Pair>
-            <Pair>
-                <Left>\\LAGOON\eXoDOS</Left>
-                <Right>\\River\Games\eXoDOS</Right>
-            </Pair>
-            <Pair>
-                <Left>\\LAGOON\Emulators</Left>
-                <Right>\\RIVER\Emulators</Right>
-            </Pair>
-            <Pair>
-                <Left>\\LAGOON\Games\SCREENSHOTS</Left>
-                <Right>\\RIVER\Games\SCREENSHOTS</Right>
-            </Pair>
-        </FolderPairs>
-        <OnCompletion>Close progress dialog</OnCompletion>
-    </MainConfig>
-    <BatchConfig>
-        <HandleError>Popup</HandleError>
-        <RunMinimized>true</RunMinimized>
-        <LogfileFolder Limit="-1">E:\FFS\FFSLog</LogfileFolder>
-    </BatchConfig>
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="BATCH" XmlFormat="15">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Direct</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>TwoWay</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>Versioning</DeletionPolicy>
+        <VersioningFolder Style="TimeStamp-File">E:\FFS\FFSArchive</VersioningFolder>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLER\</Item>
+            <Item>\RECYCLED\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+            <Item>\My Music\</Item>
+            <Item>\My Pictures\</Item>
+            <Item>\My Videos\</Item>
+            <Item>\My Music</Item>
+            <Item>\My Pictures</Item>
+            <Item>\My Videos</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>\\RIVER\Users\Tony\Saved Games</Left>
+            <Right>\\LAGOON\Users\Tony\Saved Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Users\tony\Documents</Left>
+            <Right>\\LAGOON\Users\Tony\Documents</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Emulators</Left>
+            <Right>\\LAGOON\Emulators</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder/>
+    <EmailNotification Condition="Always"/>
+    <Batch>
+        <ProgressDialog Minimized="false" AutoClose="false"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
 </FreeFileSync>
