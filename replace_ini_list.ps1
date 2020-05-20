@@ -234,12 +234,24 @@ Foreach-Object { $_ -replace "FullScreenWidth=.*", "FullScreenWidth=$WIDTH" } |
 ForEach-Object { $_ -replace "FullScreenHeight=.*", "FullScreenHeight=$HEIGHT" } | 
 Set-Content $path2conf
 
+
+function replace-WidthHeight{
+	param([string]$path2conf, [string]$widthKey, [string]$heightKey)
+	# only do the operation if you don't find a single instance of pre-existing height and/or width from this machine
+	# this prevents changing timestamps for no good reason
+	# the widthKey and heightKey must contain ALL characters and spaces up till the WIDTH or HEIGHT (to make a regex that allows for various alternatives is VERY nasty) see https://stackoverflow.com/a/50210893
+	If (-Not (Select-String -Path $path2conf -SimpleMatch "$widthKey$WIDTH" -quiet)){
+		If (-Not (Select-String -Path $path2conf -SimpleMatch "$heightKey$HEIGHT" -quiet)){
+			(Get-Content $path2conf) | 
+			Foreach-Object { $_ -replace "$widthKey.*", "$widthKey$WIDTH" } | 
+			ForEach-Object { $_ -replace "$heightKey.*", "$heightKey$HEIGHT" } | 
+			Set-Content $path2conf
+		}
+	}	  
+}
 #MEDNAFEN v09 config
-$path2conf = "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg"
-(Get-Content $path2conf) | 
-Foreach-Object { $_ -replace "xres .*", "xres $WIDTH" } | 
-ForEach-Object { $_ -replace "yres .*", "yres $HEIGHT" } | 
-Set-Content $path2conf
+replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" "xres " "yres "
+
 
 #MEDNAFEN
 $path2conf = "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg"
