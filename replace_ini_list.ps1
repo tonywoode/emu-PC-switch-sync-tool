@@ -236,21 +236,21 @@ Set-Content $path2conf
 
 
 function replace-WidthHeight{
-	param([string]$path2conf, [string]$widthKey, [string]$heightKey)
+	param([string]$path2conf, [string]$widthKey, [string]$heightKey, [string]$sep)
 	# only do the operation if you don't find a single instance of pre-existing height and/or width from this machine
 	# this prevents changing timestamps for no good reason
 	# the widthKey and heightKey must contain ALL characters and spaces up till the WIDTH or HEIGHT (to make a regex that allows for various alternatives is VERY nasty) see https://stackoverflow.com/a/50210893
-	If (-Not (Select-String -Path $path2conf -SimpleMatch "$widthKey$WIDTH" -quiet)){
-		If (-Not (Select-String -Path $path2conf -SimpleMatch "$heightKey$HEIGHT" -quiet)){
+	If (-Not (Select-String -Path $path2conf -SimpleMatch "$widthKey$sep$WIDTH" -quiet)){
+		If (-Not (Select-String -Path $path2conf -SimpleMatch "$heightKey$sep$HEIGHT" -quiet)){
 			(Get-Content $path2conf) | 
-			Foreach-Object { $_ -replace "$widthKey.*", "$widthKey$WIDTH" } | 
-			ForEach-Object { $_ -replace "$heightKey.*", "$heightKey$HEIGHT" } | 
+			Foreach-Object { $_ -replace "$widthKey$sep.*", "$widthKey$sep$WIDTH" } | 
+			ForEach-Object { $_ -replace "$heightKey$sep.*", "$heightKey$sep$HEIGHT" } | 
 			Set-Content $path2conf
 		}
 	}	  
 }
 #MEDNAFEN v09 config
-replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" "xres " "yres "
+replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" "xres" "yres" " "
 
 
 #MEDNAFEN
