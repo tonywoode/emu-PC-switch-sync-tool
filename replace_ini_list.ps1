@@ -137,77 +137,81 @@ Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurs
         [IO.File]::WriteAllText($_.FullName, ($c -join "`r`n"))
 		}
 
-#ZINC - renderer.cfg
-$path2conf = "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg"
-(Get-Content $path2conf) | 
-ForEach-Object { $_ -replace "XSize			= .*", "XSize			= $FIXED_WIDTH" } | 
-Foreach-Object { $_ -replace "YSize			= .*", "YSize			= $FIXED_HEIGHT" } | 
-Set-Content $path2conf
-
-
-
 #Then the sensible stuff, which can have a generic function
 
 function replace-WidthHeight{
-	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey)
-	# only do the operation if you don't find a single instance of pre-existing height and/or width from this machine
+	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey, [string]$refreshKey)
+	# first check if our params have been passed, only replace those which have been - https://stackoverflow.com/a/48643616
+	#  - note bad things can happen otherwise for instance omitting $refreshKey results in often replacing "" with a 
+	# separator or " " and a regex which therefore equates to " ".*. So making refresh optional was a large factor here!
+	$replaceWidth = $PSBoundParameters.ContainsKey('widthKey')
+	$replaceHeight = $PSBoundParameters.ContainsKey('heightKey')
+	$replaceRefresh = $PSBoundParameters.ContainsKey('refreshKey')
+
+	# negative lookbehind to only replace where you find >=1 height=[NOT 1280]
 	# this prevents changing timestamps for no good reason
-	# the widthKey and heightKey must contain ALL characters and spaces up till the WIDTH or HEIGHT (to make a regex that allows for various alternatives is VERY nasty) see https://stackoverflow.com/a/50210893
-	If (-Not (Select-String -Path $path2conf -SimpleMatch "$widthKey$sep$WIDTH" -quiet)){
-		If (-Not (Select-String -Path $path2conf -SimpleMatch "$heightKey$sep$HEIGHT" -quiet)){
-			(Get-Content $path2conf) | 
-			Foreach-Object { $_ -replace "$widthKey$sep.*", "$widthKey$sep$WIDTH" } | 
-			ForEach-Object { $_ -replace "$heightKey$sep.*", "$heightKey$sep$HEIGHT" } | 
-			Set-Content $path2conf
-		}
-	}	  
+	If ( 
+		(($replaceWidth) -And (Select-String -Path $path2conf -Pattern "$widthKey$sep(?!$WIDTH)" -quiet)) -Or 
+		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$heightKey$sep(?!$HEIGHT)" -quiet)) -Or
+		(($replaceRefresh) -And (Select-String -Path $path2conf -Pattern "$refreshKey$sep(?!$REFRESH)" -quiet))
+		){
+     # this was a nice pipe but I needed conditionals....
+			$text = (Get-Content $path2conf) 
+			$text2 = IF ($replaceWidth) { Foreach-Object { $text -replace "$widthKey$sep.*", "$widthKey$sep$WIDTH" } } ELSE { $text }
+			$text3 = IF ($replaceHeight) { ForEach-Object { $text2 -replace "$heightKey$sep.*", "$heightKey$sep$HEIGHT" } } ELSE { $text2 }
+			$text4 = IF ($replaceRefresh) { ForEach-Object { $text3 -replace "$refreshKey$sep.*", "$refreshKey$sep$REFRESH" } } ELSE { $text3 }
+			Set-Content -Path $path2conf -Value $text4
+		}  
 }
 
-#BLUE MSX
+#ZINC - renderer.cfg
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg" "			= " "XSize" "YSize"
+
+#BLUE MSX 
 replace-WidthHeight "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
 
-#Caprice 3.6.1
+#Caprice 3.6.1 
 replace-WidthHeight "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\CAPRICE_3.6.1\cap32.cfg"  "=" "scr_width" "scr_height"
 
-#Caprice 4.2.0
+#Caprice 4.2.0 
 replace-WidthHeight "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\caprice_4.2.0\cap32.cfg"  "=" "scr_width" "scr_height"
 
-#Project64 2.1
+#Project64 2.1 
 replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\N64\Project64\Project64 2.1\Config\Project64.cfg" "=" "FullscreenWidth" "FullscreenHeight"
 
-#CPS3
+#CPS3 
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\CPS3\cps3\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
 
-#EPSXE
+#EPSXE 
 replace-WidthHeight "\\$MACHINE\Emulators\SONY\PS1\EPSXE\plugins\gpuPeopsSoftX.cfg" "            = " "ResX" "ResY"
 
 #FBA - this is how it was before generic fn, replacing horizontal and vertical width/height with just width and height
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidHorWidth" "nVidHorHeight"
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidVerWidth" "nVidVerHeight"
 
-#FCEUx - TODO: what's that escaping does it work in the gernic fn?
+#FCEUx - TODO: what's that escaping does it work in the generic fn?
 $path2conf = "\\$MACHINE\Emulators\Nintendo\NES\FCEUx\fceux.cfg"
 (Get-Content $path2conf) | 
 Foreach-Object { $_ -replace "`"vmcx`" .*", "`"vmcx`" $WIDTH" } | 
 ForEach-Object { $_ -replace "`"vmcy`" .*", "`"vmcy`" $HEIGHT" } | 
 Set-Content $path2conf
 
-#M2 1.0
+#M2 1.0 
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_10\EMULATOR.ini" "=" "FullScreenWidth" "FullScreenHeight"
 
-#Magic Engine
+#Magic Engine 
 replace-WidthHeight "\\$MACHINE\Emulators\PCEngine\Magic Engine\Magic-Engine113\pce.ini" "=" "screen_width" "screen_height"
 
-#Magic Engine FX
+#Magic Engine FX 
 replace-WidthHeight "\\$MACHINE\Emulators\PCEngine\Magic Engine FX\pcfx.ini" "=" "screen_width" "screen_height"
 
-#M2 0.9
+#M2 0.9 
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_09\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
 
-#MEDNAFEN v09 config
+#MEDNAFEN v09 config 
 replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" " " "xres" "yres"
 
-#MEDNAFEN
+#MEDNAFEN 
 replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg" " " "xres" "yres"
 
 #NESTOPIA - TODO: regex, tony the pony...
@@ -217,15 +221,10 @@ ForEach-Object { $_ -replace "<width>.*</width>", "<width>$WIDTH</width>" } |
 Foreach-Object { $_ -replace "<height>.*</height>", "<height>$HEIGHT</height>" } | 
 Set-Content $path2conf
 
-#PSX - TODO: forgot about refresh rate...
-$path2conf = "\\$MACHINE\Emulators\SONY\PS1\pSX\pSX\psx.ini"
-(Get-Content $path2conf) | 
-ForEach-Object { $_ -replace "Width=.*", "Width=$WIDTH" } | 
-Foreach-Object { $_ -replace "Height=.*", "Height=$HEIGHT" } | 
-Foreach-Object { $_ -replace "Refresh=.*", "Refresh=$REFRESH" } | 
-Set-Content $path2conf
+#PSX - note refresh
+replace-WidthHeight "\\$MACHINE\Emulators\SONY\PS1\pSX\pSX\psx.ini" "=" "Width" "Height" "Refresh"
 
-#RAINE
+#RAINE 
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Raine\Raine\config\raine32_sdl.cfg" " = " "screen_x" "screen_y"
 
 #Stella
@@ -234,31 +233,21 @@ $path2conf = "\\$MACHINE\Emulators\Atari\Atari 2600\Stella\stella-2.6.1\stella.i
 ForEach-Object { $_ -replace "fullres = .*", "fullres = $WIDTH x $HEIGHT" } | 
 Set-Content $path2conf
 
-#Supermodel
+#Supermodel 
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Supermodel\Supermodel\Config\Supermodel.ini" " = " "XResolution" "YResolution"
 
-#VisualBoyAdvance
+#VisualBoyAdvance 
 replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\DS GBA GB\VisualBoy Advance\vba.ini" "=" "fsWidth" "fsHeight"
 
-#Vice - TODO: refresh again
-$path2conf = "\\$MACHINE\Emulators\Commodore\WinVICE\WinVICE-2.2-x64\vice.ini"
-(Get-Content $path2conf) | 
-ForEach-Object { $_ -replace "FullscreenWidth=.*", "FullscreenWidth=$WIDTH" } | 
-ForEach-Object { $_ -replace "FullscreenHeight=.*", "FullscreenHeight=$HEIGHT" } | 
-ForEach-Object { $_ -replace "FullscreenRefreshRate=.*", "FullscreenRefreshRate=$REFRESH" } | 
-Set-Content $path2conf
+#Vice - note refresh
+replace-WidthHeight "\\$MACHINE\Emulators\Commodore\WinVICE\WinVICE-2.2-x64\vice.ini" "=" "FullscreenWidth" "FullscreenHeight" "FullscreenRefreshRate"
 
 #Winkawaks - two sets of changes for normal and neogeo
 replace = "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidth" "FullScreenHeight"
 replace = "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidthNeoGeo" "FullScreenHeightNeoGeo"
 
-#ZSnesW - TODO: refresh again
-$path2conf = "\\$MACHINE\Emulators\Nintendo\SNES\ZSNES\zsnesw.cfg"
-(Get-Content $path2conf) | 
-ForEach-Object { $_ -replace "CustomResX=.*", "CustomResX=$WIDTH" } | 
-ForEach-Object { $_ -replace "CustomResY=.*", "CustomResY=$HEIGHT" } | 
-ForEach-Object { $_ -replace "SetRefreshRate=.*", "SetRefreshRate=$REFRESH" } | 
-Set-Content $path2conf
+#ZSnesW - note refresh
+replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\SNES\ZSNES\zsnesw.cfg" "=" "CustomResX" "CustomResY" "SetRefreshRate"
 
-#ZX Spin
+#ZX Spin 
 replace-WidthHeight "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "=" "FullScreenWidth" "FullScreenHeight"
