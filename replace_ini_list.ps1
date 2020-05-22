@@ -149,7 +149,7 @@ Set-Content $path2conf
 #Then the sensible stuff, which can have a generic function
 
 function replace-WidthHeight{
-	param([string]$path2conf, [string]$widthKey, [string]$heightKey, [string]$sep)
+	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey)
 	# only do the operation if you don't find a single instance of pre-existing height and/or width from this machine
 	# this prevents changing timestamps for no good reason
 	# the widthKey and heightKey must contain ALL characters and spaces up till the WIDTH or HEIGHT (to make a regex that allows for various alternatives is VERY nasty) see https://stackoverflow.com/a/50210893
@@ -164,26 +164,26 @@ function replace-WidthHeight{
 }
 
 #BLUE MSX
-replace-WidthHeight "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini" "video.fullscreen.width" "video.fullscreen.height" "="
+replace-WidthHeight "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
 
 #Caprice 3.6.1
-replace-WidthHeight "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\CAPRICE_3.6.1\cap32.cfg" "scr_width" "scr_height" "="
+replace-WidthHeight "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\CAPRICE_3.6.1\cap32.cfg"  "=" "scr_width" "scr_height"
 
 #Caprice 4.2.0
-replace-WidthHeight "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\caprice_4.2.0\cap32.cfg" "scr_width" "scr_height" "="
+replace-WidthHeight "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\caprice_4.2.0\cap32.cfg"  "=" "scr_width" "scr_height"
 
 #Project64 2.1
-replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\N64\Project64\Project64 2.1\Config\Project64.cfg" "FullscreenWidth" "FullscreenHeight" "="
+replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\N64\Project64\Project64 2.1\Config\Project64.cfg" "=" "FullscreenWidth" "FullscreenHeight"
 
 #CPS3
-replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\CPS3\cps3\emulator.ini" "FullScreenWidth" "FullScreenHeight" "="
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\CPS3\cps3\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
 
 #EPSXE
-replace-WidthHeight "\\$MACHINE\Emulators\SONY\PS1\EPSXE\plugins\gpuPeopsSoftX.cfg" "ResX" "ResY" "            = "
+replace-WidthHeight "\\$MACHINE\Emulators\SONY\PS1\EPSXE\plugins\gpuPeopsSoftX.cfg" "            = " "ResX" "ResY"
 
 #FBA - this is how it was before generic fn, replacing horizontal and vertical width/height with just width and height
-replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" "nVidHorWidth" "nVidHorHeight" " "
-replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" "nVidVerWidth" "nVidVerHeight" " "
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidHorWidth" "nVidHorHeight"
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidVerWidth" "nVidVerHeight"
 
 #FCEUx - TODO: what's that escaping does it work in the gernic fn?
 $path2conf = "\\$MACHINE\Emulators\Nintendo\NES\FCEUx\fceux.cfg"
@@ -193,22 +193,22 @@ ForEach-Object { $_ -replace "`"vmcy`" .*", "`"vmcy`" $HEIGHT" } |
 Set-Content $path2conf
 
 #M2 1.0
-replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_10\EMULATOR.ini" "FullScreenWidth" "FullScreenHeight" "="
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_10\EMULATOR.ini" "=" "FullScreenWidth" "FullScreenHeight"
 
 #Magic Engine
-replace-WidthHeight "\\$MACHINE\Emulators\PCEngine\Magic Engine\Magic-Engine113\pce.ini" "screen_width" "screen_height" "="
+replace-WidthHeight "\\$MACHINE\Emulators\PCEngine\Magic Engine\Magic-Engine113\pce.ini" "=" "screen_width" "screen_height"
 
 #Magic Engine FX
-replace-WidthHeight "\\$MACHINE\Emulators\PCEngine\Magic Engine FX\pcfx.ini" "screen_width" "screen_height" "="
+replace-WidthHeight "\\$MACHINE\Emulators\PCEngine\Magic Engine FX\pcfx.ini" "=" "screen_width" "screen_height"
 
 #M2 0.9
-replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_09\emulator.ini" "FullScreenWidth" "FullScreenHeight" "="
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_09\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
 
 #MEDNAFEN v09 config
-replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" "xres" "yres" " "
+replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" " " "xres" "yres"
 
 #MEDNAFEN
-replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg" "xres" "yres" " "
+replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg" " " "xres" "yres"
 
 #NESTOPIA - TODO: regex, tony the pony...
 $path2conf = "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml"
@@ -226,7 +226,7 @@ Foreach-Object { $_ -replace "Refresh=.*", "Refresh=$REFRESH" } |
 Set-Content $path2conf
 
 #RAINE
-replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Raine\Raine\config\raine32_sdl.cfg" "screen_x" "screen_y" " = "
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Raine\Raine\config\raine32_sdl.cfg" " = " "screen_x" "screen_y"
 
 #Stella
 $path2conf = "\\$MACHINE\Emulators\Atari\Atari 2600\Stella\stella-2.6.1\stella.ini"
@@ -235,10 +235,10 @@ ForEach-Object { $_ -replace "fullres = .*", "fullres = $WIDTH x $HEIGHT" } |
 Set-Content $path2conf
 
 #Supermodel
-replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Supermodel\Supermodel\Config\Supermodel.ini" "XResolution" "YResolution" " = "
+replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Supermodel\Supermodel\Config\Supermodel.ini" " = " "XResolution" "YResolution"
 
 #VisualBoyAdvance
-replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\DS GBA GB\VisualBoy Advance\vba.ini" "fsWidth" "fsHeight" "="
+replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\DS GBA GB\VisualBoy Advance\vba.ini" "=" "fsWidth" "fsHeight"
 
 #Vice - TODO: refresh again
 $path2conf = "\\$MACHINE\Emulators\Commodore\WinVICE\WinVICE-2.2-x64\vice.ini"
@@ -249,8 +249,8 @@ ForEach-Object { $_ -replace "FullscreenRefreshRate=.*", "FullscreenRefreshRate=
 Set-Content $path2conf
 
 #Winkawaks - two sets of changes for normal and neogeo
-replace = "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "FullScreenWidth" "FullScreenHeight" "="
-replace = "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "FullScreenWidthNeoGeo" "FullScreenHeightNeoGeo" "="
+replace = "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidth" "FullScreenHeight"
+replace = "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidthNeoGeo" "FullScreenHeightNeoGeo"
 
 #ZSnesW - TODO: refresh again
 $path2conf = "\\$MACHINE\Emulators\Nintendo\SNES\ZSNES\zsnesw.cfg"
@@ -261,4 +261,4 @@ ForEach-Object { $_ -replace "SetRefreshRate=.*", "SetRefreshRate=$REFRESH" } |
 Set-Content $path2conf
 
 #ZX Spin
-replace-WidthHeight "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "FullScreenWidth" "FullScreenHeight" "="
+replace-WidthHeight "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "=" "FullScreenWidth" "FullScreenHeight"
