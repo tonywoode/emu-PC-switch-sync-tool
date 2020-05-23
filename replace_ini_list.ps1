@@ -210,12 +210,17 @@ replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" " 
 #MEDNAFEN 
 replace-WidthHeight "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg" " " "xres" "yres"
 
-#NESTOPIA - TODO: regex, tony the pony...
+#NESTOPIA - tony the pony...
 $path2conf = "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml"
-(Get-Content $path2conf) | 
-ForEach-Object { $_ -replace "<width>.*</width>", "<width>$WIDTH</width>" } | 
-Foreach-Object { $_ -replace "<height>.*</height>", "<height>$HEIGHT</height>" } | 
-Set-Content $path2conf
+If ( 
+	(Select-String -Path $path2conf -Pattern "<width>(?!$WIDTH</width>)" -quiet) -Or
+	(Select-String -Path $path2conf -Pattern "<height>(?!$HEIGHT</height>)" -quiet)
+	){
+	(Get-Content $path2conf) | 
+	ForEach-Object { $_ -replace "<width>.*</width>", "<width>$WIDTH</width>" } | 
+	Foreach-Object { $_ -replace "<height>.*</height>", "<height>$HEIGHT</height>" } | 
+	Set-Content $path2conf
+}
 
 #PSX - note refresh
 replace-WidthHeight "\\$MACHINE\Emulators\SONY\PS1\pSX\pSX\psx.ini" "=" "Width" "Height" "Refresh"
