@@ -48,7 +48,7 @@ UAE_SCREEN
 #$path2conf = "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
 #UAE_SCREEN
 
-#now that bit is for WinUAELoader is a bit manual. Is Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
+#now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
 IF ($WIDTH -eq "1366") { $SCREEN = 14 }
 ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
 ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
@@ -190,11 +190,7 @@ replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidVerWidth" "nVidVerHeight"
 
 #FCEUx - TODO: what's that escaping does it work in the generic fn?
-$path2conf = "\\$MACHINE\Emulators\Nintendo\NES\FCEUx\fceux.cfg"
-(Get-Content $path2conf) | 
-Foreach-Object { $_ -replace "`"vmcx`" .*", "`"vmcx`" $WIDTH" } | 
-ForEach-Object { $_ -replace "`"vmcy`" .*", "`"vmcy`" $HEIGHT" } | 
-Set-Content $path2conf
+replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\NES\FCEUx\fceux.cfg" " " "`"vmcx`"" "`"vmcy`""
 
 #M2 1.0 
 replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_10\EMULATOR.ini" "=" "FullScreenWidth" "FullScreenHeight"
