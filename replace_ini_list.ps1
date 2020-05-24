@@ -128,14 +128,7 @@ IF ($WIDTH -eq '2560' ) {
 	$FIXED_HEIGHT='768' 
 	}
 
-#ZINC - all files in dir
-Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
-    Foreach-Object {
-        $c = ($_ | Get-Content) 
-        $c = $c -replace "XSize=.*", "XSize=$FIXED_WIDTH"
-		$c = $c -replace "YSize=.*", "YSize=$FIXED_HEIGHT"
-        [IO.File]::WriteAllText($_.FullName, ($c -join "`r`n"))
-		}
+
 
 #Then the sensible stuff, which can have a generic function
 
@@ -144,9 +137,9 @@ function replace-WidthHeight{
 	# first check if our params have been passed, only replace those which have been - https://stackoverflow.com/a/48643616
 	#  - note bad things can happen otherwise for instance omitting $refreshKey results in often replacing "" with a 
 	# separator or " " and a regex which therefore equates to " ".*. So making refresh optional was a large factor here!
-	$replaceWidth = $PSBoundParameters.ContainsKey('widthKey')
-	$replaceHeight = $PSBoundParameters.ContainsKey('heightKey')
-	$replaceRefresh = $PSBoundParameters.ContainsKey('refreshKey')
+	$replaceWidth = ($widthKey  -ne '')
+	$replaceHeight = ($heightKey  -ne '')
+	$replaceRefresh = ($refreshKey -ne '')
 
 	# negative lookbehind to only replace where you find >=1 height=[NOT 1280]
 	# this prevents changing timestamps for no good reason
@@ -163,6 +156,17 @@ function replace-WidthHeight{
 			Set-Content -Path $path2conf -Value $text4
 		}  
 }
+
+#ZINC - all files in dir
+Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
+    Foreach-Object {
+	#	replace-WidthHeight $_ "=" "XSize" "YSize"
+	#}
+        $c = ($_ | Get-Content) 
+        $c = $c -replace "XSize=.*", "XSize=$FIXED_WIDTH"
+		$c = $c -replace "YSize=.*", "YSize=$FIXED_HEIGHT"
+        [IO.File]::WriteAllText($_.FullName, ($c -join "`r`n"))
+		}
 
 <#ZINC - renderer.cfg#> replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg" "			= " "XSize" "YSize"
 <#BLUE MSX#> replace-WidthHeight "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
@@ -194,7 +198,7 @@ replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.i
 
 # Then these, which almost fit the mould of the generic function but don't quite
 
-#NESTOPIA - tony the pony...
+#NESTOPIA - tony the pony...don't regex xml
 $path2conf = "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml"
 If ( 
 	(Select-String -Path $path2conf -Pattern "<width>(?!$WIDTH</width>)" -quiet) -Or
