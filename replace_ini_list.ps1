@@ -117,23 +117,14 @@ switch ($MACHINE) {
 Foreach-Object { $_ -replace "dolphin_internal_resolution = .*", "dolphin_internal_resolution = $dolphin_internal_resolution" } | 
 Set-Content $path2conf
 
-# And for Zinc it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples
-# note tv and 4k monitor will get the SAME multiple
-IF ($WIDTH -eq '2560' ) { 
-	$FIXED_WIDTH='1280' 
-	$FIXED_HEIGHT='800' 
-	}
-  ELSE { 
-	$FIXED_WIDTH='1024' 
-	$FIXED_HEIGHT='768' 
-	}
-
-
-
 #Then the sensible stuff, which can have a generic function
 
 function replace-WidthHeight{
-	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey, [string]$refreshKey)
+	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey, [string]$refreshKey, [string]$widthOverride, [string]$heightOverride, [string]$refreshOverride)
+	# this function could have been pure, but no.....and now we need these....
+	$thisWidth = IF ($widthOverride -ne ''){$widthOverride} ELSE {$WIDTH}
+	$thisHeight = IF ($heightOverride -ne ''){$heightOverride} ELSE {$HEIGHT}
+	$thisRefresh = IF ($refreshOverride -ne ''){$refreshOverride} ELSE {$REFRESH}
 	# first check if our params have been passed, only replace those which have been - https://stackoverflow.com/a/48643616
 	#  - note bad things can happen otherwise for instance omitting $refreshKey results in often replacing "" with a 
 	# separator or " " and a regex which therefore equates to " ".*. So making refresh optional was a large factor here!
@@ -144,29 +135,18 @@ function replace-WidthHeight{
 	# negative lookbehind to only replace where you find >=1 height=[NOT 1280]
 	# this prevents changing timestamps for no good reason
 	If ( 
-		(($replaceWidth) -And (Select-String -Path $path2conf -Pattern "$widthKey$sep(?!$WIDTH)" -quiet)) -Or 
-		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$heightKey$sep(?!$HEIGHT)" -quiet)) -Or
-		(($replaceRefresh) -And (Select-String -Path $path2conf -Pattern "$refreshKey$sep(?!$REFRESH)" -quiet))
+		(($replaceWidth) -And (Select-String -Path $path2conf -Pattern "$widthKey$sep(?!$thisWidth)" -quiet)) -Or 
+		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$heightKey$sep(?!$thisHeight)" -quiet)) -Or
+		(($replaceRefresh) -And (Select-String -Path $path2conf -Pattern "$refreshKey$sep(?!$thisRefresh)" -quiet))
 		){
      # this was a nice pipe but I needed conditionals....
 			$text = (Get-Content $path2conf) 
-			$text2 = IF ($replaceWidth) { Foreach-Object { $text -replace "$widthKey$sep.*", "$widthKey$sep$WIDTH" } } ELSE { $text }
-			$text3 = IF ($replaceHeight) { ForEach-Object { $text2 -replace "$heightKey$sep.*", "$heightKey$sep$HEIGHT" } } ELSE { $text2 }
-			$text4 = IF ($replaceRefresh) { ForEach-Object { $text3 -replace "$refreshKey$sep.*", "$refreshKey$sep$REFRESH" } } ELSE { $text3 }
+			$text2 = IF ($replaceWidth) { Foreach-Object { $text -replace "$widthKey$sep.*", "$widthKey$sep$thisWidth" } } ELSE { $text }
+			$text3 = IF ($replaceHeight) { ForEach-Object { $text2 -replace "$heightKey$sep.*", "$heightKey$sep$thisHeight" } } ELSE { $text2 }
+			$text4 = IF ($replaceRefresh) { ForEach-Object { $text3 -replace "$refreshKey$sep.*", "$refreshKey$sep$thisRefresh" } } ELSE { $text3 }
 			Set-Content -Path $path2conf -Value $text4
 		}  
 }
-
-#ZINC - all files in dir
-Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
-    Foreach-Object {
-	#	replace-WidthHeight $_ "=" "XSize" "YSize"
-	#}
-        $c = ($_ | Get-Content) 
-        $c = $c -replace "XSize=.*", "XSize=$FIXED_WIDTH"
-		$c = $c -replace "YSize=.*", "YSize=$FIXED_HEIGHT"
-        [IO.File]::WriteAllText($_.FullName, ($c -join "`r`n"))
-		}
 
 <#ZINC - renderer.cfg#> replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg" "			= " "XSize" "YSize"
 <#BLUE MSX#> replace-WidthHeight "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
@@ -196,7 +176,7 @@ replace-WidthHeight "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.i
 <#ZSnesW - note refresh#> replace-WidthHeight "\\$MACHINE\Emulators\Nintendo\SNES\ZSNES\zsnesw.cfg" "=" "CustomResX" "CustomResY" "SetRefreshRate"
 <#ZX Spin#> replace-WidthHeight "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "=" "FullScreenWidth" "FullScreenHeight"
 
-# Then these, which almost fit the mould of the generic function but don't quite
+# Then these varients, which almost fit the mould of the generic function but don't quite
 
 #NESTOPIA - tony the pony...don't regex xml
 $path2conf = "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml"
@@ -217,3 +197,18 @@ If ( Select-String -Path $path2conf -Pattern "fullres = (?!$WIDTH x $HEIGHT)" -q
 	ForEach-Object { $_ -replace "fullres = .*", "fullres = $WIDTH x $HEIGHT" } | 
 	Set-Content $path2conf
 }
+
+#ZINC - it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples, note tv and 4k monitor will get the SAME multiple
+IF ( ($WIDTH -eq '2560') -Or ($WIDTH -eq '1280') ) { 
+	$FIXED_WIDTH='1280' 
+	$FIXED_HEIGHT='800' 
+	}
+  ELSE { 
+	$FIXED_WIDTH='1024' 
+	$FIXED_HEIGHT='768' 
+	}
+# now loop through all files in dir, overriding $WIDTH and $HEIGHT in the generic fn
+Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
+    Foreach-Object {
+		replace-WidthHeight $_.FullName "=" "XSize" "YSize" "" "$FIXED_WIDTH" "$FIXED_HEIGHT"
+	}
