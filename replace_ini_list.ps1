@@ -1,63 +1,8 @@
 #we set our Machine, Width and Height and Refresh Rate - pass to script as THISSCRIPT.ps1 MACHINE_B 1800 1440 72
-#so e.g.:SEAEEE
-$MACHINE = $args[0]
-#Width Gets changed to eg: 1800
-$WIDTH = $args[1]
-#And height Gets changed to eg: 1440
-$HEIGHT = $args[2]
-#Then let's set the refresh rate (UAE needs this for a start)
-$REFRESH = $args[3]
-#gets changed to 72 (HZ that is)
-
-#First all the amiga stuff
-#Let's define a funtion for all these
-function UAE_SCREEN {
-(Get-Content $path2conf) |
-Foreach-Object { $_ -replace "gfx_width=.*", "gfx_width=$WIDTH" } | 
-ForEach-Object { $_ -replace "gfx_height=.*", "gfx_height=$HEIGHT" } | 
-Foreach-Object { $_ -replace "gfx_width_fullscreen=.*", "gfx_width_fullscreen=$WIDTH" } | 
-ForEach-Object { $_ -replace "gfx_height_fullscreen=.*", "gfx_height_fullscreen=$HEIGHT" } | 
-ForEach-Object { $_ -replace "gfx_refreshrate=.*", "gfx_refreshrate=$REFRESH" } |
-Set-Content $path2conf
-}
-
-# I think the only valid one that needs changing now is the cd32 config in winuaeloader's directory
-#UAE - CD32 with PAD
-$path2conf = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
-UAE_SCREEN
-
-#And let's do each one in term using the function
-#UAE - default - the section here is probably useless as the UAE registry entry changes the config 
-#  directory permanently to WinUAELoader's config directory, so any .uae not in there isn't even visible to winUAE
-
-#$path2conf = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
-#UAE_SCREEN
-
-#UAE - CD32 with PAD
-#$path2conf = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
-#UAE_SCREEN
-
-#Gamebase Amiga - Gamebase Amiga
-#$path2conf = "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
-#UAE_SCREEN
-
-#Gamebase Amiga - whdload
-#$path2conf = "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\WHDLoad.uae"
-#UAE_SCREEN
-
-#DEMObase Amiga - Gamebase Amiga
-#$path2conf = "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
-#UAE_SCREEN
-
-#now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
-IF ($WIDTH -eq "1366") { $SCREEN = 14 }
-ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
-ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
-ELSE { $SCREEN = 19 }
-$path2conf = "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini"
-(Get-Content $path2conf) |
-Foreach-Object { $_ -replace "Screen=.*", "Screen=$SCREEN" } |
-Set-Content $path2conf
+$MACHINE = $args[0] #so e.g.:SEAEEE
+$WIDTH = $args[1] #Width Gets changed to eg: 1800
+$HEIGHT = $args[2] #And height Gets changed to eg: 1440
+$REFRESH = $args[3] #set refresh rate (UAE needs this for a start) gets changed to 72 (HZ that is)
 
 #and we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
 IF ($WIDTH -eq '1920' -or $WIDTH -eq '3840') { $FusionString = '56,4,128,7' } #4k or tv
@@ -129,7 +74,7 @@ function replace-ScreenProps {
 	$replaceRefresh = ($refreshKey -ne '')
 
 	# negative lookbehind to only replace where you find >=1 height=[NOT 1280]
-	# this prevents changing timestamps for no good reason
+	# this prevents changing timestamps for no good reason, the conditional structure should replace any one of (good for inconsistent state)
 	If ( 
 		(($replaceWidth) -And (Select-String -Path $path2conf -Pattern "$widthKey$sep(?!$thisWidth)" -quiet)) -Or 
 		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$heightKey$sep(?!$thisHeight)" -quiet)) -Or
@@ -151,6 +96,7 @@ function replace-systemScreen {
 	replace-ScreenProps $path2conf $sep $widthKey $heightKey $refreshKey $WIDTH $HEIGHT $REFRESH
 }
 
+# each emulator in turn - I used block quotes for the emu names here just to save a line each time
 <#ZINC - renderer.cfg#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg" "			= " "XSize" "YSize"
 <#BLUE MSX#> replace-systemScreen "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
 <#Caprice 3.6.1#> replace-systemScreen "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\CAPRICE_3.6.1\cap32.cfg"  "=" "scr_width" "scr_height"
@@ -179,7 +125,8 @@ replace-systemScreen "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.
 <#ZSnesW - note refresh#> replace-systemScreen "\\$MACHINE\Emulators\Nintendo\SNES\ZSNES\zsnesw.cfg" "=" "CustomResX" "CustomResY" "SetRefreshRate"
 <#ZX Spin#> replace-systemScreen "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "=" "FullScreenWidth" "FullScreenHeight"
 
-# then a use of the fn in a recursive loop
+# then less general uses of the fns
+
 #ZINC - it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples, note tv and 4k monitor will get the SAME multiple
 IF ( ($WIDTH -eq '2560') -Or ($WIDTH -eq '1280') ) { 
 	$FIXED_WIDTH='1280' 
@@ -193,6 +140,33 @@ Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurs
     Foreach-Object {
 		replace-ScreenProps $_.FullName "=" "XSize" "YSize" "" "$FIXED_WIDTH" "$FIXED_HEIGHT"
 	}
+
+
+# AMIGA - uae has a set of 'fullscreen' width and heights, as well as the standard width/height/refresh. TBH i'm not sure i've ever investigated why
+function UAE_Replace {
+	param([string]$path2conf)
+	replace-systemScreen $path2conf "=" "gfx_width" "gfx_height" "gfx_refreshrate"
+	replace-systemScreen $path2conf "=" "gfx_width_fullscreen" "gfx_height_fullscreen"
+}
+
+# remember that the UAE registry is currently hardcoded to UAE loaders data dir, meaning non-gamebase uae files elsewhere (specifically in
+#  UAE's own configurations directory) are not worth changing atm as they aren't even visible to the active winUAE
+# so the cd32 config in winuaeloader's directory needs changing, but the one in WinUAE's own configurations dir does not
+<#UAE - CD32 with PAD#> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
+#<#UAE's main dir #> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
+#<#UAE - CD32 with PAD#> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
+<#Gamebase Amiga - disk games #> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
+<#Gamebase Amiga - whdload#> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\WHDLoad.uae"
+<#DEMObase Amiga#> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
+
+#now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
+IF ($WIDTH -eq "1366") { $SCREEN = 14 }
+ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
+ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
+ELSE { $SCREEN = 19 }
+# now we can bastardise the generic function and use its ability to only call one of its replacement params (ie: this isn't width but works)
+replace-ScreenProps "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini" "=" "Screen" "" "" $SCREEN
+
 
 # Then these varients, which almost fit the mould of the generic function but don't quite, and aren't general enough to warrant modding
 #NESTOPIA - tony the pony...don't regex xml
