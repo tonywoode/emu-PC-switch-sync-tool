@@ -81,7 +81,7 @@ function replace-ScreenProps {
 }
 
 # call the generic function, but facade its properties inputs as the passed in screen properties (we can still control which props get replaced with 
-#  the property keynames being supplied or not
+#  the property keynames being supplied or not)
 function replace-systemScreen { 
 	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey, [string]$refreshKey)
 	replace-ScreenProps $path2conf $sep $widthKey $heightKey $refreshKey $WIDTH $HEIGHT $REFRESH
@@ -118,20 +118,6 @@ replace-systemScreen "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.
 
 # then less general uses of the fns
 
-#ZINC - it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples, note tv and 4k monitor will get the SAME multiple
-IF ( ($WIDTH -eq '2560') -Or ($WIDTH -eq '1280') ) { 
-	$FIXED_WIDTH='1280' 
-	$FIXED_HEIGHT='800' 
-} ELSE { 
-	$FIXED_WIDTH='1024' 
-	$FIXED_HEIGHT='768' 
-}
-# now loop through all files in dir, overriding $WIDTH and $HEIGHT in the generic fn
-Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
-    Foreach-Object {
-		replace-ScreenProps $_.FullName "=" "XSize" "YSize" "" "$FIXED_WIDTH" "$FIXED_HEIGHT"
-	}
-
 # AMIGA - uae has a set of 'fullscreen' width and heights, as well as the standard width/height/refresh. TBH i'm not sure i've ever investigated why
 function UAE_Replace {
 	param([string]$path2conf)
@@ -162,23 +148,27 @@ IF ($WIDTH -eq "1920" -or $WIDTH -eq "3840") { $FusionString = "56,4,128,7" } #4
 ELSE { $FusionString = "224,1,128,2" } #default to 640x480 if something else happenss
 replace-ScreenProps "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini" "=" "DResolution" "" "" $FusionString
 
-# Then these varients, which almost fit the mould of the generic function but don't quite, and aren't general enough to warrant modding
-#NESTOPIA - tony the pony...don't regex xml
-$path2conf = "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml"
-If ( 
-	(Select-String -Path $path2conf -Pattern "<width>(?!$WIDTH</width>)" -quiet) -Or
-	(Select-String -Path $path2conf -Pattern "<height>(?!$HEIGHT</height>)" -quiet)
-	){
-	(Get-Content $path2conf) | 
-	ForEach-Object { $_ -replace "<width>.*</width>", "<width>$WIDTH</width>" } | 
-	Foreach-Object { $_ -replace "<height>.*</height>", "<height>$HEIGHT</height>" } | 
-	Set-Content $path2conf
-}
+#NESTOPIA - tony the pony...here we are, regexing xml....the original version of this made it very clear its xml
+#  note as such its the only case in which the separator is nothing
+$widthAndEndTag = "$WIDTH</width>"
+$heightAndEndTag = "$HEIGHT</height>"
+replace-ScreenProps "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml" "" "<width>" "<height>" "" $widthAndEndTag $heightAndEndTag
 
-#Stella
-$path2conf = "\\$MACHINE\Emulators\Atari\Atari 2600\Stella\stella-2.6.1\stella.ini"
-If ( Select-String -Path $path2conf -Pattern "fullres = (?!$WIDTH x $HEIGHT)" -quiet) {
-	(Get-Content $path2conf) | 
-	ForEach-Object { $_ -replace "fullres = .*", "fullres = $WIDTH x $HEIGHT" } | 
-	Set-Content $path2conf
+#Stella - just the general case of a generic replacement (instead of 'width') but a combination
+$fullres = "$WIDTH x $HEIGHT"
+replace-ScreenProps "\\$MACHINE\Emulators\Atari\Atari 2600\Stella\stella-2.6.1\stella.ini" " = " "fullres" "" "" $fullres
+
+#ZINC - do a recursive replace using the fn
+# it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples, note tv and 4k monitor will get the SAME multiple
+IF ( ($WIDTH -eq '2560') -Or ($WIDTH -eq '1280') ) { 
+	$FIXED_WIDTH='1280' 
+	$FIXED_HEIGHT='800' 
+} ELSE { 
+	$FIXED_WIDTH='1024' 
+	$FIXED_HEIGHT='768' 
 }
+# now loop through all files in dir, overriding $WIDTH and $HEIGHT in the generic fn
+Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
+    Foreach-Object {
+		replace-ScreenProps $_.FullName "=" "XSize" "YSize" "" "$FIXED_WIDTH" "$FIXED_HEIGHT"
+	}
