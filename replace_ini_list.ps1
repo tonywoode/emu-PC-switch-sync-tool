@@ -87,6 +87,12 @@ function replace-systemScreen {
 	replace-ScreenProps $path2conf $sep $widthKey $heightKey $refreshKey $WIDTH $HEIGHT $REFRESH
 }
 
+# a useful further facade is to call the generic function but only call and replace one arg, creating a generic setting replacer
+function Replace-Setting {
+	param([string]$path2conf, [string]$sep, [string]$key, [string]$val)
+	replace-ScreenProps $path2conf $sep $key "" "" $val
+}
+
 # each emulator in turn - I used block quotes for the emu names here just to save a line each time
 <#ZINC - renderer.cfg#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg" "			= " "XSize" "YSize"
 <#BLUE MSX#> replace-systemScreen "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
@@ -139,14 +145,13 @@ IF ($WIDTH -eq "1366") { $SCREEN = 14 }
 ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
 ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
 ELSE { $SCREEN = 19 }
-# now we can bastardise the generic function and use its ability to only call one of its replacement params (ie: this isn't width but works)
-replace-ScreenProps "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini" "=" "Screen" "" "" $SCREEN
+Replace-Setting "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini" "=" "Screen" $SCREEN
 
 # MEGADRIVE - we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
 IF ($WIDTH -eq "1920" -or $WIDTH -eq "3840") { $FusionString = "56,4,128,7" } #4k or tv
  ELSEIF ($WIDTH -eq "1280" -or $WIDTH -eq "2560") { $FusionString = "32,3,0,5" } #current laptops 1280x800
 ELSE { $FusionString = "224,1,128,2" } #default to 640x480 if something else happenss
-replace-ScreenProps "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini" "=" "DResolution" "" "" $FusionString
+Replace-Setting "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini" "=" "DResolution" $FusionString
 
 #NESTOPIA - tony the pony...here we are, regexing xml....the original version of this made it very clear its xml
 #  note as such its the only case in which the separator is nothing
@@ -156,7 +161,7 @@ replace-ScreenProps "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\n
 
 #Stella - just the general case of a generic replacement (instead of 'width') but a combination
 $fullres = "$WIDTH x $HEIGHT"
-replace-ScreenProps "\\$MACHINE\Emulators\Atari\Atari 2600\Stella\stella-2.6.1\stella.ini" " = " "fullres" "" "" $fullres
+Replace-Setting "\\$MACHINE\Emulators\Atari\Atari 2600\Stella\stella-2.6.1\stella.ini" " = " "fullres" $fullres
 
 #ZINC - do a recursive replace using the fn
 # it looks like the D3D renderer will only do up to 1280x1024, so lets do multiples, note tv and 4k monitor will get the SAME multiple
