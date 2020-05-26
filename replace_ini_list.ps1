@@ -62,24 +62,18 @@ function Replace-ScreenProps {
 	# first check if our params have been passed, only replace those which have been - https://stackoverflow.com/a/48643616
 	#  - note bad things can happen otherwise for instance omitting $refreshKey results in often replacing "" with a 
 	# separator or " " and a regex which therefore equates to " ".*. So making refresh optional was a large factor here!
-	$replaceWidth = ($widthKey  -ne '')
-	$replaceHeight = ($heightKey  -ne '')
-	$replaceRefresh = ($refreshKey -ne '')
-
 	# negative lookbehind to only replace where you find >=1 height=[NOT 1280]
 	# this prevents changing timestamps for no good reason, the conditional structure should replace any one of (good for inconsistent state)
-	If ( 
-		(($replaceWidth) -And (Select-String -Path $path2conf -Pattern "$widthKey$sep(?!$thisWidth)" -quiet)) -Or 
-		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$heightKey$sep(?!$thisHeight)" -quiet)) -Or
-		(($replaceRefresh) -And (Select-String -Path $path2conf -Pattern "$refreshKey$sep(?!$thisRefresh)" -quiet))
-		){
      # https://stackoverflow.com/a/11652395 and note % is just 'Foreach-Object'
-			(Get-Content $path2conf) |
-			% { IF ($replaceWidth) {$_ -replace "$widthKey$sep.*", "$widthKey$sep$thisWidth"} ELSE {$_} } |
-			% { IF ($replaceHeight) {$_ -replace "$heightKey$sep.*", "$heightKey$sep$thisHeight"} ELSE {$_} } |
-			% { IF ($replaceRefresh) {$_ -replace "$refreshKey$sep.*", "$refreshKey$sep$thisRefresh"} ELSE {$_} } |
-			Set-Content $path2conf
-		}  
+            $content = Get-Content $path2conf
+			$changed = $content|
+			% { IF ( ($widthKey  -ne '') -And (Select-String -InputObject $_ -Pattern "$widthKey$sep(?!$thisWidth)" -quiet) ) 
+				{$_ -replace "$widthKey$sep.*", "$widthKey$sep$thisWidth" } ELSE { $_ }} |
+			% { IF ( ($heightKey  -ne '') -And (Select-String -InputObject $_ -Pattern "$heightKey$sep(?!$thisHeight)" -quiet) ) 
+				{$_ -replace "$heightKey$sep.*", "$heightKey$sep$thisHeight" } ELSE { $_ } } |
+			% { IF ( ($refreshKey -ne '') -And (Select-String -InputObject $_ -Pattern "$refreshKey$sep(?!$thisRefresh)" -quiet) ) 
+				{ $_ -replace "$refreshKey$sep.*", "$refreshKey$sep$thisRefresh" } ELSE { $_ } }
+			IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }		  
 }
 
 # call the generic function, but facade its properties inputs as the passed in screen properties (we can still control which props get replaced with 
