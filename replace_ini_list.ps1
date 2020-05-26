@@ -4,15 +4,6 @@ $WIDTH = $args[1] #Width Gets changed to eg: 1800
 $HEIGHT = $args[2] #And height Gets changed to eg: 1440
 $REFRESH = $args[3] #set refresh rate (UAE needs this for a start) gets changed to 72 (HZ that is)
 
-#and we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
-IF ($WIDTH -eq '1920' -or $WIDTH -eq '3840') { $FusionString = '56,4,128,7' } #4k or tv
- ELSEIF ($WIDTH -eq '1280' -or $WIDTH -eq '2560') { $FusionString = '32,3,0,5' } #current laptops 1280x800
-ELSE { $FusionString = '224,1,128,2' } #default to 640x480 if something else happenss
-$path2conf = "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini"
-(Get-Content $path2conf) | 
-Foreach-Object { $_ -replace "DResolution=.*", "DResolution=$FusionString" } |  
-Set-Content $path2conf
-
 #PCSX2 can look very nice on the desktop, change every setting needed to make that so, one by one...
 $path2conf = "\\$MACHINE\Emulators\SONY\PS2\pcsx2\pcsx2\inis\GSdx.ini" 
 switch ($MACHINE) {
@@ -141,23 +132,21 @@ Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurs
 		replace-ScreenProps $_.FullName "=" "XSize" "YSize" "" "$FIXED_WIDTH" "$FIXED_HEIGHT"
 	}
 
-
 # AMIGA - uae has a set of 'fullscreen' width and heights, as well as the standard width/height/refresh. TBH i'm not sure i've ever investigated why
 function UAE_Replace {
 	param([string]$path2conf)
 	replace-systemScreen $path2conf "=" "gfx_width" "gfx_height" "gfx_refreshrate"
 	replace-systemScreen $path2conf "=" "gfx_width_fullscreen" "gfx_height_fullscreen"
 }
-
 # remember that the UAE registry is currently hardcoded to UAE loaders data dir, meaning non-gamebase uae files elsewhere (specifically in
 #  UAE's own configurations directory) are not worth changing atm as they aren't even visible to the active winUAE
 # so the cd32 config in winuaeloader's directory needs changing, but the one in WinUAE's own configurations dir does not
 <#UAE - CD32 with PAD#> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
-#<#UAE's main dir #> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
-#<#UAE - CD32 with PAD#> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
 <#Gamebase Amiga - disk games #> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
 <#Gamebase Amiga - whdload#> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\WHDLoad.uae"
 <#DEMObase Amiga#> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
+#<#UAE's main dir #> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
+#<#UAE - CD32 with PAD#> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
 
 #now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
 IF ($WIDTH -eq "1366") { $SCREEN = 14 }
@@ -167,6 +156,11 @@ ELSE { $SCREEN = 19 }
 # now we can bastardise the generic function and use its ability to only call one of its replacement params (ie: this isn't width but works)
 replace-ScreenProps "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini" "=" "Screen" "" "" $SCREEN
 
+# MEGADRIVE - we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
+IF ($WIDTH -eq "1920" -or $WIDTH -eq "3840") { $FusionString = "56,4,128,7" } #4k or tv
+ ELSEIF ($WIDTH -eq "1280" -or $WIDTH -eq "2560") { $FusionString = "32,3,0,5" } #current laptops 1280x800
+ELSE { $FusionString = "224,1,128,2" } #default to 640x480 if something else happenss
+replace-ScreenProps "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini" "=" "DResolution" "" "" $FusionString
 
 # Then these varients, which almost fit the mould of the generic function but don't quite, and aren't general enough to warrant modding
 #NESTOPIA - tony the pony...don't regex xml
