@@ -1,3 +1,5 @@
+# to test things in here open up the powershell ide/ise, set these values to hardcoded results and change $MACHINE/Emulators/ to P:/
+
 #we set our Machine, Width and Height and Refresh Rate - pass to script as THISSCRIPT.ps1 MACHINE_B 1800 1440 72
 $MACHINE = $args[0] #so e.g.:SEAEEE
 $WIDTH = $args[1] #Width Gets changed to eg: 1800
@@ -55,7 +57,7 @@ Foreach-Object { $_ -replace "dolphin_internal_resolution = .*", "dolphin_intern
 Set-Content $path2conf
 
 #Then the sensible stuff, which can have a generic function, that mostly gets facaded with the passed in props
-function replace-ScreenProps {
+function Replace-ScreenProps {
 	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey, [string]$refreshKey, [string]$thisWidth, [string]$thisHeight, [string]$thisRefresh)
 	# first check if our params have been passed, only replace those which have been - https://stackoverflow.com/a/48643616
 	#  - note bad things can happen otherwise for instance omitting $refreshKey results in often replacing "" with a 
@@ -71,74 +73,74 @@ function replace-ScreenProps {
 		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$heightKey$sep(?!$thisHeight)" -quiet)) -Or
 		(($replaceRefresh) -And (Select-String -Path $path2conf -Pattern "$refreshKey$sep(?!$thisRefresh)" -quiet))
 		){
-     # this was a nice pipe but I needed conditionals....
-			$text = (Get-Content $path2conf) 
-			$text2 = IF ($replaceWidth) { Foreach-Object { $text -replace "$widthKey$sep.*", "$widthKey$sep$thisWidth" } } ELSE { $text }
-			$text3 = IF ($replaceHeight) { ForEach-Object { $text2 -replace "$heightKey$sep.*", "$heightKey$sep$thisHeight" } } ELSE { $text2 }
-			$text4 = IF ($replaceRefresh) { ForEach-Object { $text3 -replace "$refreshKey$sep.*", "$refreshKey$sep$thisRefresh" } } ELSE { $text3 }
-			Set-Content -Path $path2conf -Value $text4
+     # https://stackoverflow.com/a/11652395 and note % is just 'Foreach-Object'
+			(Get-Content $path2conf) |
+			% { IF ($replaceWidth) {$_ -replace "$widthKey$sep.*", "$widthKey$sep$thisWidth"} ELSE {$_} } |
+			% { IF ($replaceHeight) {$_ -replace "$heightKey$sep.*", "$heightKey$sep$thisHeight"} ELSE {$_} } |
+			% { IF ($replaceRefresh) {$_ -replace "$refreshKey$sep.*", "$refreshKey$sep$thisRefresh"} ELSE {$_} } |
+			Set-Content $path2conf
 		}  
 }
 
 # call the generic function, but facade its properties inputs as the passed in screen properties (we can still control which props get replaced with 
 #  the property keynames being supplied or not)
-function replace-systemScreen { 
+function Replace-SystemScreen { 
 	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey, [string]$refreshKey)
-	replace-ScreenProps $path2conf $sep $widthKey $heightKey $refreshKey $WIDTH $HEIGHT $REFRESH
+	Replace-ScreenProps $path2conf $sep $widthKey $heightKey $refreshKey $WIDTH $HEIGHT $REFRESH
 }
 
 # a useful further facade is to call the generic function but only call and replace one arg, creating a generic setting replacer
 function Replace-Setting {
 	param([string]$path2conf, [string]$sep, [string]$key, [string]$val)
-	replace-ScreenProps $path2conf $sep $key "" "" $val
+	Replace-ScreenProps $path2conf $sep $key "" "" $val
 }
 
 # each emulator in turn - I used block quotes for the emu names here just to save a line each time
-<#ZINC - renderer.cfg#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg" "			= " "XSize" "YSize"
-<#BLUE MSX#> replace-systemScreen "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
-<#Caprice 3.6.1#> replace-systemScreen "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\CAPRICE_3.6.1\cap32.cfg"  "=" "scr_width" "scr_height"
-<#Caprice 4.2.0#> replace-systemScreen "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\caprice_4.2.0\cap32.cfg"  "=" "scr_width" "scr_height"
-<#Project64 2.1#> replace-systemScreen "\\$MACHINE\Emulators\Nintendo\N64\Project64\Project64 2.1\Config\Project64.cfg" "=" "FullscreenWidth" "FullscreenHeight"
-<#CPS3#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\CPS3\cps3\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
-<#EPSXE#> replace-systemScreen "\\$MACHINE\Emulators\SONY\PS1\EPSXE\plugins\gpuPeopsSoftX.cfg" "            = " "ResX" "ResY"
+<#ZINC - renderer.cfg#> Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\renderer.cfg" "			= " "XSize" "YSize"
+<#BLUE MSX#> Replace-SystemScreen "\\$MACHINE\Emulators\BlueMSX\blueMSXv28full\bluemsx.ini"  "=" "video.fullscreen.width" "video.fullscreen.height"
+<#Caprice 3.6.1#> Replace-SystemScreen "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\CAPRICE_3.6.1\cap32.cfg"  "=" "scr_width" "scr_height"
+<#Caprice 4.2.0#> Replace-SystemScreen "\\$MACHINE\Emulators\Amstrad_CPC\CAPRICE\caprice_4.2.0\cap32.cfg"  "=" "scr_width" "scr_height"
+<#Project64 2.1#> Replace-SystemScreen "\\$MACHINE\Emulators\Nintendo\N64\Project64\Project64 2.1\Config\Project64.cfg" "=" "FullscreenWidth" "FullscreenHeight"
+<#CPS3#> Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\CPS3\cps3\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
+<#EPSXE#> Replace-SystemScreen "\\$MACHINE\Emulators\SONY\PS1\EPSXE\plugins\gpuPeopsSoftX.cfg" "            = " "ResX" "ResY"
 #FBA - this is how it was before generic fn, replacing horizontal and vertical width/height with just width and height#
-replace-systemScreen "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidHorWidth" "nVidHorHeight"
-replace-systemScreen "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidVerWidth" "nVidVerHeight"
-<#FCEUx#> replace-systemScreen "\\$MACHINE\Emulators\Nintendo\NES\FCEUx\fceux.cfg" " " "`"vmcx`"" "`"vmcy`""
-<#M2 1.0#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_10\EMULATOR.ini" "=" "FullScreenWidth" "FullScreenHeight"
-<#Magic Engine#> replace-systemScreen "\\$MACHINE\Emulators\PCEngine\Magic Engine\Magic-Engine113\pce.ini" "=" "screen_width" "screen_height"
-<#Magic Engine FX#> replace-systemScreen "\\$MACHINE\Emulators\PCEngine\Magic Engine FX\pcfx.ini" "=" "screen_width" "screen_height"
-<#M2 0.9#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_09\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
-<#MEDNAFEN v09 config#> replace-systemScreen "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" " " "xres" "yres"
-<#MEDNAFEN#> replace-systemScreen "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg" " " "xres" "yres"
-<#PSX - note refresh#> replace-systemScreen "\\$MACHINE\Emulators\SONY\PS1\pSX\pSX\psx.ini" "=" "Width" "Height" "Refresh"
-<#RAINE#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\Raine\Raine\config\raine32_sdl.cfg" " = " "screen_x" "screen_y"
-<#Supermodel#> replace-systemScreen "\\$MACHINE\Emulators\ARCADE\Supermodel\Supermodel\Config\Supermodel.ini" " = " "XResolution" "YResolution"
-<#VisualBoyAdvance#> replace-systemScreen "\\$MACHINE\Emulators\Nintendo\DS GBA GB\VisualBoy Advance\vba.ini" "=" "fsWidth" "fsHeight"
-<#Vice - note refresh#> replace-systemScreen "\\$MACHINE\Emulators\Commodore\WinVICE\WinVICE-2.2-x64\vice.ini" "=" "FullscreenWidth" "FullscreenHeight" "FullscreenRefreshRate"
+Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidHorWidth" "nVidHorHeight"
+Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidVerWidth" "nVidVerHeight"
+<#FCEUx#> Replace-SystemScreen "\\$MACHINE\Emulators\Nintendo\NES\FCEUx\fceux.cfg" " " "`"vmcx`"" "`"vmcy`""
+<#M2 1.0#> Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_10\EMULATOR.ini" "=" "FullScreenWidth" "FullScreenHeight"
+<#Magic Engine#> Replace-SystemScreen "\\$MACHINE\Emulators\PCEngine\Magic Engine\Magic-Engine113\pce.ini" "=" "screen_width" "screen_height"
+<#Magic Engine FX#> Replace-SystemScreen "\\$MACHINE\Emulators\PCEngine\Magic Engine FX\pcfx.ini" "=" "screen_width" "screen_height"
+<#M2 0.9#> Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\M2\M2\m2emulator_09\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
+<#MEDNAFEN v09 config#> Replace-SystemScreen "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen-09x.cfg" " " "xres" "yres"
+<#MEDNAFEN#> Replace-SystemScreen "\\$MACHINE\Emulators\Mednafen\mednafen\mednafen.cfg" " " "xres" "yres"
+<#PSX - note refresh#> Replace-SystemScreen "\\$MACHINE\Emulators\SONY\PS1\pSX\pSX\psx.ini" "=" "Width" "Height" "Refresh"
+<#RAINE#> Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\Raine\Raine\config\raine32_sdl.cfg" " = " "screen_x" "screen_y"
+<#Supermodel#> Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\Supermodel\Supermodel\Config\Supermodel.ini" " = " "XResolution" "YResolution"
+<#VisualBoyAdvance#> Replace-SystemScreen "\\$MACHINE\Emulators\Nintendo\DS GBA GB\VisualBoy Advance\vba.ini" "=" "fsWidth" "fsHeight"
+<#Vice - note refresh#> Replace-SystemScreen "\\$MACHINE\Emulators\Commodore\WinVICE\WinVICE-2.2-x64\vice.ini" "=" "FullscreenWidth" "FullscreenHeight" "FullscreenRefreshRate"
 #Winkawaks - two sets of changes for normal and neogeo
-replace-systemScreen "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidth" "FullScreenHeight"
-replace-systemScreen "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidthNeoGeo" "FullScreenHeightNeoGeo"
-<#ZSnesW - note refresh#> replace-systemScreen "\\$MACHINE\Emulators\Nintendo\SNES\ZSNES\zsnesw.cfg" "=" "CustomResX" "CustomResY" "SetRefreshRate"
-<#ZX Spin#> replace-systemScreen "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "=" "FullScreenWidth" "FullScreenHeight"
+Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidth" "FullScreenHeight"
+Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.ini" "=" "FullScreenWidthNeoGeo" "FullScreenHeightNeoGeo"
+<#ZSnesW - note refresh#> Replace-SystemScreen "\\$MACHINE\Emulators\Nintendo\SNES\ZSNES\zsnesw.cfg" "=" "CustomResX" "CustomResY" "SetRefreshRate"
+<#ZX Spin#> Replace-SystemScreen "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "=" "FullScreenWidth" "FullScreenHeight"
 
 # then less general uses of the fns
 
 # AMIGA - uae has a set of 'fullscreen' width and heights, as well as the standard width/height/refresh. TBH i'm not sure i've ever investigated why
-function UAE_Replace {
+function Replace-UAE {
 	param([string]$path2conf)
-	replace-systemScreen $path2conf "=" "gfx_width" "gfx_height" "gfx_refreshrate"
-	replace-systemScreen $path2conf "=" "gfx_width_fullscreen" "gfx_height_fullscreen"
+	Replace-SystemScreen $path2conf "=" "gfx_width" "gfx_height" "gfx_refreshrate"
+	Replace-SystemScreen $path2conf "=" "gfx_width_fullscreen" "gfx_height_fullscreen"
 }
 # remember that the UAE registry is currently hardcoded to UAE loaders data dir, meaning non-gamebase uae files elsewhere (specifically in
 #  UAE's own configurations directory) are not worth changing atm as they aren't even visible to the active winUAE
 # so the cd32 config in winuaeloader's directory needs changing, but the one in WinUAE's own configurations dir does not
-<#UAE - CD32 with PAD#> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
-<#Gamebase Amiga - disk games #> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
-<#Gamebase Amiga - whdload#> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\WHDLoad.uae"
-<#DEMObase Amiga#> UAE_Replace "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
-#<#UAE's main dir #> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
-#<#UAE - CD32 with PAD#> UAE_Replace "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
+<#UAE - CD32 with PAD#> Replace-UAE "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
+<#Gamebase Amiga - disk games #> Replace-UAE "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
+<#Gamebase Amiga - whdload#> Replace-UAE "\\$MACHINE\Emulators\GAMEBASE\GameBase Amiga\WHDLoad.uae"
+<#DEMObase Amiga#> Replace-UAE "\\$MACHINE\Emulators\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
+#<#UAE's main dir #> Replace-UAE "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
+#<#UAE - CD32 with PAD#> Replace-UAE "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
 
 #now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
 IF ($WIDTH -eq "1366") { $SCREEN = 14 }
@@ -157,7 +159,7 @@ Replace-Setting "\\$MACHINE\Emulators\SEGA\Fusion\Fusion\Fusion.ini" "=" "DResol
 #  note as such its the only case in which the separator is nothing
 $widthAndEndTag = "$WIDTH</width>"
 $heightAndEndTag = "$HEIGHT</height>"
-replace-ScreenProps "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml" "" "<width>" "<height>" "" $widthAndEndTag $heightAndEndTag
+Replace-ScreenProps "\\$MACHINE\Emulators\Nintendo\NES\Nestopia\Nestopia140bin\nestopia.xml" "" "<width>" "<height>" "" $widthAndEndTag $heightAndEndTag
 
 #Stella - just the general case of a generic replacement (instead of 'width') but a combination
 $fullres = "$WIDTH x $HEIGHT"
@@ -175,5 +177,5 @@ IF ( ($WIDTH -eq '2560') -Or ($WIDTH -eq '1280') ) {
 # now loop through all files in dir, overriding $WIDTH and $HEIGHT in the generic fn
 Get-ChildItem "\\$MACHINE\Emulators\ARCADE\Zinc\zinc11-win32\rcfg" *.cfg -recurse |
     Foreach-Object {
-		replace-ScreenProps $_.FullName "=" "XSize" "YSize" "" "$FIXED_WIDTH" "$FIXED_HEIGHT"
+		Replace-ScreenProps $_.FullName "=" "XSize" "YSize" "" "$FIXED_WIDTH" "$FIXED_HEIGHT"
 	}
