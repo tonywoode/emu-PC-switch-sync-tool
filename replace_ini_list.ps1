@@ -6,11 +6,12 @@ $WIDTH = $args[1] #Width Gets changed to eg: 1800
 $HEIGHT = $args[2] #And height Gets changed to eg: 1440
 $REFRESH = $args[3] #set refresh rate (UAE needs this for a start) gets changed to 72 (HZ that is)
 
+# first deal with general properties to change due to desktop/laptop power etc
 
 function genericCheckAndReplace {
 	param([string]$line, [string]$sep, [string]$key, [string]$val)
 	IF (Select-String -InputObject $line -Pattern "$key$sep(?!$val)" -quiet) 
-                {$line -replace "$key$sep.*", "$key$sep$val" } ELSE { $line }
+        {$line -replace "$key$sep.*", "$key$sep$val" } ELSE { $line }
 }
 
 #PCSX2 can look very nice on the desktop, change every setting needed to make that so, one by one...
@@ -48,23 +49,25 @@ $changed = $content| #note % is just 'Foreach-Object', and in this context it ju
     % { genericCheckAndReplace $_ "=" "wrap_gs_mem" $wrap_gs_mem } #NO LAST PIPE CHARACTER PLEASE!!!
 IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
-# now similar for dolphin on retroarch
+# now similar for dolphin on retroarch - note all of retroarch's values are double-quoted
 $path2conf = "\\$MACHINE\Emulators\Retroarch\RetroArch\retroarch-core-options.cfg"
 switch ($MACHINE) {
   "RIVER" {
-    $dolphin_internal_resolution = "6x (3840x3168)"
+    $dolphin_efb_scale = "`"x6 (3840 x 3168)`""
     break
   }
   default {
-    $dolphin_internal_resolution = "1.5x (960x792)"
+    $dolphin_efb_scale = "`"x2 (1280 x 1056)`""
     break
   }
 }
-(Get-Content $path2conf) | 
-Foreach-Object { $_ -replace "dolphin_internal_resolution = .*", "dolphin_internal_resolution = $dolphin_internal_resolution" } | 
-Set-Content $path2conf
+$content = Get-Content $path2conf
+$changed = $content| #note % is just 'Foreach-Object', and in this context it just means a line
+    % { genericCheckAndReplace $_ " = " "dolphin_efb_scale" $dolphin_efb_scale } #NO LAST PIPE CHARACTER PLEASE!!!
+IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
-#Then the sensible stuff, which can have a generic function, that mostly gets facaded with the passed in props
+#Then deal with width/height and screen res, which can have a generic function, that mostly gets facaded with the passed in props
+
 function Replace-ScreenProps {
 	param([string]$path2conf, [string]$sep, [string]$widthKey, [string]$heightKey, [string]$refreshKey, [string]$thisWidth, [string]$thisHeight, [string]$thisRefresh)
 	# first check if our params have been passed, only replace those which have been - https://stackoverflow.com/a/48643616
