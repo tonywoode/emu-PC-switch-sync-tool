@@ -6,6 +6,13 @@ $WIDTH = $args[1] #Width Gets changed to eg: 1800
 $HEIGHT = $args[2] #And height Gets changed to eg: 1440
 $REFRESH = $args[3] #set refresh rate (UAE needs this for a start) gets changed to 72 (HZ that is)
 
+
+function genericCheckAndReplace {
+	param([string]$line, [string]$sep, [string]$key, [string]$val)
+	IF (Select-String -InputObject $line -Pattern "$key$sep(?!$val)" -quiet) 
+                {$line -replace "$key$sep.*", "$key$sep$val" } ELSE { $line }
+}
+
 #PCSX2 can look very nice on the desktop, change every setting needed to make that so, one by one...
 $path2conf = "\\$MACHINE\Emulators\SONY\PS2\pcsx2\pcsx2\inis\GSdx.ini" 
 switch ($MACHINE) {
@@ -30,15 +37,16 @@ switch ($MACHINE) {
     break
   }
 }
-(Get-Content $path2conf) | 
-Foreach-Object { $_ -replace "upscale_multiplier=.*", "upscale_multiplier=$upscale_multiplier" } | 
-Foreach-Object { $_ -replace "filter=.*", "filter=$filter" } | 
-Foreach-Object { $_ -replace "UserHacks_MSAA=.*", "UserHacks_MSAA=$UserHacks_MSAA" } | 
-Foreach-Object { $_ -replace "MaxAnisotropy=.*", "MaxAnisotropy=$MaxAnisotropy" } | 
-Foreach-Object { $_ -replace "Userhacks_align_sprite_X=.*", "Userhacks_align_sprite_X=$Userhacks_align_sprite_X" } | 
-Foreach-Object { $_ -replace "UserHacks_unscale_point_line=.*", "UserHacks_unscale_point_line=$UserHacks_unscale_point_line" } | 
-Foreach-Object { $_ -replace "wrap_gs_mem=.*", "wrap_gs_mem=$wrap_gs_mem" } | 
-Set-Content $path2conf
+$content = Get-Content $path2conf
+$changed = $content| #note % is just 'Foreach-Object', and in this context it just means a line
+    % { genericCheckAndReplace $_ "=" "upscale_multiplier" $upscale_multiplier } |
+    % { genericCheckAndReplace $_ "=" "filter" $filter } |
+    % { genericCheckAndReplace $_ "=" "UserHacks_MSAA" $UserHacks_MSAA } |
+    % { genericCheckAndReplace $_ "=" "MaxAnisotropy" $MaxAnisotropy } |
+    % { genericCheckAndReplace $_ "=" "Userhacks_align_sprite_X" $Userhacks_align_sprite_X } |
+    % { genericCheckAndReplace $_ "=" "UserHacks_unscale_point_line" $UserHacks_unscale_point_line } |
+    % { genericCheckAndReplace $_ "=" "wrap_gs_mem" $wrap_gs_mem } #NO LAST PIPE CHARACTER PLEASE!!!
+IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
 # now similar for dolphin on retroarch
 $path2conf = "\\$MACHINE\Emulators\Retroarch\RetroArch\retroarch-core-options.cfg"
