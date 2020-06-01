@@ -15,6 +15,7 @@ function genericCheckAndReplace {
 }
 
 #PCSX2 can look very nice on the desktop, change every setting needed to make that so, one by one...
+# however note if you switch on machine, you might be in tv mode, so don't actually change resolution here
 $path2conf = "\\$MACHINE\Emulators\SONY\PS2\pcsx2\pcsx2\inis\GSdx.ini" 
 switch ($MACHINE) {
   "RIVER" {
@@ -51,8 +52,8 @@ IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-C
 
 # now similar for dolphin on retroarch - note all of retroarch's values are double-quoted
 $path2conf = "\\$MACHINE\Emulators\Retroarch\RetroArch\retroarch-core-options.cfg"
-switch ($MACHINE) {
-  "RIVER" {
+switch ($WIDTH) {
+  "3840" {
     $dolphin_efb_scale = "`"x6 (3840 x 3168)`""
     break
   }
@@ -136,6 +137,7 @@ Replace-SystemScreen "\\$MACHINE\Emulators\ARCADE\WinKawaks\winkawaks\WinKawaks.
 <#ZX Spin#> Replace-SystemScreen "\\$MACHINE\Emulators\Spectrum\Spin\Default.spincfg" "=" "FullScreenWidth" "FullScreenHeight"
 
 # then less general uses of the fns
+# I think a subtlety here is if computername is RIVER, it could be in tv mode, hence the actual res passed in instead of $MACHINE
 
 # AMIGA - uae has a set of 'fullscreen' width and heights, as well as the standard width/height/refresh. TBH i'm not sure i've ever investigated why
 function Replace-UAE {
@@ -153,12 +155,18 @@ function Replace-UAE {
 #<#UAE's main dir #> Replace-UAE "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
 #<#UAE - CD32 with PAD#> Replace-UAE "\\$MACHINE\Emulators\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
 
-#now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
+# now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
 IF ($WIDTH -eq "1366") { $SCREEN = 14 }
 ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
 ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
 ELSE { $SCREEN = 19 }
 Replace-Setting "\\$MACHINE\Emulators\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini" "=" "Screen" $SCREEN
+
+# C64 - ccs64. Same deal as the above, oddly all the variables in the cfg really do start with $ but its less confusing to omit it than to single quote it
+IF ($WIDTH -eq "1280") { $SCREENMODE = 14 }
+ELSEIF ($WIDTH -eq "2560") { $SCREENMODE = 32 }
+ELSE { $SCREENMODE = 32 } # for some reason the res of the 4k monitor causes it to postage stamp, and i think 32 will also work for both tv and 4k
+Replace-Setting "\\$MACHINE\Emulators\Commodore\C64\CCS64\c64.cfg" "=" "SCREENMODE" $SCREENMODE
 
 # MEGADRIVE - we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
 IF ($WIDTH -eq "1920" -or $WIDTH -eq "3840") { $FusionString = "56,4,128,7" } #4k or tv
