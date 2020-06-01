@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="GUI" XmlFormat="16">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Exclude</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>TwoWay</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>RecycleBin</DeletionPolicy>
+        <VersioningFolder Style="Replace"/>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>\Mame\mame\nvram\</Item>
+            <Item>\Mame\mame\sta\</Item>
+            <Item>\Mame\mame\diff\</Item>
+            <Item>\Mame\mame\cfg\</Item>
+            <Item>\Retroarch\RetroArch\saves\</Item>
+            <Item>\Retroarch\RetroArch\states\</Item>
+            <Item>\Retroarch\RetroArch\system\</Item>
+            <Item>\3D0\4DO\Saves\</Item>
+            <Item>\Acorn_BBC\Acorn\beebem385\UserData\BeebState\</Item>
+            <Item>\Acorn_BBC\Acorn\BeebEm402\BeebEm\UserData\BeebState\</Item>
+            <Item>\Acorn_BBC\BBC\BeebEm384\UserData\BeebState\</Item>
+            <Item>\Amstrad_CPC\CAPRICE\CAPRICE_3.6.1\snap\</Item>
+            <Item>\Amstrad_CPC\CAPRICE\caprice_4.2.0\snap\</Item>
+            <Item>\Amstrad_CPC\CPCE\SNAP\</Item>
+            <Item>\Amstrad_CPC\CPCEMU32\SNAP\</Item>
+            <Item>\Amstrad_CPC\WINAPE\Snapshots\</Item>
+            <Item>\ARCADE\CPS3\cps3\NVDATA\</Item>
+            <Item>\ARCADE\FinalBurn_Alpha\fba\savestates\</Item>
+            <Item>\ARCADE\M2\M2\m2emulator_09\NVDATA\</Item>
+            <Item>\ARCADE\M2\M2\m2emulator_10\NVDATA\</Item>
+            <Item>\ARCADE\Nebula\nebula\STATES\</Item>
+            <Item>\ARCADE\Raine\Raine\savedata\</Item>
+            <Item>\ARCADE\Raine\Raine\savegame\</Item>
+            <Item>\ARCADE\Supermodel\Supermodel\Config\</Item>
+            <Item>\ARCADE\Supermodel\Supermodel\NVRAM\</Item>
+            <Item>\ARCADE\Supermodel\Supermodel\Saves\</Item>
+            <Item>\ARCADE\WinKawaks\winkawaks\eeprom\</Item>
+            <Item>\ARCADE\WinKawaks\winkawaks\ini\</Item>
+            <Item>\ARCADE\WinKawaks\winkawaks\saves\</Item>
+            <Item>\ARCADE\Zinc\zinc11-win32\zcfg\</Item>
+            <Item>\ARCADE\Zinc\zinc11-win32\SNAP\</Item>
+            <Item>\Atari\Atari 2600\Stella\stella-2.6.1\snapshots\</Item>
+            <Item>\Atari\Atari 2600\Stella\stella-2.6.1\state\</Item>
+            <Item>\Atari\Atari Lynx\Handy-0.95\Save Games\</Item>
+            <Item>\Atari\Atari ST\SainT 1.6\MemoryShot\</Item>
+            <Item>\Atari\Atari ST\STeem v3.1\memory snapshots\</Item>
+            <Item>\Atari\Atari ST\STeem v3.2\memory snapshots\</Item>
+            <Item>\Atari\Atari_Jaguar\Virtual Jaguar\Virtual Jaguar\virtualjaguar-2.0.1\eeproms\</Item>
+            <Item>\BlueMSX\blueMSXv28full\QuickSave\</Item>
+            <Item>\BlueMSX\blueMSXv28full\SRAM\</Item>
+            <Item>\Commodore\Amiga\WinUAE\WINUAE\SaveImages\</Item>
+            <Item>\Commodore\Amiga\WinUAE\WINUAE\Savestates\</Item>
+            <Item>\Commodore\Amiga\WinUAELoader\WHDRun\whdrun-data\</Item>
+            <Item>\Commodore\C64\CCS64\*.c64</Item>
+            <Item>\Emerson\WinArcadia\AUTOSAVE.EAS</Item>
+            <Item>\FreezeSMS\Battery Backed Savegames\</Item>
+            <Item>\FreezeSMS\SaveGames\</Item>
+            <Item>\GAMEBASE\GameBase Amiga\whdrun-data\</Item>
+            <Item>\GBGame\</Item>
+            <Item>\Intellivision\Bliss2.0.5\rips\</Item>
+            <Item>\Mednafen\mednafen\b\</Item>
+            <Item>\Mednafen\mednafen\sav\</Item>
+            <Item>\MEKA\mekaw072\Saves\</Item>
+            <Item>\Nintendo\DS GBA GB\Desmume\saves\</Item>
+            <Item>\Nintendo\DS GBA GB\Desmume\states\</Item>
+            <Item>\Nintendo\DS GBA GB\Desmume\desmume\saves\</Item>
+            <Item>\Nintendo\DS GBA GB\Desmume\desmume\states\</Item>
+            <Item>\Nintendo\DS GBA GB\Desmume\desmume-64\Battery\</Item>
+            <Item>\Nintendo\DS GBA GB\Desmume\desmume-64\States\</Item>
+            <Item>\Nintendo\DS GBA GB\No$GBA\No$gba\BATTERY\</Item>
+            <Item>\Nintendo\DS GBA GB\No$GBA\No$gba\No$Zoomer\SAVESLOT\</Item>
+            <Item>\Nintendo\DS GBA GB\No$GBA\No$gba\SLOT\</Item>
+            <Item>\Nintendo\DS GBA GB\No$GBA\No$gba\SNAP\</Item>
+            <Item>\Nintendo\DS GBA GB\VisualBoy Advance\Battery\</Item>
+            <Item>\Nintendo\DS GBA GB\VisualBoy Advance\states\</Item>
+            <Item>\Nintendo\Gamecube Wii\Dolphin\User\Cache\</Item>
+            <Item>\Nintendo\Gamecube Wii\Dolphin\User\StateSaves\</Item>
+            <Item>\Nintendo\N64\1964\1964\save\</Item>
+            <Item>\Nintendo\N64\Mupen64\Mupen64\save\</Item>
+            <Item>\Nintendo\N64\Project64\Project64\Save\</Item>
+            <Item>\Nintendo\N64\Project64\Project64 1.6\Save\</Item>
+            <Item>\Nintendo\N64\Project64\Project64 2.1\Save\</Item>
+            <Item>\Nintendo\N64\Project64\Project64_1.7.0.49\mempaks\</Item>
+            <Item>\Nintendo\N64\Project64\Project64_1.7.0.49\Save\</Item>
+            <Item>\Nintendo\NES\FCEUx\Battery\</Item>
+            <Item>\Nintendo\NES\FCEUx\sav\</Item>
+            <Item>\Nintendo\NES\Nestopia\Nestopia140bin\save\</Item>
+            <Item>\Nintendo\NES\Nestopia\Nestopia140bin\states\</Item>
+            <Item>\Nintendo\SNES\Snes9x\snes9x-1.53-x64\Saves\</Item>
+            <Item>\Nintendo\SNES\SnesGT\snesgt0230b7e\save\</Item>
+            <Item>\Nintendo\SNES\ZSNES\states\</Item>
+            <Item>\PC\BoR\OpenBOR\Saves\</Item>
+            <Item>\PC\Oolite\oolite.app\oolite-saves\</Item>
+            <Item>\PC\ScummVM\Saved Games\</Item>
+            <Item>\PC\DOS\DOSBox\svn\SAVE\</Item>
+            <Item>\PCEngine\Magic Engine\Magic-Engine113\states\</Item>
+            <Item>\PCEngine\Magic Engine FX\states\</Item>
+            <Item>\SEGA\Dreamcast\demul64\memsaves\</Item>
+            <Item>\SEGA\Dreamcast\demul64\nvram\</Item>
+            <Item>\SEGA\Dreamcast\demul64\sstates\</Item>
+            <Item>\SEGA\Fusion\Fusion\BRM files\</Item>
+            <Item>\SEGA\Fusion\Fusion\save states\</Item>
+            <Item>\SEGA\Fusion\Fusion\SRM Files\</Item>
+            <Item>\SEGA\Fusion\Fusion\SxM\</Item>
+            <Item>\SEGA\HazeMD\HazeMD\nvram\</Item>
+            <Item>\SEGA\Saturn\SSF\SSF\Backup\</Item>
+            <Item>\SEGA\Saturn\SSF\SSF\StateSave\</Item>
+            <Item>\SNK\NEO GEO CD\neoraine\savedata\</Item>
+            <Item>\SNK\NEO GEO CD\neoraine\savegame\</Item>
+            <Item>\SNK\NEOGEO Pocket Color\Koyote-0.5.0-win32-release\Koyote-0.5.0-win32-release\states\</Item>
+            <Item>\SNK\NEOGEO Pocket Color\NeoPop-0.71-Win32-1.06b\Battery\</Item>
+            <Item>\SNK\NEOGEO Pocket Color\NeoPop-0.71-Win32-1.06b\States\</Item>
+            <Item>\SONY\PS1\EPSXE\memcards\</Item>
+            <Item>\SONY\PS1\EPSXE\sstates\</Item>
+            <Item>\SONY\PS1\pSX\pSX\saves\</Item>
+            <Item>\SONY\PS1\pSX\pSX\cards\</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\memcards\</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\sstates\</Item>
+            <Item>\SONY\PSP\ppsspp\ppsspp\memstick\</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLER\</Item>
+            <Item>\RECYCLED\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+            <Item>*.DS_Store |</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>P:</Left>
+            <Right>\\Estuary\Emulators</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder/>
+    <EmailNotification Condition="Always"/>
+    <Gui>
+        <MiddleGridView>Action</MiddleGridView>
+    </Gui>
+</FreeFileSync>
