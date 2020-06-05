@@ -8,23 +8,20 @@
     <Synchronize>
         <Variant>TwoWay</Variant>
         <DetectMovedFiles>false</DetectMovedFiles>
-        <DeletionPolicy>RecycleBin</DeletionPolicy>
-        <VersioningFolder Style="Replace"/>
+        <DeletionPolicy>Versioning</DeletionPolicy>
+        <VersioningFolder Style="TimeStamp-File">C:\Users\Tony\FFSArchive</VersioningFolder>
     </Synchronize>
     <Filter>
         <Include>
-            <Item>*.sav</Item>
+            <Item>*</Item>
         </Include>
         <Exclude>
-            <Item>\OneDrive\</Item>
-            <Item>\SCREENSHOTS\</Item>
             <Item>\System Volume Information\</Item>
             <Item>\$Recycle.Bin\</Item>
             <Item>\RECYCLER\</Item>
             <Item>\RECYCLED\</Item>
             <Item>*\desktop.ini</Item>
             <Item>*\thumbs.db</Item>
-            <Item>*.DS_Store |</Item>
         </Exclude>
         <TimeSpan Type="None">0</TimeSpan>
         <SizeMin Unit="None">0</SizeMin>
@@ -32,7 +29,7 @@
     </Filter>
     <FolderPairs>
         <Pair>
-            <Left>P:</Left>
+            <Left>P:\</Left>
             <Right>\\Estuary\Emulators</Right>
         </Pair>
     </FolderPairs>
