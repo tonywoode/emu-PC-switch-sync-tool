@@ -1,52 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="7" XmlType="BATCH">
-    <MainConfig>
-        <Comparison>
-            <Variant>TimeAndSize</Variant>
-            <Symlinks>Direct</Symlinks>
-            <IgnoreTimeShift/>
-        </Comparison>
-        <SyncConfig>
-            <Variant>TwoWay</Variant>
-            <CustomDirections>
-                <LeftOnly>right</LeftOnly>
-                <RightOnly>left</RightOnly>
-                <LeftNewer>right</LeftNewer>
-                <RightNewer>left</RightNewer>
-                <Different>none</Different>
-                <Conflict>none</Conflict>
-            </CustomDirections>
-            <DetectMovedFiles>false</DetectMovedFiles>
-            <DeletionPolicy>Permanent</DeletionPolicy>
-            <VersioningFolder Style="Replace"/>
-        </SyncConfig>
-        <GlobalFilter>
-            <Include>
-                <Item>*</Item>
-            </Include>
-            <Exclude>
-                <Item>/.fseventsd/</Item>
-                <Item>/.Spotlight-V100/</Item>
-                <Item>/.Trashes/</Item>
-                <Item>*/.DS_Store</Item>
-                <Item>*/._.*</Item>
-                <Item>/System Volume Information/</Item>
-            </Exclude>
-            <TimeSpan Type="None">0</TimeSpan>
-            <SizeMin Unit="None">0</SizeMin>
-            <SizeMax Unit="None">0</SizeMax>
-        </GlobalFilter>
-        <FolderPairs>
-            <Pair>
-                <Left>/Users/twoode/CODE</Left>
-                <Right>/Volumes/CODE</Right>
-            </Pair>
-        </FolderPairs>
-        <OnCompletion/>
-    </MainConfig>
-    <BatchConfig>
-        <HandleError>Popup</HandleError>
-        <RunMinimized>false</RunMinimized>
-        <LogfileFolder Limit="-1">/Users/twoode/CODE/SyncLog</LogfileFolder>
-    </BatchConfig>
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="BATCH" XmlFormat="16">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Direct</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>TwoWay</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>Permanent</DeletionPolicy>
+        <VersioningFolder Style="Replace"/>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>/.fseventsd/</Item>
+            <Item>/.Spotlight-V100/</Item>
+            <Item>/.Trashes/</Item>
+            <Item>*.DS_Store</Item>
+            <Item>*._.DS_Store</Item>
+            <Item>*/._.*</Item>
+            <Item>/System Volume Information/</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>/Users/twoode/CODE</Left>
+            <Right>/Volumes/CODE</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder>/Users/twoode/CODE/SyncLog</LogFolder>
+    <EmailNotification Condition="Always"/>
+    <Batch>
+        <ProgressDialog Minimized="false" AutoClose="false"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
 </FreeFileSync>

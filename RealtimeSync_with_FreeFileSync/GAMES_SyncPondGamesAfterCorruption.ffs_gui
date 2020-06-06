@@ -1,83 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="8" XmlType="GUI">
-    <MainConfig>
-        <Comparison>
-            <Variant>Content</Variant>
-            <Symlinks>Exclude</Symlinks>
-            <IgnoreTimeShift/>
-        </Comparison>
-        <SyncConfig>
-            <Variant>Custom</Variant>
-            <CustomDirections>
-                <LeftOnly>right</LeftOnly>
-                <RightOnly>none</RightOnly>
-                <LeftNewer>right</LeftNewer>
-                <RightNewer>left</RightNewer>
-                <Different>right</Different>
-                <Conflict>right</Conflict>
-            </CustomDirections>
-            <DetectMovedFiles>false</DetectMovedFiles>
-            <DeletionPolicy>RecycleBin</DeletionPolicy>
-            <VersioningFolder Style="Replace"/>
-        </SyncConfig>
-        <GlobalFilter>
-            <Include>
-                <Item>*</Item>
-            </Include>
-            <Exclude>
-                <Item>\System Volume Information\</Item>
-                <Item>\$Recycle.Bin\</Item>
-                <Item>\RECYCLER\</Item>
-                <Item>\RECYCLED\</Item>
-                <Item>*\desktop.ini</Item>
-                <Item>*\thumbs.db</Item>
-            </Exclude>
-            <TimeSpan Type="None">0</TimeSpan>
-            <SizeMin Unit="None">0</SizeMin>
-            <SizeMax Unit="None">0</SizeMax>
-        </GlobalFilter>
-        <FolderPairs>
-            <Pair>
-                <Left>\\RIVER\Games\NONGOOD</Left>
-                <Right>\\POND\Games\NONGOOD</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\Nintendo Games\SNES Games</Left>
-                <Right>\\POND\Games\Nintendo Games\SNES Games</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\Nintendo Games\NES Games</Left>
-                <Right>\\POND\Games\Nintendo Games\NES Games</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\Nintendo Games\N64 Games</Left>
-                <Right>\\POND\Games\Nintendo Games\N64 Games</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\Nintendo Games\Gameboy Games</Left>
-                <Right>\\POND\Games\Nintendo Games\Gameboy Games</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\NEC GAMES\PCEngine Games</Left>
-                <Right>\\POND\Games\NEC GAMES\PCEngine Games</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\Gamebase Games</Left>
-                <Right>\\POND\Games\Gamebase Games</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\Console Classics</Left>
-                <Right>\\POND\Games\Console Classics</Right>
-            </Pair>
-            <Pair>
-                <Left>\\RIVER\Games\Computer Classics</Left>
-                <Right>\\POND\Games\Computer Classics</Right>
-            </Pair>
-        </FolderPairs>
-        <IgnoreErrors>false</IgnoreErrors>
-        <PostSyncCommand Condition="Completion"/>
-    </MainConfig>
-    <GuiConfig>
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="GUI" XmlFormat="16">
+    <Compare>
+        <Variant>Content</Variant>
+        <Symlinks>Exclude</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>Custom</Variant>
+        <CustomDirections>
+            <LeftOnly>right</LeftOnly>
+            <RightOnly>none</RightOnly>
+            <LeftNewer>right</LeftNewer>
+            <RightNewer>left</RightNewer>
+            <Different>right</Different>
+            <Conflict>right</Conflict>
+        </CustomDirections>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>RecycleBin</DeletionPolicy>
+        <VersioningFolder Style="Replace"/>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLER\</Item>
+            <Item>\RECYCLED\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+            <Item>*.DS_Store</Item>
+            <Item>*._.DS_Store</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>\\RIVER\Games\NONGOOD</Left>
+            <Right>\\POND\Games\NONGOOD</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\Nintendo Games\SNES Games</Left>
+            <Right>\\POND\Games\Nintendo Games\SNES Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\Nintendo Games\NES Games</Left>
+            <Right>\\POND\Games\Nintendo Games\NES Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\Nintendo Games\N64 Games</Left>
+            <Right>\\POND\Games\Nintendo Games\N64 Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\Nintendo Games\Gameboy Games</Left>
+            <Right>\\POND\Games\Nintendo Games\Gameboy Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\NEC GAMES\PCEngine Games</Left>
+            <Right>\\POND\Games\NEC GAMES\PCEngine Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\Gamebase Games</Left>
+            <Right>\\POND\Games\Gamebase Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\Console Classics</Left>
+            <Right>\\POND\Games\Console Classics</Right>
+        </Pair>
+        <Pair>
+            <Left>\\RIVER\Games\Computer Classics</Left>
+            <Right>\\POND\Games\Computer Classics</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder/>
+    <EmailNotification Condition="Always"/>
+    <Gui>
         <MiddleGridView>Category</MiddleGridView>
-    </GuiConfig>
+    </Gui>
 </FreeFileSync>

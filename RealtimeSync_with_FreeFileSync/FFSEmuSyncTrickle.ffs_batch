@@ -1,55 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FreeFileSync XmlFormat="3" XmlType="BATCH">
-    <MainConfig>
-        <Comparison>
-            <Variant>TimeAndSize</Variant>
-            <Symlinks>Direct</Symlinks>
-        </Comparison>
-        <SyncConfig>
-            <Variant>TwoWay</Variant>
-            <CustomDirections>
-                <LeftOnly>right</LeftOnly>
-                <RightOnly>left</RightOnly>
-                <LeftNewer>right</LeftNewer>
-                <RightNewer>left</RightNewer>
-                <Different>none</Different>
-                <Conflict>none</Conflict>
-            </CustomDirections>
-            <DetectMovedFiles>false</DetectMovedFiles>
-            <DeletionPolicy>Versioning</DeletionPolicy>
-            <VersioningFolder Style="TimeStamp">E:\FFSArchive</VersioningFolder>
-        </SyncConfig>
-        <GlobalFilter>
-            <Include>
-                <Item>*</Item>
-            </Include>
-            <Exclude>
-                <Item>\System Volume Information\</Item>
-                <Item>\$Recycle.Bin\</Item>
-                <Item>\RECYCLER\</Item>
-                <Item>\RECYCLED\</Item>
-                <Item>*\desktop.ini</Item>
-                <Item>*\thumbs.db</Item>
-            </Exclude>
-            <TimeSpan Type="None">0</TimeSpan>
-            <SizeMin Unit="None">0</SizeMin>
-            <SizeMax Unit="None">0</SizeMax>
-        </GlobalFilter>
-        <FolderPairs>
-            <Pair>
-                <Left>F:\SCREENSHOTS</Left>
-                <Right>\\TRICKLE\Trickle_Games\SCREENSHOTS</Right>
-            </Pair>
-            <Pair>
-                <Left>P:</Left>
-                <Right>\\TRICKLE\Emulators</Right>
-            </Pair>
-        </FolderPairs>
-        <OnCompletion>Close progress dialog</OnCompletion>
-    </MainConfig>
-    <BatchConfig>
-        <HandleError>Popup</HandleError>
-        <ShowProgress>false</ShowProgress>
-        <LogfileFolder Limit="-1">E:\FFS\FFSLog</LogfileFolder>
-    </BatchConfig>
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="BATCH" XmlFormat="16">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Direct</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>TwoWay</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>Versioning</DeletionPolicy>
+        <VersioningFolder Style="TimeStamp-File">E:\FFSArchive</VersioningFolder>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLER\</Item>
+            <Item>\RECYCLED\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+            <Item>*.DS_Store</Item>
+            <Item>*._.DS_Store</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>F:\SCREENSHOTS</Left>
+            <Right>\\TRICKLE\Trickle_Games\SCREENSHOTS</Right>
+        </Pair>
+        <Pair>
+            <Left>P:</Left>
+            <Right>\\TRICKLE\Emulators</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder>E:\FFS\FFSLog</LogFolder>
+    <EmailNotification Condition="Always"/>
+    <Batch>
+        <ProgressDialog Minimized="false" AutoClose="true"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
 </FreeFileSync>

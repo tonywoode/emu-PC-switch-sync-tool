@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FreeFileSync XmlType="BATCH" XmlFormat="15">
+<FreeFileSync XmlType="BATCH" XmlFormat="16">
     <Compare>
         <Variant>TimeAndSize</Variant>
         <Symlinks>Direct</Symlinks>
@@ -28,6 +28,8 @@
             <Item>\My Music</Item>
             <Item>\My Pictures</Item>
             <Item>\My Videos</Item>
+            <Item>*.DS_Store</Item>
+            <Item>*._.DS_Store</Item>
         </Exclude>
         <TimeSpan Type="None">0</TimeSpan>
         <SizeMin Unit="None">0</SizeMin>
