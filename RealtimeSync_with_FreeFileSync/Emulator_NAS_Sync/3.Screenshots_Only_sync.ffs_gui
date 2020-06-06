@@ -32,7 +32,7 @@
     <FolderPairs>
         <Pair>
             <Left>P:\</Left>
-            <Right>\\Estuary\Emulators</Right>
+            <Right>N:\</Right>
         </Pair>
     </FolderPairs>
     <Errors Ignore="false" Retry="0" Delay="5"/>

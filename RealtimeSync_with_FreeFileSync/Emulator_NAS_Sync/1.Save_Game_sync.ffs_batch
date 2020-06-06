@@ -140,7 +140,7 @@
     <FolderPairs>
         <Pair>
             <Left>P:\</Left>
-            <Right>\\Estuary\Emulators</Right>
+            <Right>N:\</Right>
         </Pair>
     </FolderPairs>
     <Errors Ignore="true" Retry="1" Delay="5"/>
