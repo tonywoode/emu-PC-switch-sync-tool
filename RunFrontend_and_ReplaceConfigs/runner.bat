@@ -11,7 +11,11 @@ if "%computername%"=="LAGOON"  (START /B ReplaceTextAndLaunchQP.bat LAGOON 1280 
 if "%computername%"=="POND"    (START /B ReplaceTextAndLaunchQP.bat POND 2560 1600 60)
 
 ::ensure we sync save games
-START "C:\Program Files\FreeFileSync\FreeFileSync.exe" "P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\1.Save_Game_sync.ffs_batch"
+START "" "C:\Program Files\FreeFileSync\FreeFileSync.exe" "P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\1.Save_Game_sync.ffs_batch"
+::kick off a powershell script that will sync commonly used emu configs if qp is open, but not if commonly used emus are...
+START powershell -File "P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\RunSync2IfQPopenButEmusNot.ps1"
+:: kick off realtimeSync for the screnshots
+START "" "C:\Program Files\FreeFileSync\RealTimeSync.exe" "P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\3.Screenshots_Only_sync.ffs_batch"
 
 ::my Emulators and frontend all live on Drive P (subst), so if we aren't on that drive, we won't be able to CD
 if not ("%~d0")==("P:") (P:)

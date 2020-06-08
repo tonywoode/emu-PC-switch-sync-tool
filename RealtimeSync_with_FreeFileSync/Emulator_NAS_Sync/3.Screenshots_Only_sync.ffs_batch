@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FreeFileSync XmlType="GUI" XmlFormat="16">
+<FreeFileSync XmlType="BATCH" XmlFormat="16">
     <Compare>
         <Variant>TimeAndSize</Variant>
         <Symlinks>Exclude</Symlinks>
@@ -35,11 +35,13 @@
             <Right>N:\Screenshots\</Right>
         </Pair>
     </FolderPairs>
-    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <Errors Ignore="true" Retry="0" Delay="5"/>
     <PostSyncCommand Condition="Completion"/>
     <LogFolder/>
     <EmailNotification Condition="Always"/>
-    <Gui>
-        <MiddleGridView>Action</MiddleGridView>
-    </Gui>
+    <Batch>
+        <ProgressDialog Minimized="true" AutoClose="true"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
 </FreeFileSync>
