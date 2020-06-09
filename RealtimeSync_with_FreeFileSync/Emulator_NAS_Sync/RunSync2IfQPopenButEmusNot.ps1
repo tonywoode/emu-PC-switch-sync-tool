@@ -1,4 +1,5 @@
-﻿$quickplay = Get-Process QP -ErrorAction SilentlyContinue
+﻿Get-Process
+$quickplay = Get-Process QP -ErrorAction SilentlyContinue
 $usedEmulators = Get-Process retroarch,mame64,pcsx2 -ErrorAction SilentlyContinue
 
 if ($quickplay) {
