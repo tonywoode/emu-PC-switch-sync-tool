@@ -29,7 +29,8 @@ set savegame_sync=%FFS% "%nas_sync_dir:"=%1.Save_Game_sync.ffs_batch"
 set active_files_sync=%FFS% "%nas_sync_dir:"=%2.Active_Files_No_Screenshots_sync.ffs_batch"
 set screenshots_sync=%FFS% "%nas_sync_dir:"=%3.Screenshots_Only_sync.ffs_batch"
 
-START "running syncs" /B cmd /c " %savegame_sync% && %active_files_sync% && %screenshots_sync% "
+:: don' start with the /b flag else we won't be able to taskkill /T later on, use /MIN instead
+START "runningSyncs" /MIN cmd /c " %savegame_sync% && %active_files_sync% && %screenshots_sync% "
 
 ::my Emulators and frontend all live on Drive P (subst), so if we aren't on that drive, we won't be able to CD
 if not ("%~d0")==("P:") (P:)
@@ -46,13 +47,14 @@ QP.exe
 
 :: QP is now no longer running, if any syncs are still running, kill them (lets you get out of a laborious unintended sync quickly) 
 :: If no syncs are running, run a full(ish) sync
-:: BEWARE: a possible issue here is if you load up quickplay when using FFS for some other long term operation....
+:: a possible issue here is if you load up quickplay when using FFS for some other long term operation....
+::  hence the WindowTitle kill.....see https://stackoverflow.com/questions/9486960/how-to-get-pid-of-process-just-started-from-within-a-batch-file
 tasklist /FI "IMAGENAME eq FreeFileSync.exe" 2>NUL | find /I /N "FreeFileSync.exe">NUL
 if "%ERRORLEVEL%"=="0" (
 	:: there actually always seems to be both FreeFileSync.exe and FreeFileSync_64.exe running
-	taskkill /FI "imagename eq FreeFileSync*" /F
+	taskkill /FI "WindowTitle eq runningSyncs*" /T /F
 ) ELSE (
-	START "running syncs" /B cmd /c " %savegame_sync% && %active_files_sync% && %screenshots_sync% "
+	START "runningSyncs" /B cmd /c " %savegame_sync% && %active_files_sync% && %screenshots_sync% "
 )
 
 ::export the gamebase reg before we close
