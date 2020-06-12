@@ -1,4 +1,3 @@
-
 ::cd to script directory, for administrator needs to run this
 cd /D "%~dp0" 
 ::import the gamebase reg REG IMPORT "P:\GAMEBASE\Gamebase.reg"
@@ -24,13 +23,11 @@ if "%computername%"=="POND"    (START /B ReplaceTextAndLaunchQP.bat POND 2560 16
 :: we want to start these 3 syncs asynschronously from quickplay, but not continue to the next sync if errorlevel,
 :: which may catch us out sometimes, but also means if we quit a sync we stop all syncs
 set FFS="C:\Program Files\FreeFileSync\FreeFileSync.exe"
-set nas_sync_dir="P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\"
-set savegame_sync=powershell -File checkEmus.ps1 %FFS% "%nas_sync_dir:"=%1.Save_Game_sync.ffs_batch"
-set active_files_sync=powershell -File checkEmus.ps1 %FFS% "%nas_sync_dir:"=%2.Active_Files_No_Screenshots_sync.ffs_batch"
-set screenshots_sync=powershell -File checkEmus.ps1 %FFS% "%nas_sync_dir:"=%3.Screenshots_Only_sync.ffs_batch"
-
+set nas_sync_dir="P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\AutoSyncs\"
+set open_close_sync=%FFS% "%nas_sync_dir:"=%Frontend_Open_close_sync.ffs_batch"
+set run_sync=START "runningSync" /MIN /LOW cmd /c " %open_close_sync% " 
 :: don' start with the /b flag else we won't be able to taskkill /T later on, use /MIN instead
-START "runningSyncs" /MIN cmd /c " %savegame_sync% && %active_files_sync% && %screenshots_sync% "
+%run_sync%
 
 ::my Emulators and frontend all live on Drive P (subst), so if we aren't on that drive, we won't be able to CD
 if not ("%~d0")==("P:") (P:)
@@ -52,9 +49,9 @@ QP.exe
 tasklist /FI "IMAGENAME eq FreeFileSync.exe" 2>NUL | find /I /N "FreeFileSync.exe">NUL
 if "%ERRORLEVEL%"=="0" (
 	:: there actually always seems to be both FreeFileSync.exe and FreeFileSync_64.exe running
-	taskkill /FI "WindowTitle eq runningSyncs*" /T /F
+	taskkill /FI "WindowTitle eq runningSync*" /T /F
 ) ELSE (
-	START "runningSyncs" /B cmd /c " %savegame_sync% && %active_files_sync% && %screenshots_sync% "
+	%run_sync%
 )
 
 ::export the gamebase reg before we close
@@ -62,5 +59,3 @@ REG EXPORT HKEY_CURRENT_USER\Software\GB64 "P:\GAMEBASE\Gamebase.reg" /y
 
 ::kill joy2key as it can have unwanted side effects
 taskkill /IM "JoyToKey.exe" /F
-
-
