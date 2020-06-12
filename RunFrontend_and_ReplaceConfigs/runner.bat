@@ -25,9 +25,9 @@ if "%computername%"=="POND"    (START /B ReplaceTextAndLaunchQP.bat POND 2560 16
 :: which may catch us out sometimes, but also means if we quit a sync we stop all syncs
 set FFS="C:\Program Files\FreeFileSync\FreeFileSync.exe"
 set nas_sync_dir="P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\"
-set savegame_sync=%FFS% "%nas_sync_dir:"=%1.Save_Game_sync.ffs_batch"
-set active_files_sync=%FFS% "%nas_sync_dir:"=%2.Active_Files_No_Screenshots_sync.ffs_batch"
-set screenshots_sync=%FFS% "%nas_sync_dir:"=%3.Screenshots_Only_sync.ffs_batch"
+set savegame_sync=powershell -File checkEmus.ps1 %FFS% "%nas_sync_dir:"=%1.Save_Game_sync.ffs_batch"
+set active_files_sync=powershell -File checkEmus.ps1 %FFS% "%nas_sync_dir:"=%2.Active_Files_No_Screenshots_sync.ffs_batch"
+set screenshots_sync=powershell -File checkEmus.ps1 %FFS% "%nas_sync_dir:"=%3.Screenshots_Only_sync.ffs_batch"
 
 :: don' start with the /b flag else we won't be able to taskkill /T later on, use /MIN instead
 START "runningSyncs" /MIN cmd /c " %savegame_sync% && %active_files_sync% && %screenshots_sync% "
