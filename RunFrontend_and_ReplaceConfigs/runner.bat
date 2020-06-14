@@ -44,7 +44,8 @@ QP.exe
 
 :: QP is now no longer running, if any syncs are still running, kill them (lets you get out of a laborious unintended sync quickly) 
 :: If no syncs are running, run a full(ish) sync
-:: a possible issue here is if you load up quickplay when using FFS for some other long term operation....
+:: a possible issue here is if you load up quickplay when using FFS for some other long term operation, it might kill that operation
+:: however another consideration is if freefilesync is running for some other reason, we won't kick off the sync, but that's probably a good thing
 ::  hence the WindowTitle kill.....see https://stackoverflow.com/questions/9486960/how-to-get-pid-of-process-just-started-from-within-a-batch-file
 tasklist /FI "IMAGENAME eq FreeFileSync.exe" 2>NUL | find /I /N "FreeFileSync.exe">NUL
 if "%ERRORLEVEL%"=="0" (

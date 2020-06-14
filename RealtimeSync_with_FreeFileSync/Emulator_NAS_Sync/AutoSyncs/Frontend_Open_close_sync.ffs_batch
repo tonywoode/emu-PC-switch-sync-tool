@@ -13,14 +13,29 @@
     </Synchronize>
     <Filter>
         <Include>
-            <Item>\Mame\mame\nvram\</Item>
-            <Item>\Mame\mame\sta\</Item>
-            <Item>\Mame\mame\diff\</Item>
-            <Item>\Mame\mame\cfg\</Item>
-            <Item>\Retroarch\RetroArch\saves\</Item>
-            <Item>\Retroarch\RetroArch\states\</Item>
-            <Item>\Retroarch\RetroArch\system\</Item>
-            <Item>\Retroarch\RetroArch\playlists\</Item>
+            <Item>\Acorn_BBC\</Item>
+            <Item>\Amstrad_CPC\</Item>
+            <Item>\ARCADE\CPS3\</Item>
+            <Item>\ARCADE\M2\</Item>
+            <Item>\ARCADE\Supermodel\</Item>
+            <Item>\ARCADE\Zinc\</Item>
+            <Item>\Atari\Atari ST\STeem v3.2\</Item>
+            <Item>\Atari\Atari800\Altirra-1.8\</Item>
+            <Item>\Commodore\</Item>
+            <Item>\GAMEBASE\</Item>
+            <Item>\JoyToKey\</Item>
+            <Item>\MAME\mame\</Item>
+            <Item>\Music\</Item>
+            <Item>\PC\BOR\</Item>
+            <Item>\PC\DOS\DOSBox\</Item>
+            <Item>\PC\eXoDOS\</Item>
+            <Item>\PC\ScummVM\</Item>
+            <Item>\QUICKPLAY\QuickPlayFrontend\qp</Item>
+            <Item>\Retroarch\</Item>
+            <Item>\SONY\PS2\</Item>
+            <Item>\Spectrum\</Item>
+            <Item>\.\*.*</Item>
+            <Item/>
             <Item>\3D0\4DO\Saves\</Item>
             <Item>\Acorn_BBC\Acorn\beebem385\UserData\BeebState\</Item>
             <Item>\Acorn_BBC\Acorn\BeebEm402\BeebEm\UserData\BeebState\</Item>
@@ -125,6 +140,21 @@
             <Item>\SONY\PSP\ppsspp\ppsspp\memstick\</Item>
         </Include>
         <Exclude>
+            <Item>\Retroarch\TextDocsNowOnWiki\</Item>
+            <Item>\Retroarch\RetroArch\cheats\</Item>
+            <Item>\Retroarch\RetroArch\assets\</Item>
+            <Item>\Retroarch\RetroArch\shaders\</Item>
+            <Item>\Retroarch\RetroArch\downloads\</Item>
+            <Item>\Retroarch\RetroArch\overlays\</Item>
+            <Item>*\MAME\full\bestgames\</Item>
+            <Item>*\MAME\full\series\</Item>
+            <Item>*\MAME\full\version\</Item>
+            <Item>*\MAME\filtered\bestgames\</Item>
+            <Item>*\MAME\filtered\series\</Item>
+            <Item>*\MAME\filtered\version\</Item>
+            <Item>\JoyToKey\JoyToKey.log</Item>
+            <Item>\QUICKPLAY\QuickPlayFrontend\qp\mametool_logfile.txt</Item>
+            <Item/>
             <Item>\System Volume Information\</Item>
             <Item>\$Recycle.Bin\</Item>
             <Item>\RECYCLER\</Item>
