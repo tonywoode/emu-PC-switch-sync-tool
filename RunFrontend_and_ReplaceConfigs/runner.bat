@@ -23,7 +23,7 @@ if "%computername%"=="POND"    (START /B ReplaceTextAndLaunchQP.bat POND 2560 16
 :: we want to start these 3 syncs asynschronously from quickplay, but not continue to the next sync if errorlevel,
 :: which may catch us out sometimes, but also means if we quit a sync we stop all syncs
 set FFS="C:\Program Files\FreeFileSync\FreeFileSync.exe"
-set nas_sync_dir="P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\AutoSyncs\"
+set nas_sync_dir="P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\"
 set open_close_sync=%FFS% "%nas_sync_dir:"=%Frontend_Open_close_sync.ffs_batch"
 set run_sync=START "runningSync" /MIN /LOW cmd /c " %open_close_sync% " 
 :: don' start with the /b flag else we won't be able to taskkill /T later on, use /MIN instead
