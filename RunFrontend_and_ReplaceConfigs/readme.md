@@ -1,4 +1,4 @@
-VERSION 2.01 DEC 17
+VERSION 2.02 DEC 17
 ===================
 Windows 10 now sees the shortcut to explorer and the original shortcut as the same type of thing, rendering the shortcut obsolete, we can now right click the first shortcut RunFronend.lnk and 'send to taskbar"
 
