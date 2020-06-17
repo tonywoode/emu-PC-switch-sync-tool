@@ -6,11 +6,20 @@ pushd .
 ::import the gamebase reg REG IMPORT "P:\GAMEBASE\Gamebase.reg"
 ::TODO: why did i comment that out?
 
+::We will replace emu ini text with the args you pass to me. Args are
+::%1 = new Machine
+::%2 = new width
+::%3 = new height
+::%4 = new refresh
+::note one based, where powershell is zero based (because arg 0 is the command that was run) 
+::now powershell - remember we do NOT need old machine for this.....
+set replace_text_in_inis=START /B powershell -file .\..\replace_ini_list.ps1
+
 ::here START ensures these get called async, a nice touch tho is remove the /B and you see the output in a new persisting window
-if "%computername%"=="RIVER"   (START /B ReplaceTextAndLaunchQP.bat RIVER 3840 2160 60)
-if "%computername%"=="TRICKLE" (START /B ReplaceTextAndLaunchQP.bat TRICKLE 1366 768 60)
-if "%computername%"=="LAGOON"  (START /B ReplaceTextAndLaunchQP.bat LAGOON 1280 800 60)
-if "%computername%"=="POND"    (START /B ReplaceTextAndLaunchQP.bat POND 2560 1600 60)
+if "%computername%"=="RIVER"   (%replace_text_in_inis% RIVER 3840 2160 60)
+if "%computername%"=="TRICKLE" (%replace_text_in_inis% TRICKLE 1366 768 60)
+if "%computername%"=="LAGOON"  (%replace_text_in_inis% LAGOON 1280 800 60)
+if "%computername%"=="POND"    (%replace_text_in_inis% POND 2560 1600 60)
 
 :: though the ffs sync basics are setup in this file (so that the switch-to-tv script can also use them), we do have a lot in this file
 ::  that assumes knowledge of that one (eg: using the window title setup in that script later on) so do refer to it to understand this one
