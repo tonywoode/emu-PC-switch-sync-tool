@@ -1,10 +1,22 @@
 SETLOCAL
-::switch to tv
-::this is an abstraction of the tv switching function, things that might change realtively often are set in SWITCH_TO_TV.bat
 ::cd to script directory, for administrator needs to run this
 cd /D "%~dp0"
+::capture the script dir, we'll need it later
+pushd .
 
 echo.****CONFIGURING TV MODE AND LAUNCHING FRONTEND*****
+
+::import the gamebase reg REG IMPORT "P:\GAMEBASE\Gamebase.reg"
+::TODO: why did i comment that out?
+
+::We will replace emu ini text with the args you pass to me. Args are
+::%1 = new Machine
+::%2 = new width
+::%3 = new height
+::%4 = new refresh
+::note one based, where powershell is zero based (because arg 0 is the command that was run) 
+::now powershell - remember we do NOT need old machine for this.....
+set replace_text_in_inis=START /B powershell -file .\..\replace_ini_list.ps1
 
 ::Unlike the other switcher scripts in this set, this does a back-and-forth so needs to be told both monitor A and monitor B's settings
 SET MACHINE=%1
@@ -15,7 +27,8 @@ SET MON_WIDTH=%5
 SET MON_HEIGHT=%6
 SET MON_REFRESH=%7
 
-powershell -file .\..\replace_ini_list.ps1 %MACHINE% %TV_WIDTH% %TV_HEIGHT% %TV_REFRESH%
+
+%replace_text_in_inis% %MACHINE% %TV_WIDTH% %TV_HEIGHT% %TV_REFRESH%
 
 ::do tv specific stuff
 powershell -file .\switch_to_tv_list.ps1 14
@@ -39,25 +52,37 @@ reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /
 ::may need to start joytokey as administrator too...
 ::why did i comment this out and why is it above the runner for itself
 ::taskkill /IM "JoyToKey.exe" /F
-:: just like in runner.bat in quickplay launcher, we must start JoyToKey up for some emus
+
+:: the ffs sync basics are setup in this file (so that the switch-to-tv script can also use them)
+call ../RunFrontend_and_ReplaceConfigs/runFFSSync.bat
+
+::my Emulators and frontend all live on Drive P (subst), so if we aren't on that drive, we won't be able to CD
+if not ("%~d0")==("P:") (P:)
+
+::joy2key does my mappings for player1 in many emulators, consider that there's many emulators that won't
+:: let you map both a keyboard and joypad at the same time
 start /D "P:\JoytoKey\" JoyToKey.exe
 
-::launch our frontend
-::if we don't CD to qp's dir, realative paths won't work. Many tools currently need relative paths
-pushd P:\QUICKPLAY\QUickPlayFrontend\qp 
+::now run my frontend, if we don't CD to qp's dir, relative paths won't work. Many tools currently need relative paths
+cd /D P:\QUICKPLAY\QuickPlayFrontend\qp 
 QP.exe /HTPC /MAXIMISE
 
 ::then when we go back, we do it the other way round
 echo.****EXITING TV MODE*****
 
-::stop joyToKey, just like I do in the runner.bat of my QP launcher script, as it can have unwanted side effects
-:: (keep in mind that, running qp up again will reinstantiate joy2key)
+:: QP is now no longer running, if any syncs are still running, kill them (lets you get out of a laborious unintended sync quickly) 
+:: If no syncs are running, sync again
+popd
+call ../RunFrontend_and_ReplaceConfigs/runFFSSync.bat
+
+::export the gamebase reg before we close
+REG EXPORT HKEY_CURRENT_USER\Software\GB64 "P:\GAMEBASE\Gamebase.reg" /y
+
+::kill joy2key as it can have unwanted side effects
 taskkill /IM "JoyToKey.exe" /F
 
-::go back to O drive where my code is kept
-popd
-
-powershell -file .\..\replace_ini_list.ps1 %MACHINE% %MON_WIDTH% %MON_HEIGHT% %MON_REFRESH%
+::for the TV script we must also do these...
+%replace_text_in_inis% %MACHINE% %MON_WIDTH% %MON_HEIGHT% %MON_REFRESH%
 
 ::undo tv-specific stuff
 powershell -file .\switch_to_tv_list.ps1 8

@@ -1,7 +1,10 @@
+SETLOCAL
 ::cd to script directory, for administrator needs to run this
 cd /D "%~dp0" 
-::caputure the script dir, we'll need it later
+::capture the script dir, we'll need it later
 pushd .
+
+echo.****CONFIGURING EMUS AND LAUNCHING FRONTEND*****
 
 ::import the gamebase reg REG IMPORT "P:\GAMEBASE\Gamebase.reg"
 ::TODO: why did i comment that out?
@@ -21,8 +24,7 @@ if "%computername%"=="TRICKLE" (%replace_text_in_inis% TRICKLE 1366 768 60)
 if "%computername%"=="LAGOON"  (%replace_text_in_inis% LAGOON 1280 800 60)
 if "%computername%"=="POND"    (%replace_text_in_inis% POND 2560 1600 60)
 
-:: though the ffs sync basics are setup in this file (so that the switch-to-tv script can also use them), we do have a lot in this file
-::  that assumes knowledge of that one (eg: using the window title setup in that script later on) so do refer to it to understand this one
+:: the ffs sync basics are setup in this file (so that the switch-to-tv script can also use them)
 call ./runFFSSync.bat
 
 ::my Emulators and frontend all live on Drive P (subst), so if we aren't on that drive, we won't be able to CD
@@ -35,6 +37,9 @@ start /D "P:\JoytoKey\" JoyToKey.exe
 ::now run my frontend, if we don't CD to qp's dir, relative paths won't work. Many tools currently need relative paths
 cd /D P:\QUICKPLAY\QuickPlayFrontend\qp 
 QP.exe
+
+::there are actions to take on exit
+echo.****EXITING EMU*****
 
 :: QP is now no longer running, if any syncs are still running, kill them (lets you get out of a laborious unintended sync quickly) 
 :: If no syncs are running, sync again
