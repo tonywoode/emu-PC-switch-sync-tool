@@ -33,7 +33,7 @@ SET MON_REFRESH=%7
 ::do tv specific stuff
 powershell -file .\switch_to_tv_list.ps1 14
 
-:now we will set the resolution 1920x1080 in the registry for EPSXE - Pete's D3D driver
+:now we will set the resolution 1920x1080 in the registry for EPSXE - Use Pete's OpenGL2 GPU core driver not D3D or it will crash on 4K
 :for instance		Monitor				TV
 :			ResX	3840 = 0x00000F00	1920 = 0x00000780
 :			ResY	2160 = 0x00000870	1080 = 0x00000438
@@ -43,8 +43,8 @@ powershell -file .\switch_to_tv_list.ps1 14
 
 
 ::set the Monitors resolution in the registry for EPSXE - Pete's D3D driver
-reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
-reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
+reg add "HKCU\Software\epsxe\config\ogl2" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
+reg add "HKCU\Software\epsxe\config\ogl2" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
 ::and EPSXE's Joypad needs to turn on
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 515,513,512,514,273,275,274,272,278,280,279,281,277,276,282,283 /f
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /d 1,0,0,0,0,0,0,0 /f
@@ -90,16 +90,8 @@ powershell -file .\switch_to_tv_list.ps1 8
 @FOR /F "tokens=*" %%k IN ('To_Hex.bat %MON_WIDTH%') DO set HEX_WIDTH=%%k
 @FOR /F "tokens=*" %%l IN ('To_Hex.bat %MON_HEIGHT%') DO set HEX_HEIGHT=%%l
 
-::Sadly Pete's D3D driver can't cope with 4k res, so we need to add a manual exception for 3840x2160
-:: TODO: I tried going to the OPENGL2 driver but it hated display scaling - maybe when launched by quickplay it would work fine though
-::The highest we seem to be able to get is 1920x1440 (the registry shows you the hex of these - just set it in epsxe and look)
-:: Later, I found on POND (2650x1600) that I needed to untick 'use window size in fullscreen mode (fullscreen hack)' that i'd previously ticked
-::  otherwise i got pillarboxed to a tiny window. this may need setting back so this process can work for RIVER however
-if (%HEX_WIDTH%)==(0x00000F00) do set HEX_WIDTH=0x00000780
-if (%HEX_WIDTH%)==(0x00000870) do set HEX_WIDTH=0x000005a0
-
-reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
-reg add "HKCU\Software\Vision Thing\PSEmu Pro\GPU\PeteD3D" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
+reg add "HKCU\Software\epsxe\config\ogl2" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
+reg add "HKCU\Software\epsxe\config\ogl2" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
 
 ::and set EPSXE's dual shock back to the keyboard (or those keys that we can anyway)
 reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 203,205,200,208,17,32,31,30,16,15,18,19,28,42,36,38 /f
