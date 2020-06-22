@@ -33,21 +33,17 @@ SET MON_REFRESH=%7
 ::do tv specific stuff
 powershell -file .\switch_to_tv_list.ps1 14
 
-:now we will set the resolution 1920x1080 in the registry for EPSXE - Use Pete's OpenGL2 GPU core driver not D3D or it will crash on 4K
-:for instance		Monitor				TV
-:			ResX	3840 = 0x00000F00	1920 = 0x00000780
-:			ResY	2160 = 0x00000870	1080 = 0x00000438
+:: we'll use this many times
+set set_epsxe_reg=reg add HKCU\Software\epsxe\config
+
 :: To get a return value, we have to echo in that script and capture the echo...not great 
 @FOR /F "tokens=*" %%i IN ('To_Hex.bat %TV_WIDTH%') DO set HEX_WIDTH=%%i
 @FOR /F "tokens=*" %%j IN ('To_Hex.bat %TV_HEIGHT%') DO set HEX_HEIGHT=%%j
-
-
-::set the Monitors resolution in the registry for EPSXE - Pete's D3D driver
-reg add "HKCU\Software\epsxe\config\ogl2" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
-reg add "HKCU\Software\epsxe\config\ogl2" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
+call :set_epsxe_reg %HEX_WIDTH% %HEX_HEIGHT%
+ 
 ::and EPSXE's Joypad needs to turn on
-reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 515,513,512,514,273,275,274,272,278,280,279,281,277,276,282,283 /f
-reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /d 1,0,0,0,0,0,0,0 /f
+%set_epsxe_reg% /v Pad1 /t REG_SZ  /d 515,513,512,514,273,275,274,272,278,280,279,281,277,276,282,283 /f
+%set_epsxe_reg% /v GamepadMotorType /t REG_SZ  /d 1,0,0,0,0,0,0,0 /f
 
 ::may need to start joytokey as administrator too...
 ::why did i comment this out and why is it above the runner for itself
@@ -89,12 +85,18 @@ powershell -file .\switch_to_tv_list.ps1 8
 
 @FOR /F "tokens=*" %%k IN ('To_Hex.bat %MON_WIDTH%') DO set HEX_WIDTH=%%k
 @FOR /F "tokens=*" %%l IN ('To_Hex.bat %MON_HEIGHT%') DO set HEX_HEIGHT=%%l
-
-reg add "HKCU\Software\epsxe\config\ogl2" /v ResX /t REG_DWORD /d %HEX_WIDTH% /f
-reg add "HKCU\Software\epsxe\config\ogl2" /v ResY /t REG_DWORD /d %HEX_HEIGHT% /f
+call :set_epsxe_reg %HEX_WIDTH% %HEX_HEIGHT%
 
 ::and set EPSXE's dual shock back to the keyboard (or those keys that we can anyway)
-reg add HKEY_CURRENT_USER\Software\epsxe\config /v Pad1 /t REG_SZ  /d 203,205,200,208,17,32,31,30,16,15,18,19,28,42,36,38 /f
-reg add HKEY_CURRENT_USER\Software\epsxe\config /v GamepadMotorType /t REG_SZ  /d 0,0,0,0,0,0,0,0 /f
+%set_epsxe_reg% /v Pad1 /t REG_SZ  /d 203,205,200,208,17,32,31,30,16,15,18,19,28,42,36,38 /f
+%set_epsxe_reg% /v GamepadMotorType /t REG_SZ  /d 0,0,0,0,0,0,0,0 /f
 
-exit
+EXIT
+
+:now we will set the resolution 1920x1080 in the registry for EPSXE - Use Pete's OpenGL2 GPU core driver not D3D or it will crash on 4K
+:for instance		Monitor				TV
+:			ResX	3840 = 0x00000F00	1920 = 0x00000780
+:			ResY	2160 = 0x00000870	1080 = 0x00000438
+:set_epsxe_reg
+%set_epsxe_reg%\ogl2 /v ResX /t REG_DWORD /d %1 /f
+%set_epsxe_reg%\ogl2 /v ResY /t REG_DWORD /d %2 /f
