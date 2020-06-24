@@ -6,9 +6,10 @@ so as to capture trivial changes that get made by emulators when you play games,
 (as sich find a frontend runner in a parent dir here that calls this sync in some relatively cunning ways). I've got this auto-sync down to about
 40 seconds
 
-Then there are three manual syncs, the main one is simply a full sync of your emulators folder, the other two are convenience sync files, due
-to SCREENSHOTS being a terribly large part of retro gaming, we can either sync with them in mind, or not in mind, or exclusively. If you don't
-care about this, just always run the full sync. You run the full syncs when you've made code changes, or larger changes that affect whole emulators
+Then there are some manual sync files, the fullest one is simply a full sync of your emulators folder, it has 2 relations which are convenience sync files, due
+to SCREENSHOTS being a terribly large part of retro gaming, we can either sync with them in mind, or not in mind, or exclusively. There is a further script that only syncsIf
+files considered to be 'code'. If you don't care about this, just always run the full sync. You run the full syncs when you've made code changes, 
+or larger changes that affect whole emulators
 
 Interestingly in this plan, emulator config file changes sit somewhere in-between, but really ALL should be captured by the auto-sync, despite that not
 really being its primiary puropose
@@ -17,6 +18,8 @@ Note that there's some exclusion folders and also the archive directory that's s
 and easy way of doing that is to open them all in the same FreeFileSync instance - use the 'open' button and ctrl_click them all to open
 
 The NAS Sync does not copy symlinks at all. Some other solution needs to exist to make sure symlinks are the same on all Emu folders
+
+There is a powershell script here which will create a nice folder link on your desktop which lead to the nas sync shortcuts, it will give it a nice icon
 
 
 How could I use the computer-to-computer syncs on Windows?
