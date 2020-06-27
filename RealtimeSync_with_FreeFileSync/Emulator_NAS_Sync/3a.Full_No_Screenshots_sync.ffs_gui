@@ -30,6 +30,10 @@
             <Item>*\thumbs.db</Item>
             <Item>*.DS_Store</Item>
             <Item>*._.DS_Store</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\dev9null.log</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\emuLog.txt</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\FWnull.log</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\USBnull.log</Item>
         </Exclude>
         <TimeSpan Type="None">0</TimeSpan>
         <SizeMin Unit="None">0</SizeMin>

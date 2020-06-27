@@ -154,6 +154,10 @@
             <Item>*\MAME\filtered\version\</Item>
             <Item>\JoyToKey\JoyToKey.log</Item>
             <Item>\QUICKPLAY\QuickPlayFrontend\qp\mametool_logfile.txt</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\dev9null.log</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\emuLog.txt</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\FWnull.log</Item>
+            <Item>\SONY\PS2\pcsx2\pcsx2\logs\USBnull.log</Item>
             <Item/>
             <Item>\System Volume Information\</Item>
             <Item>\$Recycle.Bin\</Item>
