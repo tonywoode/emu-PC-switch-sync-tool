@@ -1,25 +1,54 @@
 How could I use the NAS Syncs on Windows
 ========================================
 
-The core idea here is to have a single auto-sync, that selectively syncs emulator files that are involved in day-to-day game playing, 
-so as to capture trivial changes that get made by emulators when you play games, so this sync runs async when you open and close your frontend
-(as sich find a frontend runner in a parent dir here that calls this sync in some relatively cunning ways). I've got this auto-sync down to about
-40 seconds
+Emulator_NAS_Sync\1.Frontend_Open_close_sync.ffs_batch
+======================================================
+The core idea here is to have a single auto-sync, that selectively syncs emulator save games, emulators files that are involved in day-to-day game 
+playing, and most emulator config files generally, so this sync runs async when you open and close your frontend. (as such find a frontend runner 
+in a parent dir here that calls this sync in some relatively cunning ways). I've got this auto-sync down to about 40 seconds. Its so fast because 
+I've tuned it to only sync files from my emulators that are liable to actually change (and in particular aren't costly to sync). So Retroarch's 
+'cheat' files aren't in the sync (they'll only change when I upgrade Retroarch and contain thousands of small files), and the files for emulators 
+kept for historical/comparison interest aren't in, since they're unlikely to change in day-to-day use.
 
-Then there are some manual sync files, the fullest one is simply a full sync of your emulators folder, it has 2 relations which are convenience sync files, due
-to SCREENSHOTS being a terribly large part of retro gaming, we can either sync with them in mind, or not in mind, or exclusively. There is a further script that only syncsIf
-files considered to be 'code'. If you don't care about this, just always run the full sync. You run the full syncs when you've made code changes, 
-or larger changes that affect whole emulators
+Emulator_NAS_Sync\2.Code_sync.ffs_gui
+=====================================
+There is a further script that only syncs files considered to be 'code'. By using the manual code sync in addition to the auto sync this should 
+cover 95% of day-to-day changes (but for instance files in Emulators root may not sync when you might expect them to).
 
-Interestingly in this plan, emulator config file changes sit somewhere in-between, but really ALL should be captured by the auto-sync, despite that not
-really being its primiary puropose
+Emulator_NAS_Sync\3a.Full_No_Screenshots_sync.ffs_gui
+Emulator_NAS_Sync\3b.Screenshots_Only_sync
+Emulator_NAS_Sync\3z.Full_sync
+=====================================================
+Then there are some manual sync files, the fullest one is simply a full sync of your emulators folder, it has 2 relations which are convenience sync 
+files, due to SCREENSHOTS being a terribly large part of retro gaming, we can either sync with them in mind, or not in mind, or exclusively.
 
-Note that there's some exclusion folders and also the archive directory that's shared between the manual syncs, a change to one requires a change to all,
-and easy way of doing that is to open them all in the same FreeFileSync instance - use the 'open' button and ctrl_click them all to open
+There are common configs between the FFS sync files: e.g. there's some exclusion folders, and also the archive directory location, that's shared 
+between the manual syncs, so its worth editing them all at once: open them all in the same FreeFileSync instance - use the 'open' button and 
+ctrl_click them all to open
 
-The NAS Sync does not copy symlinks at all. Some other solution needs to exist to make sure symlinks are the same on all Emu folders
+Emulator_NAS_Sync\4a.Emu_backup_mirror.ffs_batch
+Emulator_NAS_Sync\4b.make_7zip_from_backup_emu_mirror.ps1
+Emulator_NAS_Sync\4c.RIVERs Emu Backup Folder
+=========================================================
+The Emulator syncs are unhelpful for backup purposes. We do place FFS's file backup archive on all machines that do syncing, but thats not enough.
+So we have a dedicated backup location. This holds a single mirror of the emulators folder (which is what 4a does for me and is fast). 
+But at any time that mirror can be snapshotted off into its own 7zip archive (what 4b gets you). That is slow. Both are held at location 4c.
+So the idea is to mirror much more often than archive. These are all manual
 
-There is a powershell script here which will create a nice folder link on your desktop which lead to the nas sync shortcuts, it will give it a nice icon
+
+Helper Files/Processes
+======================
+
+Emulator_NAS_Sync_Link_On_Desktop.ps1 - This will place a shortcut to the NAS Sync folder from this repo on your desktop, with a nice icon, for convenience
+
+Emulator_NAS_Sync\5.create_symlinks_replace_script.ps1
+======================================================
+The NAS Sync does not copy symlinks at all. This is a major bugbear with syncing because only administrator can copy symlinks, but administrators mapped
+drives might be different from user's mapped drives. And a linux nas box is not going to honour or make its won versions of windows symlinks. (And 
+as we all know, lots can go wrong with symlinks). So in all the NAS syncs we ignore symlinks and instead running this script will (manually) create
+another powershell script in the base of the emulators folder, which, when run, will reconstitute all the symlinks found when the original script was
+run. This seems like the best way of communicating symlinks across operating systems/time/file-systems/storage-devices: if we ever need to reconsitute
+the symlinks we can. The running of this script is manual because the symlinks here change very infrequently
 
 
 How could I use the computer-to-computer syncs on Windows?
