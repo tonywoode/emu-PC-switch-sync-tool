@@ -35,12 +35,6 @@ So we have a dedicated backup location. This holds a single mirror of the emulat
 But at any time that mirror can be snapshotted off into its own 7zip archive (what 4b gets you). That is slow. Both are held at location 4c.
 So the idea is to mirror much more often than archive. These are all manual
 
-
-Helper Files/Processes
-======================
-
-Emulator_NAS_Sync_Link_On_Desktop.ps1 - This will place a shortcut to the NAS Sync folder from this repo on your desktop, with a nice icon, for convenience
-
 Emulator_NAS_Sync\5.create_symlinks_replace_script.ps1
 ======================================================
 The NAS Sync does not copy symlinks at all. This is a major bugbear with syncing because only administrator can copy symlinks, but administrators mapped
@@ -50,8 +44,24 @@ another powershell script in the base of the emulators folder, which, when run, 
 run. This seems like the best way of communicating symlinks across operating systems/time/file-systems/storage-devices: if we ever need to reconsitute
 the symlinks we can. The running of this script is manual because the symlinks here change very infrequently
 
+6a.WindowsSaves_sync.ffs_batch
+6b.RealtimeSyncWindowsSaves_scheduled_task.xml
+6c.ImportXMLToTaskScheduler_RunMeAsAdmin.bat
+==============================================
+Modern-ish windows Games have a nasty habit of saving their save games in some crazy subfolder of your documents or 'saved games' home directories. In order to
+try and preserve these saved games, we have to go a bit further: the idea is to take them into your 'Emulators' directory and then eventually sync those (ie: when I
+perform a full sync). For now that works quite well, perhaps in time when these games are all playable via laptop I could change the sync target from P: (ie: the same
+drive really that i'm coming from....) to the NAS itself (N:/). But for now its overkill. Also overkill is possibly running this windows games sync as a FFS 'Realtime Sync'
+(i suspect the reason for it is simply its not an emulator-type sync), but to get this sync running, you have to import the xml (6b), but runing the bat (6c) as admin
+I used to do this as admin in a peer-to-peer way between pc and latop, there it had to run at logon not startup (it won't work at startup), but now seems to work as startup when
+not admin.
 
-How could I use the computer-to-computer syncs on Windows?
+Helper Files/Processes
+======================
+
+Emulator_NAS_Sync_Link_On_Desktop.ps1 - This will place a shortcut to the NAS Sync folder from this repo on your desktop, with a nice icon, for convenience
+
+How could I use the deprecated computer-to-computer syncs on Windows?
 =======================================================
 
 Its all about administrator because of symlinks. First Load FreeFileSync and open a *._batch file from this folder. Change it to suit your configuration. Save it as a batch
