@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="BATCH" XmlFormat="16">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Exclude</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>TwoWay</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>Versioning</DeletionPolicy>
+        <VersioningFolder Style="TimeStamp-File">C:\Users\Tony\FFSArchive</VersioningFolder>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLER\</Item>
+            <Item>\RECYCLED\</Item>
+            <Item>*\desktop.ini</Item>
+            <Item>*\thumbs.db</Item>
+            <Item>\My Music\</Item>
+            <Item>\My Pictures\</Item>
+            <Item>\My Videos\</Item>
+            <Item>\My Music</Item>
+            <Item>\My Pictures</Item>
+            <Item>\My Videos</Item>
+            <Item>*.DS_Store</Item>
+            <Item>*._.DS_Store</Item>
+            <Item>\WinMerge\</Item>
+            <Item>\WindowsPowerShell\</Item>
+            <Item>\Updater\</Item>
+            <Item>\TomTomUpgrade\</Item>
+            <Item>\TomTom\</Item>
+            <Item>\Scanned Documents\</Item>
+            <Item>\Sound recordings\</Item>
+            <Item>\My Shapes\</Item>
+            <Item>\Outlook Files\</Item>
+            <Item>\Custom Office Templates\</Item>
+            <Item>\Downloads\</Item>
+            <Item>\Fax\</Item>
+            <Item>\FeedbackHub\</Item>
+            <Item>\AutoHotkey.ahk</Item>
+            <Item>\Default.rdp</Item>
+            <Item>\gitignore_global.txt</Item>
+            <Item>\hgignore_global.txt</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>\\LAGOON\Users\Tony\Saved Games</Left>
+            <Right>P:\PC\WindowsGameSaves\Saved Games</Right>
+        </Pair>
+        <Pair>
+            <Left>\\LAGOON\Users\Tony\Documents</Left>
+            <Right>P:\PC\WindowsGameSaves\Documents</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="true" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder/>
+    <EmailNotification Condition="Always"/>
+    <Batch>
+        <ProgressDialog Minimized="true" AutoClose="true"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
+</FreeFileSync>
