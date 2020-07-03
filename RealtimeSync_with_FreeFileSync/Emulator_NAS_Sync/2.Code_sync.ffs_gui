@@ -29,7 +29,6 @@
             <Item>*\thumbs.db</Item>
             <Item>*.DS_Store</Item>
             <Item>*._.DS_Store</Item>
-            <Item>\OneDrive\Personal Vault-river.lnk</Item>
             <Item>\QUICKPLAY\QuickPlayFrontend\qp\mametool_logfile.txt</Item>
         </Exclude>
         <TimeSpan Type="None">0</TimeSpan>

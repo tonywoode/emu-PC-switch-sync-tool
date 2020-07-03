@@ -16,9 +16,7 @@
             <Item>*</Item>
         </Include>
         <Exclude>
-            <Item>\OneDrive\.849C9593-D756-4E56-8D6E-42412F2A707B</Item>
             <Item>\JoyToKey\JoyToKey.log</Item>
-            <Item>\OneDrive\Personal Vault.lnk</Item>
             <Item>\QUICKPLAY\QuickPlayFrontend\qp\mametool_logfile.txt</Item>
             <Item/>
             <Item>\SCREENSHOTS\</Item>
