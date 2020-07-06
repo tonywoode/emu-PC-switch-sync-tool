@@ -14,8 +14,13 @@
 set FFS="C:\Program Files\FreeFileSync\FreeFileSync.exe"
 set nas_sync_dir="P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\"
 set open_close_sync=%FFS% "%nas_sync_dir:"=%1.Frontend_Open_close_sync.ffs_batch"
+set nas="estuary"
 
-call :run_syncs_if_only_sync
+:: only try and auto-sync if you can see the nas box SMB (so we don't run a 10 min sync if we're not at home)
+ping %nas%
+if "%ERRORLEVEL%"=="0" (
+ call :run_syncs_if_only_sync
+)
 
 EXIT /B %ERRORLEVEL%
 
