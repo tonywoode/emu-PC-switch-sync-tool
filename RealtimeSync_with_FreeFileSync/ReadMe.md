@@ -38,7 +38,7 @@ So the idea is to mirror much more often than archive. These are all manual
 Emulator_NAS_Sync\5.create_symlinks_replace_script.ps1
 ======================================================
 The NAS Sync does not copy symlinks at all. This is a major bugbear with syncing because only administrator can copy symlinks, but administrators mapped
-drives might be different from user's mapped drives. And a linux nas box is not going to honour or make its won versions of windows symlinks. (And 
+drives might be different from user's mapped drives. And a linux nas box is not going to honour or make its own versions of windows symlinks. (And 
 as we all know, lots can go wrong with symlinks). So in all the NAS syncs we ignore symlinks and instead running this script will (manually) create
 another powershell script in the base of the emulators folder, which, when run, will reconstitute all the symlinks found when the original script was
 run. This seems like the best way of communicating symlinks across operating systems/time/file-systems/storage-devices: if we ever need to reconsitute

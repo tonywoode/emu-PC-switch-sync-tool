@@ -13,6 +13,37 @@
 # pity about having to surround with double quotes all the time, its acutally not needed by the links i have atm
 
 $emuDir = "P:\"
+# Take note of this folder here, its in your autoInstall files ie: we're assuming the main use for this script is at build time only
+$outFilePath = $emuDir + "WinScripts\winAutoInstall\7.RemakeEmulatorsSymlinks\RemakeSymlinks.ps1"
+# First a bit of code using powershell's heredoc to make it so I don't have to run the result as admin...
+
+Write-Host "Finding all symlinks in $emuDir and writing a file that will reconstitute them to $outFilePath..."
+
+"# This file generated from $PSCommandPath" > $outFilePath
+
+$runAsAdminPreamble = @'
+param([switch]$Elevated)
+
+function Test-Admin {
+  $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+  $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+}
+
+if ((Test-Admin) -eq $false)  {
+    if ($elevated) 
+    {
+        # tried to elevate, did not work, aborting
+    } 
+    else {
+        Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
+}
+
+exit
+}
+'running with full privileges'
+'@ >> $outFilePath
+
+# now note Tee-ing the output and appending to file (we need to for each loop but its ok since we already overwrote the previous file with our pre-amble)
 Dir $emuDir -Force -Recurse -ErrorAction 'silentlycontinue' | 
 #  below would just report all symlinks in the same format nix would, instead of making a reconstitute script
 #  Where { $_.Attributes -match "ReparsePoint"} | % {$_.FullName + " --> "+ $_.Target + " (" + $_.LinkType + ")"} | Tee P:\Symlinks.txt
@@ -20,4 +51,4 @@ Dir $emuDir -Force -Recurse -ErrorAction 'silentlycontinue' |
   "pushd " + '"' + $(split-path $_.Fullname) + '"'
   "New-Item -ItemType SymbolicLink -Path " + '"' + $_.FullName + '"' + " -Target "+ '"' + $_.Target + '"'
   "popd"
-  } | Tee P:\RemakeSymlinks.ps1
+  } | Tee $outFilePath -Append
