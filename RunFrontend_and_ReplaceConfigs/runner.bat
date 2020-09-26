@@ -6,7 +6,10 @@ pushd .
 
 echo.****CONFIGURING EMUS AND LAUNCHING FRONTEND*****
 
-::import the gamebase reg REG IMPORT "P:\GAMEBASE\Gamebase.reg"
+::import the gamebase reg 
+SET GBRegDir=P:\GAMEBASE
+REG IMPORT %GBRegDir%\Gamebase.reg
+
 ::TODO: why did i comment that out?
 
 ::We will replace emu ini text with the args you pass to me. Args are
@@ -47,7 +50,11 @@ echo.****EXITING EMU*****
 popd
 call ./runFFSSync.bat
 
-::export the gamebase reg before we close
+::export the gamebase reg before we close - backup the older file, but only one per day pls
+:: see https://stackoverflow.com/a/10945887 for datetime format
+for /f %%x in ('wmic path win32_localtime get /format:list ^| findstr "="') do set %%x
+set today=%Day%-%Month%-%Year%
+move %GBRegDir%\Gamebase.reg "%GBRegDir%\old_reg_files\Gamebase-%today%.reg"
 REG EXPORT HKEY_CURRENT_USER\Software\GB64 "P:\GAMEBASE\Gamebase.reg" /y
 
 ::kill joy2key as it can have unwanted side effects
