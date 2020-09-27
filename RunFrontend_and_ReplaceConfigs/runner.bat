@@ -6,11 +6,9 @@ pushd .
 
 echo.****CONFIGURING EMUS AND LAUNCHING FRONTEND*****
 
-::import the gamebase reg 
-SET GBRegDir=P:\GAMEBASE
-REG IMPORT %GBRegDir%\Gamebase.reg
-
-::TODO: why did i comment that out?
+::I used to import the gamebase reg, which seemed intuitive at first, but think: importing this is an setup-time-only-action,
+:: and indeed if you open gamebase outside of opening QuickPlay, you'll lose any changes made... 
+::REG IMPORT P:\GAMEBASE\Gamebase.reg
 
 ::We will replace emu ini text with the args you pass to me. Args are
 ::%1 = new Machine
@@ -51,11 +49,7 @@ popd
 call ./runFFSSync.bat
 
 ::export the gamebase reg before we close - backup the older file, but only one per day pls
-:: see https://stackoverflow.com/a/10945887 for datetime format
-for /f %%x in ('wmic path win32_localtime get /format:list ^| findstr "="') do set %%x
-set today=%Day%-%Month%-%Year%
-move %GBRegDir%\Gamebase.reg "%GBRegDir%\old_reg_files\Gamebase-%today%.reg"
-REG EXPORT HKEY_CURRENT_USER\Software\GB64 "P:\GAMEBASE\Gamebase.reg" /y
+powershell -file .\..\Gamebase_Import_Export\GamebaseCompareScript.ps1
 
 ::kill joy2key as it can have unwanted side effects
 taskkill /IM "JoyToKey.exe" /F
