@@ -9,7 +9,7 @@
         <Variant>TwoWay</Variant>
         <DetectMovedFiles>false</DetectMovedFiles>
         <DeletionPolicy>Versioning</DeletionPolicy>
-        <VersioningFolder Style="TimeStamp-File">C:\Users\Tony\FFSArchive</VersioningFolder>
+        <VersioningFolder Style="TimeStamp-File">%UserProfile%\FFSArchive</VersioningFolder>
     </Synchronize>
     <Filter>
         <Include>
