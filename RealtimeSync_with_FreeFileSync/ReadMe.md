@@ -52,9 +52,13 @@ Modern-ish windows Games have a nasty habit of saving their save games in some c
 try and preserve these saved games, we have to go a bit further: the idea is to take them into your 'Emulators' directory and then eventually sync those (ie: when I
 perform a full sync). For now that works quite well, perhaps in time when these games are all playable via laptop I could change the sync target from P: (ie: the same
 drive really that i'm coming from....) to the NAS itself (N:/). But for now its overkill. Also overkill is possibly running this windows games sync as a FFS 'Realtime Sync'
-(i suspect the reason for it is simply its not an emulator-type sync), but to get this sync running, you have to import the xml (6b), but runing the bat (6c) as admin
+(i suspect the reason for it is simply its not an emulator-type sync), but to get this sync running, you have to import the xml (6b), by runing the bat (6c) as admin
 I used to do this as admin in a peer-to-peer way between pc and latop, there it had to run at logon not startup (it won't work at startup), but now seems to work as startup when
 not admin.
+* You may think its not safe to sync your 'documents' folder on Windows, but take a look at it. I've excluded all the usual suspects and all that's left is Game Saves.
+* Note also the scheduled task creation here is not about running as admin, its about scheduling a task! And note the task is loaded via an xml, bypassing our problem of CMD-created 
+tasks not starting when on batteries
+* You might think that you need to do an intial sync before you activate the scheduled task, but on my first run of the scheduled task it did sync
 
 Helper Files/Processes
 ======================

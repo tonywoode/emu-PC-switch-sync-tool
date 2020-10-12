@@ -54,11 +54,11 @@
     </Filter>
     <FolderPairs>
         <Pair>
-            <Left>\\LAGOON\Users\Tony\Saved Games</Left>
+            <Left>%UserProfile%\Saved Games</Left>
             <Right>P:\PC\WindowsGameSaves\Saved Games</Right>
         </Pair>
         <Pair>
-            <Left>\\LAGOON\Users\Tony\Documents</Left>
+            <Left>%UserProfile%\Documents</Left>
             <Right>P:\PC\WindowsGameSaves\Documents</Right>
         </Pair>
     </FolderPairs>
