@@ -8,6 +8,8 @@ $REFRESH = $args[3] #set refresh rate (UAE needs this for a start) gets changed 
 
 # first deal with general properties to change due to desktop/laptop power etc
 # note the ^\s* - we don't want to replace false positives (e.g.: had an issue with Screen=19 and Fullscreen=1)
+# but in the same spirit we don't want to check and find a false positive either, since this will cause a write
+# even if it does no harm beacause we replace the right thing
 $BOL = "^\s*"
 # regex in this domain is fairly standard see https://www.zerrouki.com/powershell-cheatsheet-regular-expressions/
 
@@ -159,7 +161,8 @@ function Replace-UAE {
 #<#UAE - CD32 with PAD#> Replace-UAE "P:\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
 
 # now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
-IF ($WIDTH -eq "1366") { $SCREEN = 14 }
+# why are the 1366 and 2880 value both 14 when they are doutbless different ratios? the value is just index in auto-generated array based on system res 
+IF ($WIDTH -eq "1366" -or $WIDTH -eq "2880") { $SCREEN = 14 }
 ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
 ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
 ELSE { $SCREEN = 19 }
