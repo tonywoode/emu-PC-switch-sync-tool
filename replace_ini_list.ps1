@@ -7,11 +7,13 @@ $HEIGHT = $args[2] #And height Gets changed to eg: 1440
 $REFRESH = $args[3] #set refresh rate (UAE needs this for a start) gets changed to 72 (HZ that is)
 
 # first deal with general properties to change due to desktop/laptop power etc
+# note the ^\s* - we don't want to replace false positives (e.g.: had an issue with Screen=19 and Fullscreen=1)
+# regex in this domain is fairly standard see https://www.zerrouki.com/powershell-cheatsheet-regular-expressions/
 
 function genericCheckAndReplace {
 	param([string]$line, [string]$sep, [string]$key, [string]$val)
 	IF (Select-String -InputObject $line -Pattern "$key$sep(?!$val)" -quiet) 
-        {$line -replace "$key$sep.*", "$key$sep$val" } ELSE { $line }
+        {$line -replace "^\s$key$sep.*", "$key$sep$val" } ELSE { $line }
 }
 
 #PCSX2 can look very nice on the desktop, change every setting needed to make that so, one by one...
@@ -87,9 +89,9 @@ function Replace-ScreenProps {
 		){
      # https://stackoverflow.com/a/11652395 and note % is just 'Foreach-Object'
 			(Get-Content $path2conf) |
-			% { IF ($replaceWidth) {$_ -replace "$widthKey$sep.*", "$widthKey$sep$thisWidth"} ELSE {$_} } |
-			% { IF ($replaceHeight) {$_ -replace "$heightKey$sep.*", "$heightKey$sep$thisHeight"} ELSE {$_} } |
-			% { IF ($replaceRefresh) {$_ -replace "$refreshKey$sep.*", "$refreshKey$sep$thisRefresh"} ELSE {$_} } |
+			% { IF ($replaceWidth) {$_ -replace "^\s*$widthKey$sep.*", "$widthKey$sep$thisWidth"} ELSE {$_} } |
+			% { IF ($replaceHeight) {$_ -replace "^\s*$heightKey$sep.*", "$heightKey$sep$thisHeight"} ELSE {$_} } |
+			% { IF ($replaceRefresh) {$_ -replace "^\s*$refreshKey$sep.*", "$refreshKey$sep$thisRefresh"} ELSE {$_} } |
 			Set-Content $path2conf
 		}  
 }
