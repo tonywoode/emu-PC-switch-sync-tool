@@ -169,9 +169,11 @@ ELSE { $SCREENMODE = 32 } # for some reason the res of the 4k monitor causes it 
 Replace-Setting "P:\Commodore\C64\CCS64\c64.cfg" "=" "SCREENMODE" $SCREENMODE
 
 # MEGADRIVE - we need a similar trick for Kega Fusion (which doesn't like 4k resolutions btw, so we stick to 2k....)
+# To work out a resolution, load fusion.exe, change fullscreen resolution, switch to it and exit, now check DResolution in its config
 IF ($WIDTH -eq "1920" -or $WIDTH -eq "3840") { $FusionString = "56,4,128,7" } #4k or tv
- ELSEIF ($WIDTH -eq "1280" -or $WIDTH -eq "2560") { $FusionString = "32,3,0,5" } #current laptops 1280x800
-ELSE { $FusionString = "224,1,128,2" } #default to 640x480 if something else happenss
+ELSEIF ($WIDTH -eq "2880") { $FusionString = "176,4,128,7" } #actually fusion can cope with 1920x1200 which is the largest we'll get with our 2880x1800
+ELSEIF ($WIDTH -eq "1280" -or $WIDTH -eq "2560") { $FusionString = "32,3,0,5" } #current laptops 1280x800
+ELSE { $FusionString = "224,1,128,2" } #default to 640x480 if something else happenss (actually thats what fusion will automatically do if problems)
 Replace-Setting "P:\SEGA\Fusion\Fusion\Fusion.ini" "=" "DResolution" $FusionString
 
 #NESTOPIA - tony the pony...here we are, regexing xml....the original version of this made it very clear its xml
