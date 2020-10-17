@@ -8,11 +8,12 @@ $REFRESH = $args[3] #set refresh rate (UAE needs this for a start) gets changed 
 
 # first deal with general properties to change due to desktop/laptop power etc
 # note the ^\s* - we don't want to replace false positives (e.g.: had an issue with Screen=19 and Fullscreen=1)
+$BOL = "^\s*"
 # regex in this domain is fairly standard see https://www.zerrouki.com/powershell-cheatsheet-regular-expressions/
 
 function genericCheckAndReplace {
 	param([string]$line, [string]$sep, [string]$key, [string]$val)
-	IF (Select-String -InputObject $line -Pattern "$key$sep(?!$val)" -quiet) 
+	IF (Select-String -InputObject $line -Pattern "$BOL$key$sep(?!$val)" -quiet) 
         {$line -replace "^\s$key$sep.*", "$key$sep$val" } ELSE { $line }
 }
 
@@ -83,15 +84,15 @@ function Replace-ScreenProps {
 	# negative lookbehind to only replace where you find >=1 height=[NOT 1280]
 	# this prevents changing timestamps for no good reason, the conditional structure should replace any one of (good for inconsistent state)
 	If ( 
-		(($replaceWidth) -And (Select-String -Path $path2conf -Pattern "$widthKey$sep(?!$thisWidth)" -quiet)) -Or 
-		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$heightKey$sep(?!$thisHeight)" -quiet)) -Or
-		(($replaceRefresh) -And (Select-String -Path $path2conf -Pattern "$refreshKey$sep(?!$thisRefresh)" -quiet))
+		(($replaceWidth) -And (Select-String -Path $path2conf -Pattern "$BOL$widthKey$sep(?!$thisWidth)" -quiet)) -Or 
+		(($replaceHeight) -And (Select-String -Path $path2conf -Pattern "$BOL$heightKey$sep(?!$thisHeight)" -quiet)) -Or
+		(($replaceRefresh) -And (Select-String -Path $path2conf -Pattern "$BOL$refreshKey$sep(?!$thisRefresh)" -quiet))
 		){
      # https://stackoverflow.com/a/11652395 and note % is just 'Foreach-Object'
 			(Get-Content $path2conf) |
-			% { IF ($replaceWidth) {$_ -replace "^\s*$widthKey$sep.*", "$widthKey$sep$thisWidth"} ELSE {$_} } |
-			% { IF ($replaceHeight) {$_ -replace "^\s*$heightKey$sep.*", "$heightKey$sep$thisHeight"} ELSE {$_} } |
-			% { IF ($replaceRefresh) {$_ -replace "^\s*$refreshKey$sep.*", "$refreshKey$sep$thisRefresh"} ELSE {$_} } |
+			% { IF ($replaceWidth) {$_ -replace "$BOL$widthKey$sep.*", "$widthKey$sep$thisWidth"} ELSE {$_} } |
+			% { IF ($replaceHeight) {$_ -replace "$BOL$heightKey$sep.*", "$heightKey$sep$thisHeight"} ELSE {$_} } |
+			% { IF ($replaceRefresh) {$_ -replace "$BOL$refreshKey$sep.*", "$refreshKey$sep$thisRefresh"} ELSE {$_} } |
 			Set-Content $path2conf
 		}  
 }
