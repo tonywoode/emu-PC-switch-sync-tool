@@ -169,7 +169,9 @@ ELSE { $SCREEN = 19 }
 Replace-Setting "P:\Commodore\Amiga\WinUAELoader\Data\WinUAELoader.ini" "=" "Screen" $SCREEN
 
 # C64 - ccs64. Same deal as the above, oddly all the variables in the cfg really do start with $ but its less confusing to omit it than to single quote it
-IF ($WIDTH -eq "1280") { $SCREENMODE = 14 }
+# again this vintage emulator doesn't like real resolutions so where we can set it to 2880x1800 it postage stamps, so set to 1920x1200,
+# why this number equates to the same as 1280's setting I don't know
+IF ($WIDTH -eq "1280" -or $WIDTH -eq "2880") { $SCREENMODE = 14 }
 ELSEIF ($WIDTH -eq "2560") { $SCREENMODE = 32 }
 ELSE { $SCREENMODE = 32 } # for some reason the res of the 4k monitor causes it to postage stamp, and i think 32 will also work for both tv and 4k
 Replace-Setting "P:\Commodore\C64\CCS64\c64.cfg" "=" "SCREENMODE" $SCREENMODE
