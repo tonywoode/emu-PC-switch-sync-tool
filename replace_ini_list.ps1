@@ -156,6 +156,8 @@ function Replace-UAE {
 <#UAE - CD32 with PAD#> Replace-UAE "P:\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
 <#Gamebase Amiga - disk games #> Replace-UAE "P:\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
 <#Gamebase Amiga - whdload#> Replace-UAE "P:\GAMEBASE\GameBase Amiga\WHDLoad.uae"
+<#WinUAELoader Gamebase Amiga - disk games #> Replace-UAE "P:\Commodore\Amiga\WinUAELoader\Data\GameBase.uae"
+<#WinUAELoader Gamebase Amiga - whdload#> Replace-UAE "P:\Commodore\Amiga\WinUAELoader\Data\WHDLoad.uae"
 <#DEMObase Amiga#> Replace-UAE "P:\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
 #<#UAE's main dir #> Replace-UAE "P:\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
 #<#UAE - CD32 with PAD#> Replace-UAE "P:\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
