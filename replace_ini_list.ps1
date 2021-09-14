@@ -157,13 +157,17 @@ function Replace-UAE {
 <#UAE - CD32 with PAD#> Replace-UAE "P:\Commodore\Amiga\WinUAELoader\Data\cd32withpad.uae"
 <#Gamebase Amiga - disk games #> Replace-UAE "P:\GAMEBASE\GameBase Amiga\GameBase Amiga.uae"
 <#Gamebase Amiga - whdload#> Replace-UAE "P:\GAMEBASE\GameBase Amiga\WHDLoad.uae"
+<#WinUAELoader Gamebase Amiga - disk games #> Replace-UAE "P:\Commodore\Amiga\WinUAELoader\Data\GameBase.uae"
+<#WinUAELoader Gamebase Amiga - whdload#> Replace-UAE "P:\Commodore\Amiga\WinUAELoader\Data\WHDLoad.uae"
 <#DEMObase Amiga#> Replace-UAE "P:\GAMEBASE\Amiga demobase\GameBase Amiga.uae"
 #<#UAE's main dir #> Replace-UAE "P:\Commodore\Amiga\WinUAE\WINUAE\Configurations\default.uae"
 #<#UAE - CD32 with PAD#> Replace-UAE "P:\Commodore\Amiga\WinUAE\WINUAE\Configurations\cd32withpad.uae"
 
 # now that bit is for WinUAELoader is a bit manual. If Width is 1366 we'll set 14, if 1800 or 1920 we want 19 and so on...
-# why are the 1366 and 2880 value both 14 when they are doutbless different ratios? the value is just index in auto-generated array based on system res 
-IF ($WIDTH -eq "1366" -or $WIDTH -eq "2880") { $SCREEN = 14 }
+# why is 1366 '14' yet 2880 '12'? the value is just index in auto-generated array based on system res, however this is brittle as at one point
+# they were BOTH index 14, prob operating system changes altered the 2880 machines resolutions
+IF ($WIDTH -eq "1366"){ $SCREEN = 14 }
+ELSEIF ($WIDTH -eq "2880") { $SCREEN = 12 }
 ELSEIF ($WIDTH -eq "1280") { $SCREEN = 11 }
 ELSEIF ($WIDTH -eq "2560") { $SCREEN = 29 }
 ELSE { $SCREEN = 19 }
