@@ -128,6 +128,7 @@ Replace-SystemScreen "P:\ARCADE\FinalBurn_Alpha\fba\config\fba.ini" " " "nVidVer
 <#Magic Engine#> Replace-SystemScreen "P:\PCEngine\Magic Engine\Magic-Engine113\pce.ini" "=" "screen_width" "screen_height"
 <#Magic Engine FX#> Replace-SystemScreen "P:\PCEngine\Magic Engine FX\pcfx.ini" "=" "screen_width" "screen_height"
 <#M2 0.9#> Replace-SystemScreen "P:\ARCADE\M2\M2\m2emulator_09\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
+<#M2 1.0#> Replace-SystemScreen "P:\ARCADE\M2\M2\m2emulator_10\emulator.ini" "=" "FullScreenWidth" "FullScreenHeight"
 <#MEDNAFEN v09 config#> Replace-SystemScreen "P:\Mednafen\mednafen\mednafen-09x.cfg" " " "xres" "yres"
 <#MEDNAFEN#> Replace-SystemScreen "P:\Mednafen\mednafen\mednafen.cfg" " " "xres" "yres"
 <#PSX - note refresh#> Replace-SystemScreen "P:\SONY\PS1\pSX\pSX\psx.ini" "=" "Width" "Height" "Refresh"
