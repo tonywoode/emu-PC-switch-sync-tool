@@ -16,7 +16,7 @@ $BOL = "^\s*"
 function genericCheckAndReplace {
 	param([string]$line, [string]$sep, [string]$key, [string]$val)
 	IF (Select-String -InputObject $line -Pattern "$BOL$key$sep(?!$val)" -quiet) 
-        {$line -replace "^\s$key$sep.*", "$key$sep$val" } ELSE { $line }
+        {$line -replace "$BOL$key$sep.*", "$key$sep$val" } ELSE { $line }
 }
 
 #PCSX2 can look very nice on the desktop, change every setting needed to make that so, one by one...
@@ -46,13 +46,13 @@ switch ($MACHINE) {
 }
 $content = Get-Content $path2conf
 $changed = $content| #note % is just 'Foreach-Object', and in this context it just means a line
-    % { genericCheckAndReplace $_ "=" "upscale_multiplier" $upscale_multiplier } |
-    % { genericCheckAndReplace $_ "=" "filter" $filter } |
-    % { genericCheckAndReplace $_ "=" "UserHacks_MSAA" $UserHacks_MSAA } |
-    % { genericCheckAndReplace $_ "=" "MaxAnisotropy" $MaxAnisotropy } |
-    % { genericCheckAndReplace $_ "=" "Userhacks_align_sprite_X" $Userhacks_align_sprite_X } |
-    % { genericCheckAndReplace $_ "=" "UserHacks_unscale_point_line" $UserHacks_unscale_point_line } |
-    % { genericCheckAndReplace $_ "=" "wrap_gs_mem" $wrap_gs_mem } #NO LAST PIPE CHARACTER PLEASE!!!
+    % { genericCheckAndReplace $_ " = " "upscale_multiplier" $upscale_multiplier } |
+    % { genericCheckAndReplace $_ " = " "filter" $filter } |
+    % { genericCheckAndReplace $_ " = " "UserHacks_MSAA" $UserHacks_MSAA } |
+    % { genericCheckAndReplace $_ " = " "MaxAnisotropy" $MaxAnisotropy } |
+    % { genericCheckAndReplace $_ " = " "Userhacks_align_sprite_X" $Userhacks_align_sprite_X } |
+    % { genericCheckAndReplace $_ " = " "UserHacks_unscale_point_line" $UserHacks_unscale_point_line } |
+    % { genericCheckAndReplace $_ " = " "wrap_gs_mem" $wrap_gs_mem } #NO LAST PIPE CHARACTER PLEASE!!!
 IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
 # now similar for dolphin on retroarch - note all of retroarch's values are double-quoted
