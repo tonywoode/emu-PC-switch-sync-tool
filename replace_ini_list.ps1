@@ -57,9 +57,13 @@ IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-C
 
 # now similar for dolphin on retroarch - note all of retroarch's values are double-quoted
 $path2conf = "P:\Retroarch\RetroArch\retroarch-core-options.cfg"
-switch ($WIDTH) {
-  "3840" {
+switch ($MACHINE) {
+  "RIVER" {
     $dolphin_efb_scale = "`"x6 (3840 x 3168)`""
+    break
+  }
+  "LAGOON" {
+    $dolphin_efb_scale = "`"x1 (640 x 528)`""
     break
   }
   default {
