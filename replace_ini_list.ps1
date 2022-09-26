@@ -55,25 +55,29 @@ $changed = $content| #note % is just 'Foreach-Object', and in this context it ju
     % { genericCheckAndReplace $_ " = " "wrap_gs_mem" $wrap_gs_mem } #NO LAST PIPE CHARACTER PLEASE!!!
 IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
-# now similar for dolphin on retroarch - note all of retroarch's values are double-quoted
+# now similar for dolphin and citra on retroarch - note all of retroarch's values are double-quoted
 $path2conf = "P:\Retroarch\RetroArch\retroarch-core-options.cfg"
 switch ($MACHINE) {
   "RIVER" {
     $dolphin_efb_scale = "`"x6 (3840 x 3168)`""
+	$citra_resolution_factor = "`"6x`""
     break
   }
   "LAGOON" {
     $dolphin_efb_scale = "`"x1 (640 x 528)`""
+	$citra_resolution_factor = "`"1x (Native)`""
     break
   }
   default {
     $dolphin_efb_scale = "`"x2 (1280 x 1056)`""
+	$citra_resolution_factor = "`"1x (Native)`""
     break
   }
 }
 $content = Get-Content $path2conf
 $changed = $content| #note % is just 'Foreach-Object', and in this context it just means a line
-    % { genericCheckAndReplace $_ " = " "dolphin_efb_scale" $dolphin_efb_scale } #NO LAST PIPE CHARACTER PLEASE!!!
+	% { genericCheckAndReplace $_ " = " "dolphin_efb_scale" $dolphin_efb_scale } |
+    % { genericCheckAndReplace $_ " = " "citra_resolution_factor" $citra_resolution_factor } #NO LAST PIPE CHARACTER PLEASE!!!
 IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
 #Then deal with width/height and screen res, which can have a generic function, that mostly gets facaded with the passed in props
