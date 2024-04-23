@@ -55,6 +55,24 @@ $changed = $content| #note % is just 'Foreach-Object', and in this context it ju
     % { genericCheckAndReplace $_ " = " "wrap_gs_mem" $wrap_gs_mem } #NO LAST PIPE CHARACTER PLEASE!!!
 IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
+#PCSX2-QT needs the same treatment, and the same applies: note if you switch on machine, you might be in tv mode, so don't actually change resolution here
+$path2conf = "P:\SONY\PS2\pcsx2\pcsx2-Qt\inis\PCSX2.ini" 
+switch ($MACHINE) {
+  "RIVER" {
+    $upscale_multiplier=3
+    break
+  }
+  default {
+    $upscale_multiplier=1
+	#that seems enough for now for RIVER, tweak later...note need to correspondinly add to below changed
+    break
+  }
+}
+$content = Get-Content $path2conf
+$changed = $content| #note % is just 'Foreach-Object', and in this context it just means a line
+    % { genericCheckAndReplace $_ " = " "upscale_multiplier" $upscale_multiplier } #NO LAST PIPE CHARACTER PLEASE!!!
+IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
+
 # now similar for dolphin and citra on retroarch - note all of retroarch's values are double-quoted
 $path2conf = "P:\Retroarch\RetroArch\retroarch-core-options.cfg"
 switch ($MACHINE) {
