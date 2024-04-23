@@ -35,7 +35,6 @@
             <Item>\SONY\PS2\</Item>
             <Item>\Spectrum\</Item>
             <Item>\.\*.*</Item>
-            <Item/>
             <Item>\3D0\4DO\Saves\</Item>
             <Item>\Acorn_BBC\Acorn\beebem385\UserData\BeebState\</Item>
             <Item>\Acorn_BBC\Acorn\BeebEm402\BeebEm\UserData\BeebState\</Item>
@@ -110,6 +109,7 @@
             <Item>\Nintendo\SNES\Snes9x\snes9x-1.53-x64\Saves\</Item>
             <Item>\Nintendo\SNES\SnesGT\snesgt0230b7e\save\</Item>
             <Item>\Nintendo\SNES\ZSNES\states\</Item>
+            <Item>\Nintendo\Switch</Item>
             <Item>\PC\BoR\OpenBOR\Saves\</Item>
             <Item>\PC\Oolite\oolite.app\oolite-saves\</Item>
             <Item>\PC\ScummVM\Saved Games\</Item>
@@ -139,6 +139,7 @@
             <Item>\SONY\PS2\pcsx2\pcsx2\memcards\</Item>
             <Item>\SONY\PS2\pcsx2\pcsx2\sstates\</Item>
             <Item>\SONY\PSP\ppsspp\ppsspp\memstick\</Item>
+            <Item>P:\SONY\PS3\</Item>
         </Include>
         <Exclude>
             <Item>\Retroarch\TextDocsNowOnWiki\</Item>
