@@ -60,17 +60,35 @@ $path2conf = "P:\SONY\PS2\pcsx2\pcsx2-Qt\inis\PCSX2.ini"
 switch ($MACHINE) {
   "RIVER" {
     $upscale_multiplier=3
-    break
+	$VsyncEnable=2
+	$pcrtc_offsets=true
+	$fxaa=true
+    $accurate_blending_unit=3
+	$CASMode=2
+	$MaxAnisotropy=16
+	break
   }
   default {
     $upscale_multiplier=1
-	#that seems enough for now for RIVER, tweak later...note need to correspondinly add to below changed
+	$VsyncEnable=0
+	$pcrtc_offsets=false
+	$fxaa=false
+	$accurate_blending_unit=0
+	$CASMode=0
+	$MaxAnisotropy=2
+	#note need to correspondinly add to below changed
     break
   }
 }
 $content = Get-Content $path2conf
 $changed = $content| #note % is just 'Foreach-Object', and in this context it just means a line
-    % { genericCheckAndReplace $_ " = " "upscale_multiplier" $upscale_multiplier } #NO LAST PIPE CHARACTER PLEASE!!!
+    % { genericCheckAndReplace $_ " = " "upscale_multiplier" $upscale_multiplier } |
+	% { genericCheckAndReplace $_ " = " "VsyncEnable" $VsyncEnable } |
+	% { genericCheckAndReplace $_ " = " "pcrtc_offsets" $pcrtc_offsets } |
+	% { genericCheckAndReplace $_ " = " "fxaa" $fxaa } |
+	% { genericCheckAndReplace $_ " = " "accurate_blending_unit" $accurate_blending_unit } |
+	% { genericCheckAndReplace $_ " = " "CASMode" $CASMode } |
+	% { genericCheckAndReplace $_ " = " "MaxAnisotropy" $MaxAnisotropy } #NO LAST PIPE CHARACTER PLEASE!!!
 IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-Content $path2conf -Value $changed }
 
 # now similar for dolphin and citra on retroarch - note all of retroarch's values are double-quoted
