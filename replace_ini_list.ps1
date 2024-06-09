@@ -59,10 +59,10 @@ IF (Compare-Object -ReferenceObject $content -DifferenceObject $changed) { Set-C
 $path2conf = "P:\SONY\PS2\pcsx2\pcsx2-Qt\inis\PCSX2.ini" 
 switch ($MACHINE) {
   "RIVER" {
-    $upscale_multiplier=3
-	$VsyncEnable=2
-	$pcrtc_offsets=true
-	$fxaa=true
+    $upscale_multiplier=5
+	$VsyncEnable=0
+	$pcrtc_offsets="true"
+	$fxaa="true"
     $accurate_blending_unit=3
 	$CASMode=2
 	$MaxAnisotropy=16
@@ -71,8 +71,8 @@ switch ($MACHINE) {
   default {
     $upscale_multiplier=1
 	$VsyncEnable=0
-	$pcrtc_offsets=false
-	$fxaa=false
+	$pcrtc_offsets="false"
+	$fxaa="false"
 	$accurate_blending_unit=0
 	$CASMode=0
 	$MaxAnisotropy=2
