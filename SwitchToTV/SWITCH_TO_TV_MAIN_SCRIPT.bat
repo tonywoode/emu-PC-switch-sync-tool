@@ -27,12 +27,9 @@ SET TV_REFRESH=%4
 SET MON_WIDTH=%5
 SET MON_HEIGHT=%6
 SET MON_REFRESH=%7
-
+SET QP_OLD_OR_NEW=%8
 
 %replace_text_in_inis% %MACHINE% %TV_WIDTH% %TV_HEIGHT% %TV_REFRESH%
-
-::do tv specific stuff
-powershell -file .\switch_to_tv_list.ps1 14
 
 :: we'll use this many times
 set set_epsxe_reg=reg add HKCU\Software\epsxe\config
@@ -61,8 +58,25 @@ if not ("%~d0")==("P:") (P:)
 start /D "P:\JoytoKey\" JoyToKey.exe
 
 ::now run my frontend, if we don't CD to qp's dir, relative paths won't work. Many tools currently need relative paths
-cd /D P:\QUICKPLAY\QuickPlayFrontend\qp 
-QP.exe /HTPC /MAXIMISE
+if "%8"=="OLD" (
+    ::do tv specific stuff
+    powershell -file .\switch_to_tv_list.ps1 14
+    cd /D P:\QUICKPLAY\QuickPlayFrontend\qp
+    if exist QP.exe (
+        QP.exe /HTPC /MAXIMISE
+    ) else (
+        echo QP.exe not found.
+    )
+) else if "%8"=="NEW" (
+    cd /D P:\quickPlayJS
+    if exist quickPlayJS-dogfood-edition.exe (
+        quickPlayJS-dogfood-edition.exe
+    ) else (
+        echo quickPlayJS-dogfood-edition.exe not found.
+    )
+) else (
+    echo %8 is neither OLD nor NEW.
+)
 
 ::then when we go back, we do it the other way round
 echo.****EXITING TV MODE*****
