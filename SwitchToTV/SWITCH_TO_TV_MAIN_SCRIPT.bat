@@ -70,7 +70,7 @@ if "%8"=="OLD" (
 ) else if "%8"=="NEW" (
     cd /D P:\quickPlayJS
     if exist quickPlayJS-dogfood-edition.exe (
-        quickPlayJS-dogfood-edition.exe
+        quickPlayJS-dogfood-edition.exe --fullscreen
     ) else (
         echo quickPlayJS-dogfood-edition.exe not found.
     )
