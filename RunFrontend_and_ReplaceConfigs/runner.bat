@@ -25,6 +25,7 @@ if "%computername%"=="TRICKLE" (%replace_text_in_inis% TRICKLE 1366 768 60)
 if "%computername%"=="LAGOON"  (%replace_text_in_inis% LAGOON 1280 800 60)
 if "%computername%"=="POND"    (%replace_text_in_inis% POND 2560 1600 60)
 if "%computername%"=="TYPHOON-WIN"    (%replace_text_in_inis% TYPHOON-WIN 2880 1800 60)
+if "%computername%"=="HURRICANE-WIN"    (%replace_text_in_inis% HURRICANE-WIN 2880 1800 60)
 
 :: the ffs sync basics are setup in this file (so that the switch-to-tv script can also use them)
 call ./runFFSSync.bat
