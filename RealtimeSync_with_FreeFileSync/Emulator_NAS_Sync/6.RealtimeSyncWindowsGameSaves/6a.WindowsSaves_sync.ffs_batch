@@ -64,6 +64,10 @@
             <Left>%UserProfile%\Documents</Left>
             <Right>P:\PC\WindowsGameSaves\Documents</Right>
         </Pair>
+		<Pair>
+            <Left>%AppData%\Ubisoft\Assassin's Creed\Saved Games</Left>
+            <Right>P:\PC\WindowsGameSaves\appdata\Ubisoft\Assassin's Creed\Saved Games</Right>
+        </Pair>
     </FolderPairs>
     <Errors Ignore="true" Retry="0" Delay="5"/>
     <PostSyncCommand Condition="Completion"/>
