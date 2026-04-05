@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FreeFileSync XmlType="GUI" XmlFormat="17">
+<FreeFileSync XmlType="GUI" XmlFormat="23">
+    <Notes/>
     <Compare>
         <Variant>TimeAndSize</Variant>
         <Symlinks>Exclude</Symlinks>
         <IgnoreTimeShift/>
     </Compare>
     <Synchronize>
-        <Variant>TwoWay</Variant>
-        <DetectMovedFiles>false</DetectMovedFiles>
+        <Changes>
+            <Left Create="right" Update="right" Delete="right"/>
+            <Right Create="left" Update="left" Delete="left"/>
+        </Changes>
         <DeletionPolicy>Versioning</DeletionPolicy>
         <VersioningFolder Style="TimeStamp-File">%UserProfile%\FFSArchive</VersioningFolder>
     </Synchronize>
@@ -45,7 +48,5 @@
     <PostSyncCommand Condition="Completion"/>
     <LogFolder/>
     <EmailNotification Condition="Always"/>
-    <Gui>
-        <GridViewType>Action</GridViewType>
-    </Gui>
+    <GridViewType>Action</GridViewType>
 </FreeFileSync>

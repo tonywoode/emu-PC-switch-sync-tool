@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FreeFileSync XmlType="GUI" XmlFormat="16">
+<FreeFileSync XmlType="GUI" XmlFormat="23">
+    <Notes/>
     <Compare>
         <Variant>TimeAndSize</Variant>
         <Symlinks>Exclude</Symlinks>
         <IgnoreTimeShift/>
     </Compare>
     <Synchronize>
-        <Variant>TwoWay</Variant>
-        <DetectMovedFiles>false</DetectMovedFiles>
+        <Changes>
+            <Left Create="right" Update="right" Delete="right"/>
+            <Right Create="left" Update="left" Delete="left"/>
+        </Changes>
         <DeletionPolicy>Versioning</DeletionPolicy>
         <VersioningFolder Style="TimeStamp-File">%UserProfile%\FFSArchive</VersioningFolder>
     </Synchronize>
@@ -33,9 +36,9 @@
             <Item>\SONY\PS2\pcsx2\pcsx2\logs\FWnull.log</Item>
             <Item>\SONY\PS2\pcsx2\pcsx2\logs\USBnull.log</Item>
         </Exclude>
-        <TimeSpan Type="None">0</TimeSpan>
         <SizeMin Unit="None">0</SizeMin>
         <SizeMax Unit="None">0</SizeMax>
+        <TimeSpan Type="None">0</TimeSpan>
     </Filter>
     <FolderPairs>
         <Pair>
@@ -47,7 +50,5 @@
     <PostSyncCommand Condition="Completion"/>
     <LogFolder/>
     <EmailNotification Condition="Always"/>
-    <Gui>
-        <MiddleGridView>Action</MiddleGridView>
-    </Gui>
+    <GridViewType>Action</GridViewType>
 </FreeFileSync>
