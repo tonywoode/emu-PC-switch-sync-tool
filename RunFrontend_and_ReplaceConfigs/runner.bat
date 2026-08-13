@@ -47,6 +47,10 @@ echo.****EXITING EMU*****
 :: QP is now no longer running, if any syncs are still running, kill them (lets you get out of a laborious unintended sync quickly) 
 :: If no syncs are running, sync again
 popd
+
+:: Run Ludusavi backup for Windows game saves before FFS sync
+call "P:\WinScripts\Emulator_PC_Switcher_Sync_Tool\RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\6.WindowsGameSaves\ludusavi-sync.bat" backup
+
 call ./runFFSSync.bat
 
 ::export the gamebase reg before we close - backup the older file, but only one per day pls
