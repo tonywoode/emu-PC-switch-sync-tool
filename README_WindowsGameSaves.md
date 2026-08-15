@@ -24,7 +24,7 @@ It replaces legacy background RealtimeSync tasks with **Ludusavi**—an open-sou
 | `P:\PC\WindowsGameSaves_LegacyArchive\` | Safe archive for legacy pre-Ludusavi save folders (`Documents`, `Saved Games`, `appdata`, `program files (x86)`). |
 | `1.Setup_New_PC_for_Windows_Game_Saves.bat` | **Run on New PC**: Installs Ludusavi via Winget, configures `config.yaml`, and restores all game saves from `P:\PC\WindowsGameSaves` to the local `C:` drive. |
 | `RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\6.WindowsGameSaves\ludusavi-sync.bat` | Central backup & restore launcher script called by RetroBat and Quickplay. |
-| `RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\6.WindowsGameSaves\convertRealtimeSyncToLudusavi-one-off.bat` | One-off migration script that deleted the old RealtimeSync task, archived legacy folders, and ran the initial full backup. |
+| `RealtimeSync_with_FreeFileSync\Emulator_NAS_Sync\6.WindowsGameSaves\convertRealtimeSyncToLudusavi-one-off.bat` | Self-elevating Admin migration script that idempotently deletes legacy RealtimeSync task, archives legacy folders, and removes obsolete 6a/6b/6c files. |
 | `R:\retrobat\emulationstation\.emulationstation\scripts\game-end\ludusavi-backup-game.bat` | RetroBat game-end hook script. Automatically triggers single-game backup on game exit. |
 
 ---

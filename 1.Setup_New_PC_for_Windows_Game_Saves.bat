@@ -1,4 +1,12 @@
 @echo off
+:: Self-elevate script to Administrator if not already running as Admin
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Requesting Administrator privileges...
+    powershell -Command "Start-Process cmd.exe -ArgumentList '/c \"\"%~f0\"\"' -Verb RunAs"
+    exit /b
+)
+
 echo.==================================================
 echo. Setting Up Ludusavi and Restoring PC Game Saves
 echo.==================================================
@@ -29,8 +37,12 @@ if not exist "%LUDUSAVI_CONFIG_DIR%" mkdir "%LUDUSAVI_CONFIG_DIR%"
 
 echo.Restoring all PC game saves from P:\PC\WindowsGameSaves to local C: drive...
 "%LOCALAPPDATA%\Microsoft\WinGet\Links\ludusavi.exe" restore --force --path "P:\PC\WindowsGameSaves" < nul
-schtasks /delete /tn "RealtimeSyncWindowsSaves" /f 2>nul
-taskkill /IM RealtimeSync.exe /F 2>nul
+
+:: Remove legacy RealtimeSync task if present
+powershell -Command "Unregister-ScheduledTask -TaskName 'RealtimeSyncWindowsSaves' -Confirm:$false -ErrorAction SilentlyContinue" >nul 2>&1
+schtasks /delete /tn "RealtimeSyncWindowsSaves" /f >nul 2>&1
+schtasks /delete /tn "\RealtimeSyncWindowsSaves" /f >nul 2>&1
+taskkill /IM RealtimeSync.exe /F >nul 2>&1
 
 echo.Setup Complete! Your PC game saves are restored and ready.
 pause
