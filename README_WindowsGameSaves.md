@@ -56,14 +56,14 @@ Default configuration settings:
 ```yaml
 backup:
   path: P:/PC/WindowsGameSaves
+  ignoredGames:
+    - 'Minecraft'
+    - 'Minecraft: Bedrock Edition'
+    - 'Minecraft: Java Edition'
   retention:
     full: 5
     differential: 0
   filter:
-    ignoredGames:
-      - 'Minecraft: Java Edition'
-      - 'Minecraft: Bedrock Edition'
-      - 'Minecraft'
     ignoredPaths:
       - 'N:/**'
       - 'S:/**'

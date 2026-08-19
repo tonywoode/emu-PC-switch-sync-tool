@@ -19,14 +19,14 @@ if not exist "%LUDUSAVI_CONFIG_DIR%" mkdir "%LUDUSAVI_CONFIG_DIR%"
 (
     echo backup:
     echo   path: "P:\PC\WindowsGameSaves"
+    echo   ignoredGames:
+    echo     - "Minecraft: Java Edition"
+    echo     - "Minecraft: Bedrock Edition"
+    echo     - "Minecraft"
     echo   retention:
     echo     full: 5
     echo     differential: 0
     echo   filter:
-    echo     ignoredGames:
-    echo       - "Minecraft: Java Edition"
-    echo       - "Minecraft: Bedrock Edition"
-    echo       - "Minecraft"
     echo     ignoredPaths:
     echo       - "N:/**"
     echo       - "S:/**"
